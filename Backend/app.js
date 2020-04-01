@@ -9,7 +9,7 @@ app.use(bodyParser.raw({
 
 
 app.post("/images", function (req,res) {
-    
+    console.log(req);
 });
 
 
