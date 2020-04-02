@@ -1,20 +1,54 @@
 <template>
   <div class="hello">
-      <input type="file" @change="onFileSelected">
-      <button @click="uploadFile"
+      <div v-if="message">
+          <div>{{message}}</div>
+      </div>
+
+
+      <input type="file" ref="file" @change="onFileSelected">
+      <button @click="uploadFile">Upload</button>
+
+    <div>
+        <div class="columns is-multiline">
+            <div v-for="object in uploadedFiles" :key="object" class="column is-4">
+                <figure class="image">
+                    <img :src="object.imagePath" alt="">
+                </figure>
+            </div>
+        </div>
+    </div>
   </div>
 </template>
 
 <script>
+    import axios from 'axios';
 export default {
   name: 'imageCrop',
-  props: {
-    uploadedImage: null
+  data(){
+      return {
+          uploadedImage: "",
+          message: "",
+          uploadedFiles: []
+      }
   },
   methods: {
-    onFileSelected(event){
-      this.uploadedImage = event.target.files[0];
-    }
+    onFileSelected(){
+      this.uploadedImage = this.$refs.file.files[0];
+      this.message = "";
+    },
+      uploadFile(){
+          const fdObject = new FormData();
+          fdObject.append('file', this.uploadedImage, this.uploadedImage.name);
+            axios.post(
+                'http://localhost:3000/images/',
+                fdObject)
+          .then(res => {
+              console.log(res);
+              this.message = "Foto erfolgreich hochgeladen!";
+              this.file = "";
+              this.uploadedFiles.push(res.data);
+          })
+      }
   }
 }
 </script>
