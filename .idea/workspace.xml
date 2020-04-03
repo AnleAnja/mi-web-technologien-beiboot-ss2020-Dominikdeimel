@@ -2,10 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4707854b-1ace-4548-9b55-827d55c663ef" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/components/imageCrop.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/components/imageCrop.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/static/test.jpeg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/assets/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/public/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/components/imageCrop.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/components/Gallery.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,6 +21,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JavaScript File" />
+        <option value="Vue Single File Component" />
       </list>
     </option>
   </component>
@@ -37,12 +43,20 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="12.16.1" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Frontend/imagetool/public" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Frontend/imagetool/public" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Frontend/imagetool/public" />
+    </key>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -54,7 +68,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1585817241816</updated>
-      <workItem from="1585817246673" duration="13510000" />
+      <workItem from="1585817246673" duration="13590000" />
+      <workItem from="1585902580750" duration="13990000" />
     </task>
     <servers />
   </component>
@@ -62,30 +77,30 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="261" y="200" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1585834505625">
+    <state x="261" y="200" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1585922827950">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="261" y="200" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.800@0.0.1280.800" timestamp="1585834505625" />
+    <state x="261" y="200" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.800@0.0.1280.800" timestamp="1585922827950" />
     <state x="378" y="154" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1585838258439">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="378" y="154" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.800@0.0.1280.800" timestamp="1585838258439" />
-    <state width="1259" height="193" key="GridCell.Tab.0.bottom" timestamp="1585817868706">
+    <state width="1259" height="193" key="GridCell.Tab.0.bottom" timestamp="1585839428186">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="1259" height="193" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1585817868706" />
-    <state width="1259" height="193" key="GridCell.Tab.0.center" timestamp="1585817868704">
+    <state width="1259" height="193" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1585839428186" />
+    <state width="1259" height="193" key="GridCell.Tab.0.center" timestamp="1585839428184">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="1259" height="193" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1585817868704" />
-    <state width="1259" height="193" key="GridCell.Tab.0.left" timestamp="1585817868702">
+    <state width="1259" height="193" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1585839428184" />
+    <state width="1259" height="193" key="GridCell.Tab.0.left" timestamp="1585839428184">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="1259" height="193" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1585817868702" />
-    <state width="1259" height="193" key="GridCell.Tab.0.right" timestamp="1585817868705">
+    <state width="1259" height="193" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1585839428184" />
+    <state width="1259" height="193" key="GridCell.Tab.0.right" timestamp="1585839428186">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state width="1259" height="193" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1585817868705" />
+    <state width="1259" height="193" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1585839428186" />
     <state x="141" y="39" key="SettingsEditor" timestamp="1585817539149">
       <screen x="0" y="0" width="1280" height="800" />
     </state>

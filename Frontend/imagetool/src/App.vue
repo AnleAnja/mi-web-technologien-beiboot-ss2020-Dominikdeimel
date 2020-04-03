@@ -1,17 +1,19 @@
 <template>
   <div id="app">
     <h1>Picture Box</h1>
-    <imageCrop msg="Welcome to Your Vue.js App"/>
+    <gallery src="/logo.png"/>
+
   </div>
 </template>
 
 <script>
-import imageCrop from './components/imageCrop.vue'
+import gallery from './components/Gallery.vue'
+//import imageCrop from './components/ImageCrop'
 
 export default {
   name: 'App',
   components: {
-    imageCrop
+    gallery
   }
 }
 </script>
