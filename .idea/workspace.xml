@@ -2,15 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4707854b-1ace-4548-9b55-827d55c663ef" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/static/test.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/public/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/assets/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/public/logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/components/imageCrop.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/components/Gallery.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/components/Gallery.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/components/Gallery.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -45,8 +40,11 @@
     <property name="javascript.nodejs.core.library.configured.version" value="12.16.1" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/Frontend/imagetool/public" />
     <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.standard" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
@@ -69,7 +67,8 @@
       <option name="presentableId" value="Default" />
       <updated>1585817241816</updated>
       <workItem from="1585817246673" duration="13590000" />
-      <workItem from="1585902580750" duration="13990000" />
+      <workItem from="1585902580750" duration="14179000" />
+      <workItem from="1585991056701" duration="4404000" />
     </task>
     <servers />
   </component>
@@ -77,6 +76,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="240" y="65" key="#ESLint" timestamp="1585995540570">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="240" y="65" key="#ESLint/0.0.1280.800@0.0.1280.800" timestamp="1585995540570" />
     <state x="261" y="200" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1585922827950">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
