@@ -37,6 +37,7 @@ app.post("/images", upload.single("file"), async function (req, res) {
 
         log[log.length-1].scaledImages.push({
             originalName: `500_${req.file.originalname}`,
+            scaleFactor: "500",
             imagePath: `/static/500_${req.file.originalname}`});
 
         //Resize 250x250
@@ -46,6 +47,7 @@ app.post("/images", upload.single("file"), async function (req, res) {
 
         log[log.length-1].scaledImages.push({
             originalName: `250_${req.file.originalname}`,
+            scaleFactor: "250",
             imagePath: `/static/250_${req.file.originalname}`});
 
         //Resize 100x100
@@ -55,6 +57,7 @@ app.post("/images", upload.single("file"), async function (req, res) {
 
         log[log.length-1].scaledImages.push({
             originalName: `100_${req.file.originalname}`,
+            scaleFactor: "100",
             imagePath: `/static/100_${req.file.originalname}`});
 
         res.json(log[log.length-1]);
