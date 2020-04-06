@@ -4,14 +4,9 @@
     <list default="true" id="4707854b-1ace-4548-9b55-827d55c663ef" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/components/Gallery.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/components/ImageScale.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/components/ImageCrop.vue" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/vue.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/components/Bar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/components/Bar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/components/ImageScale.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/components/ImageScale.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,7 +70,8 @@
       <workItem from="1585817246673" duration="13590000" />
       <workItem from="1585902580750" duration="14179000" />
       <workItem from="1585991056701" duration="4527000" />
-      <workItem from="1586082090617" duration="8931000" />
+      <workItem from="1586082090617" duration="9025000" />
+      <workItem from="1586165020579" duration="12704000" />
     </task>
     <servers />
   </component>

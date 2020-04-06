@@ -3,8 +3,10 @@
         <v-app id="inspire">
             <div>
                 <v-app-bar
-                        color="deep-purple accent-4"
+                        color="grey accent-4 gradient"
                         dark
+                        src="https://picsum.photos/1920/1080?random"
+                        absolute
                 >
                     <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 

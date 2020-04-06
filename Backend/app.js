@@ -30,6 +30,16 @@ app.post("/images", upload.single("file"), async function (req, res) {
             scaledImages: []
         });
 
+        //Resize 800x800
+        await sharp(req.file.path)
+            .resize(800)
+            .toFile(`./static/800_${req.file.originalname}`);
+
+        log[log.length-1].scaledImages.push({
+            originalName: `800_${req.file.originalname}`,
+            scaleFactor: "800",
+            imagePath: `/static/800_${req.file.originalname}`});
+
         //Resize 500x500
         await sharp(req.file.path)
             .resize(500)
@@ -40,25 +50,25 @@ app.post("/images", upload.single("file"), async function (req, res) {
             scaleFactor: "500",
             imagePath: `/static/500_${req.file.originalname}`});
 
-        //Resize 250x250
+        //Resize 300x300
         await sharp(req.file.path)
-            .resize(250)
-            .toFile(`./static/250_${req.file.originalname}`);
+            .resize(300)
+            .toFile(`./static/300_${req.file.originalname}`);
 
         log[log.length-1].scaledImages.push({
-            originalName: `250_${req.file.originalname}`,
-            scaleFactor: "250",
-            imagePath: `/static/250_${req.file.originalname}`});
+            originalName: `300_${req.file.originalname}`,
+            scaleFactor: "300",
+            imagePath: `/static/300_${req.file.originalname}`});
 
-        //Resize 100x100
+        //Square
         await sharp(req.file.path)
-            .resize(100)
-            .toFile(`./static/100_${req.file.originalname}`);
+            .resize(800, 800)
+            .toFile(`./static/square_${req.file.originalname}`);
 
         log[log.length-1].scaledImages.push({
-            originalName: `100_${req.file.originalname}`,
-            scaleFactor: "100",
-            imagePath: `/static/100_${req.file.originalname}`});
+            originalName: `square_${req.file.originalname}`,
+            scaleFactor: "800",
+            imagePath: `/static/square_${req.file.originalname}`});
 
         res.json(log[log.length-1]);
         saveJson();
