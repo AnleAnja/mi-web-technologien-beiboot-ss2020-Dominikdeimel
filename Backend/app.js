@@ -87,6 +87,7 @@ try {
 
     res.json({
         originalName: `${req.body.width}_${req.body.name}`,
+        scaleFactor: `${req.body.width}`,
         imagePath: `./static/${req.body.width}_${req.body.name}`
     })
 } catch (err){
@@ -97,10 +98,7 @@ try {
 app.get("/allImages", function (req, res) {
     const temp = [];
     log.forEach(it => {
-        temp.push( {
-            "originalName": it.originalName,
-                "imagePath": it.imagePath
-        });
+        temp.push(it);
     });
     res.json(temp);
 });

@@ -1,13 +1,15 @@
 <template>
     <div id="app">
+
+
         <div style="height: 1px">
             <bar @newComponent="changeActiveComponent"></bar>
         </div>
-        <div style="margin-top: 60px; height: auto" >
-            <keep-alive>
-                <component :is="dynamicComponent"></component>
-            </keep-alive>
+        <div style="margin-top: 60px; height: auto">
+            <imageScale v-if="activeComponent === 'imageScale'" :recentImage="recentImage"></imageScale>
+            <gallery v-if="activeComponent === 'gallery'" @switchToImageScale="switchToImageScale"></gallery>
         </div>
+
     </div>
 </template>
 
@@ -25,12 +27,17 @@
         },
         data() {
             return {
-                dynamicComponent: "imageScale"
+                activeComponent: "imageScale",
+                recentImage: {}
             }
         },
         methods: {
             changeActiveComponent(value) {
-                this.dynamicComponent = value;
+                this.activeComponent = value;
+            },
+            switchToImageScale(image) {
+                this.recentImage = image;
+                this.activeComponent = 'imageScale'
             }
         }
     }
