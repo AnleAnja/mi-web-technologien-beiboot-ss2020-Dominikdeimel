@@ -1,6 +1,6 @@
 <template>
     <div class="hello">
-        <v-app id="inspire">
+        <v-app class="background">
             <div style="margin-left: 85%">
                 <v-switch v-model="switch1" @change="switchView" inset label="Eigene Skalierung"></v-switch>
             </div>
@@ -52,7 +52,7 @@
                                 <v-checkbox v-model="downloadCheckboxes[2]" class="mx-2" label="300Px"></v-checkbox>
                                 <v-checkbox v-model="downloadCheckboxes[3]" class="mx-2" label="Square"></v-checkbox>
                             </v-row>
-                            <v-btn icon @click="download">
+                            <v-btn icon @click="download" style="margin-top: -20px">
                                 <v-icon>mdi-arrow-down-bold-circle-outline</v-icon>
                             </v-btn>
                         </v-card>
@@ -68,7 +68,7 @@
                     <v-btn icon @click="preferedSize" style="float: right; margin-right: 28%; margin-top: -70px">
                         <v-icon>mdi-format-align-middle</v-icon>
                     </v-btn>
-                        <v-img v-if="imageInPreferedSize" :src="imageInPreferedSize.imagePath" :width="imageInPreferedSize.scaleFactor" contain></v-img>
+                        <v-img max-width="850" v-if="imageInPreferedSize" :src="imageInPreferedSize.imagePath" :width="imageInPreferedSize.scaleFactor" contain></v-img>
                     </div>
                 </v-card>
                 </v-layout>
@@ -134,7 +134,7 @@
                 })
             },
             download() {
-                for (let i = 0; i < this.scaledImages.length; i++) {
+                /*for (let i = 0; i < this.scaledImages.length; i++) {
                     if (this.downloadCheckboxes[i]) {
                         let fileLink = document.createElement('a');
                         fileLink.href = this.scaledImages[i].imagePath;
@@ -142,7 +142,7 @@
                         document.body.appendChild(fileLink);
                         fileLink.click();
                     }
-                }
+                }*/
             }
         }
     }
@@ -167,5 +167,14 @@
     a {
         color: #42b983;
     }
+    .background {
+        background-image: url('../assets/pattern1sj5r.jpg');
+         /*background-image: linear-gradient(90deg, #F3F3F3, #D6D4D4);*/
+         height: auto;
+         background-position: center;
+         background-repeat: repeat;
+         position: relative;
+     }
+
 
 </style>

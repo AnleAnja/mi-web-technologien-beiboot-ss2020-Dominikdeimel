@@ -1,12 +1,9 @@
 <template>
     <div>
-        <v-app id="inspire">
+        <v-app id="inspire" class="background">
             <v-layout justify-center>
                 <v-card width="1200" style="margin-top: 30px">
                     <h1 style="margin-top: 20px">Gallery</h1>
-                    <v-btn icon @click="allImages" style="float: right; margin-top: -45px; margin-right: 50px">
-                        <v-icon>mdi-restore</v-icon>
-                    </v-btn>
                     <v-btn icon @click="reset" color="red" style="float: right; margin-top: -45px; margin-right: 20px">
                         <v-icon>mdi-restart</v-icon>
                     </v-btn>
@@ -70,5 +67,12 @@
 </script>
 
 <style scoped>
-
+    .background {
+        background-image: url('../assets/pattern1sj5r.jpg');
+        /*background-image: linear-gradient(90deg, #F3F3F3, #D6D4D4);*/
+        height: auto;
+        background-position: center;
+        background-repeat: repeat;
+        position: relative;
+    }
 </style>

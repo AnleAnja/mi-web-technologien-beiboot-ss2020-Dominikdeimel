@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4707854b-1ace-4548-9b55-827d55c663ef" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/App.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/components/Gallery.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/components/Gallery.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/components/ImageScale.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/components/ImageScale.vue" afterDir="false" />
@@ -39,7 +38,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="12.16.1" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Frontend/imagetool/public" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Frontend/imagetool/src/assets" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -50,10 +49,11 @@
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
+    <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Frontend/imagetool/public" />
     </key>
-    <key name="MoveFile.RECENT_KEYS">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/Frontend/imagetool/src/assets" />
       <recent name="$PROJECT_DIR$/Frontend/imagetool/public" />
     </key>
   </component>
@@ -72,7 +72,8 @@
       <workItem from="1585991056701" duration="4527000" />
       <workItem from="1586082090617" duration="9025000" />
       <workItem from="1586165020579" duration="12704000" />
-      <workItem from="1586247854522" duration="12025000" />
+      <workItem from="1586247854522" duration="12677000" />
+      <workItem from="1586336326993" duration="3706000" />
     </task>
     <servers />
   </component>
@@ -84,10 +85,10 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="240" y="65" key="#ESLint/0.0.1280.800@0.0.1280.800" timestamp="1585995540570" />
-    <state x="261" y="200" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1585922827950">
+    <state x="261" y="200" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1586265524553">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
-    <state x="261" y="200" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.800@0.0.1280.800" timestamp="1585922827950" />
+    <state x="261" y="200" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.800@0.0.1280.800" timestamp="1586265524553" />
     <state x="378" y="154" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1586083059617">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
@@ -112,5 +113,9 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="141" y="39" key="SettingsEditor/0.0.1280.800@0.0.1280.800" timestamp="1585817539149" />
+    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup" timestamp="1586337288682">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup/0.0.1280.800@0.0.1280.800" timestamp="1586337288682" />
   </component>
 </project>

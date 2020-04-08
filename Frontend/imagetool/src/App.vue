@@ -1,7 +1,5 @@
 <template>
     <div id="app">
-
-
         <div style="height: 1px">
             <bar @newComponent="changeActiveComponent"></bar>
         </div>
