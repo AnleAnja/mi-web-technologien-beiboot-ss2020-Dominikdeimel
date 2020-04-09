@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4707854b-1ace-4548-9b55-827d55c663ef" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/components/Gallery.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/components/Gallery.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/components/ImageScale.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/components/ImageScale.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/app.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +71,8 @@
       <workItem from="1586082090617" duration="9025000" />
       <workItem from="1586165020579" duration="12704000" />
       <workItem from="1586247854522" duration="12677000" />
-      <workItem from="1586336326993" duration="3706000" />
+      <workItem from="1586336326993" duration="4031000" />
+      <workItem from="1586423175689" duration="1682000" />
     </task>
     <servers />
   </component>
@@ -113,6 +112,10 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="141" y="39" key="SettingsEditor/0.0.1280.800@0.0.1280.800" timestamp="1585817539149" />
+    <state x="422" y="319" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1586429584280">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="422" y="319" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1280.800@0.0.1280.800" timestamp="1586429584280" />
     <state x="305" y="124" width="670" height="676" key="search.everywhere.popup" timestamp="1586337288682">
       <screen x="0" y="0" width="1280" height="800" />
     </state>

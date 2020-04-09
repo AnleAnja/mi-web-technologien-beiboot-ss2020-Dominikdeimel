@@ -91,21 +91,26 @@ try {
         imagePath: `./static/${req.body.width}_${req.body.name}`
     })
 } catch (err){
-    console.log(err);
+    res.status(500).send(err);
 }
 });
 
 app.get("/allImages", function (req, res) {
-    const temp = [];
-    log.forEach(it => {
-        temp.push(it);
-    });
-    res.json(temp);
+    try {
+        const temp = [];
+        log.forEach(it => {
+            temp.push(it);
+        });
+        res.json(temp);
+    } catch (err) {
+        res.status(500).send(err);
+    }
 });
 
-app.delete("/reset", function (req, res){
+app.delete("/reset", async function (req, res){
+    try {
         //delete static
-        fs.readdir('static', (err, files) => {
+        await fs.readdir('static', (err, files) => {
             if (err) throw err;
 
             for (const file of files) {
@@ -115,7 +120,7 @@ app.delete("/reset", function (req, res){
             }
         });
         //delete uploads
-        fs.readdir('uploads', (err, files) => {
+        await fs.readdir('uploads', (err, files) => {
             if (err) throw err;
 
             for (const file of files) {
@@ -125,13 +130,16 @@ app.delete("/reset", function (req, res){
             }
         });
         //delete imageLog.json
-        fs.unlink(path.join('', 'imageLog.json'), err => {
+        await fs.unlink(path.join('', 'imageLog.json'), err => {
             if (err) throw err;
         });
         //reset Log
         log = [];
 
-    res.status(200).send();
+        res.status(200).send();
+    } catch (err) {
+        res.status(500).send(err);
+    }
 });
 
 function saveJson(){
