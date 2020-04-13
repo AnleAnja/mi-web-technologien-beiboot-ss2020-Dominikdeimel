@@ -17,7 +17,7 @@
                     <div v-if="allUserImages.length !== 0">
                         <v-row class="mx-2">
                             <v-col v-for="image in allUserImages" :key="image" cols="3" class="px-1">
-                                <v-card @click="switchToImageScale(image)">
+                                <v-card @click="switchToImageScaling(image)">
                                     <h3>{{image.originalName}}</h3>
                                     <v-img :src="image.imagePath" width="300" contain></v-img>
                                 </v-card>
@@ -41,14 +41,17 @@
             }
         },
         mounted() {
-            this.allImages()
+            this.getAllImages()
         },
         methods: {
-            allImages() {
+            getAllImages() {
                 axios.get(
-                    'http://localhost:3000/allImages/'
+                    'http://localhost:3000/images/'
                 ).then(res => {
-                    this.allUserImages = res.data;
+                    res.data.forEach(it => {
+                        this.allUserImages.push(it[1]);
+                    });
+
                 });
             },
             reset() {
@@ -59,8 +62,8 @@
                     if (res.status === 200) this.message = "Reset erfolgreich!";
                 });
             },
-            switchToImageScale(image){
-                this.$emit('switchToImageScale', image);
+            switchToImageScaling(image){
+                this.$emit('switchToImageScaling', image);
             }
         }
     }
@@ -69,7 +72,6 @@
 <style scoped>
     .background {
         background-image: url('../assets/pattern1sj5r.jpg');
-        /*background-image: linear-gradient(90deg, #F3F3F3, #D6D4D4);*/
         height: auto;
         background-position: center;
         background-repeat: repeat;

@@ -1,15 +1,17 @@
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
-const path  = require('path');
+const path = require('path');
 const sharp = require('sharp');
-const fs = require('fs');
+const fs = require('fs-extra');
 const bodyParser = require('body-parser');
+const utils = require('./Utils/Utils');
 
 
 const app = express();
+
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use("/static", express.static(path.join(__dirname, "static")));
 
@@ -17,124 +19,116 @@ const upload = multer({
     dest: './uploads/'
 });
 
-let log = [];
+let log = {};
 
-app.post("/images", upload.single("file"), async function (req, res) {
+app.post("/image", upload.single("file"), async function (req, res) {
     try {
-        await sharp(req.file.path).toFile(`./static/${req.file.originalname}`);
+        const imageId = utils.randomId();
 
-        log.push({
+        await fs.mkdir(`./static/${imageId}`, err => {
+            if (err) console.log(err);
+        });
+
+        await sharp(req.file.path).toFile(`./static/${imageId}/original.png`);
+
+        log[imageId] = {
+            imageId: imageId,
             originalName: req.file.originalname,
             originalPath: req.file.path,
-            imagePath: `/static/${req.file.originalname}`,
+            imagePath: `./static/${imageId}/original.png`,
             scaledImages: []
-        });
+        };
+
 
         //Resize 800x800
         await sharp(req.file.path)
             .resize(800)
-            .toFile(`./static/800_${req.file.originalname}`);
+            .toFile(`./static/${imageId}/800.png`);
 
-        log[log.length-1].scaledImages.push({
-            originalName: `800_${req.file.originalname}`,
+        log[imageId].scaledImages.push({
             scaleFactor: "800",
-            imagePath: `/static/800_${req.file.originalname}`});
+            imagePath: `./static/${imageId}/800.png`
+        });
 
         //Resize 500x500
         await sharp(req.file.path)
             .resize(500)
-            .toFile(`./static/500_${req.file.originalname}`);
+            .toFile(`./static/${imageId}/500.png`);
 
-        log[log.length-1].scaledImages.push({
-            originalName: `500_${req.file.originalname}`,
+        log[imageId].scaledImages.push({
             scaleFactor: "500",
-            imagePath: `/static/500_${req.file.originalname}`});
+            imagePath: `./static/${imageId}/500.png`
+        });
 
         //Resize 300x300
         await sharp(req.file.path)
             .resize(300)
-            .toFile(`./static/300_${req.file.originalname}`);
+            .toFile(`./static/${imageId}/300.png`);
 
-        log[log.length-1].scaledImages.push({
-            originalName: `300_${req.file.originalname}`,
+        log[imageId].scaledImages.push({
             scaleFactor: "300",
-            imagePath: `/static/300_${req.file.originalname}`});
+            imagePath: `./static/${imageId}/300.png`
+        });
 
         //Square
         await sharp(req.file.path)
             .resize(800, 800)
-            .toFile(`./static/square_${req.file.originalname}`);
+            .toFile(`./static/${imageId}/square.png`);
 
-        log[log.length-1].scaledImages.push({
-            originalName: `square_${req.file.originalname}`,
+        log[imageId].scaledImages.push({
             scaleFactor: "800",
-            imagePath: `/static/square_${req.file.originalname}`});
+            imagePath: `./static/${imageId}/square.png`
+        });
 
-        res.json(log[log.length-1]);
+        res.json(log[imageId]);
         saveJson();
 
     } catch (err) {
-        res.status(422).json({ err });
+        res.status(422).json({err});
     }
 });
 
-app.post("/preferedSize", async function (req, res) {
-
-try {
-    await sharp(req.body.path)
-        .resize(req.body.width)
-        .toFile(`./static/${req.body.width}_${req.body.name}`);
-
-    res.json({
-        originalName: `${req.body.width}_${req.body.name}`,
-        scaleFactor: `${req.body.width}`,
-        imagePath: `./static/${req.body.width}_${req.body.name}`
-    })
-} catch (err){
-    res.status(500).send(err);
-}
+app.get("/image/all", function (req, res) {
+    res.send(Object.entries(log));
 });
 
-app.get("/allImages", function (req, res) {
+app.get("/image", async function (req, res) {
+
+    const imageId = req.query.id;
+    const imagePath = req.query.path;
+    let userWidth;
     try {
-        const temp = [];
-        log.forEach(it => {
-            temp.push(it);
-        });
-        res.json(temp);
+        userWidth = parseInt(req.query.width);
+
+        if(isNaN(userWidth) || userWidth === 0){
+            res.status(400).send('Invalid width input');
+            return;
+        }
+        await sharp(imagePath)
+            .resize(userWidth)
+            .toFile(`./static/${imageId}/${userWidth}.png`);
+
+        res.json({
+            scaleFactor: `${userWidth}`,
+            imagePath: `./static/${imageId}/${userWidth}.png`
+        })
     } catch (err) {
         res.status(500).send(err);
     }
 });
 
-app.delete("/reset", async function (req, res){
+app.delete("/reset", async function (req, res) {
     try {
-        //delete static
-        await fs.readdir('static', (err, files) => {
-            if (err) throw err;
-
-            for (const file of files) {
-                fs.unlink(path.join('static', file), err => {
-                    if (err) throw err;
-                });
-            }
-        });
-        //delete uploads
-        await fs.readdir('uploads', (err, files) => {
-            if (err) throw err;
-
-            for (const file of files) {
-                fs.unlink(path.join('uploads', file), err => {
-                    if (err) throw err;
-                });
-            }
-        });
         //delete imageLog.json
-        await fs.unlink(path.join('', 'imageLog.json'), err => {
+        if (fs.existsSync('imageLog.json')) await fs.unlink(path.join('', 'imageLog.json'), err => {
             if (err) throw err;
         });
         //reset Log
-        log = [];
+        log = {};
+        //Empty static and uploads
+        await fs.emptyDirSync('static');
+        await fs.emptyDirSync('uploads');
+
 
         res.status(200).send();
     } catch (err) {
@@ -142,21 +136,21 @@ app.delete("/reset", async function (req, res){
     }
 });
 
-function saveJson(){
+function saveJson() {
     let data = JSON.stringify(log);
     fs.writeFileSync('imageLog.json', data);
 }
-function readJson(){
+
+function readJson() {
     let rawdata = fs.readFileSync('imageLog.json');
     log = JSON.parse(rawdata);
-
 }
 
-
-app.listen(3000, function(){
+app.listen(3000, function () {
     try {
         if (fs.existsSync('imageLog.json')) readJson();
-    } catch (err){
+        if (!fs.existsSync('static')) fs.mkdirSync(path.join(__dirname, "static"));
+    } catch (err) {
         console.log(err);
     }
 

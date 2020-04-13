@@ -4,8 +4,8 @@
             <bar @newComponent="changeActiveComponent"></bar>
         </div>
         <div style="margin-top: 60px; height: auto">
-            <imageScale v-if="activeComponent === 'imageScale'" :recentImage="recentImage"></imageScale>
-            <gallery v-if="activeComponent === 'gallery'" @switchToImageScale="switchToImageScale"></gallery>
+            <imageScaling v-if="activeComponent === 'imageScaling'" :recentImage="recentImage"></imageScaling>
+            <gallery v-if="activeComponent === 'gallery'" @switchToImageScaling="switchToImageScaling"></gallery>
         </div>
 
     </div>
@@ -13,19 +13,19 @@
 
 <script>
     import gallery from './components/Gallery.vue'
-    import imageScale from './components/ImageScale.vue'
+    import imageScaling from './components/ImageScaling.vue'
     import bar from './components/Bar'
 
     export default {
         name: 'App',
         components: {
-            imageScale,
+            imageScaling,
             bar,
             gallery
         },
         data() {
             return {
-                activeComponent: "imageScale",
+                activeComponent: "imageScaling",
                 recentImage: {}
             }
         },
@@ -33,9 +33,9 @@
             changeActiveComponent(value) {
                 this.activeComponent = value;
             },
-            switchToImageScale(image) {
+            switchToImageScaling(image) {
                 this.recentImage = image;
-                this.activeComponent = 'imageScale'
+                this.activeComponent = 'imageScaling'
             }
         }
     }

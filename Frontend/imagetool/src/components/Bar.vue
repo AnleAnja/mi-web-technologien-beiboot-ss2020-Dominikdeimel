@@ -26,7 +26,7 @@
 
                                     active-class="deep-purple--text text--accent-4"
                             >
-                                <v-list-item @click="changeActiveComponent('imageScale')">
+                                <v-list-item @click="changeActiveComponent('imageScaling')">
                                     <v-list-item-icon>
                                         <v-icon>mdi-crop</v-icon>
                                     </v-list-item-icon>

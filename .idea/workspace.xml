@@ -4,6 +4,20 @@
     <list default="true" id="4707854b-1ace-4548-9b55-827d55c663ef" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/assets/imagetool_files/app.13708a3a8d37373611fa.hot-update.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/assets/imagetool_files/app.13708a3a8d37373611fa.hot-update.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/assets/imagetool_files/app.1bd1ba3d74ba6c9da2c4.hot-update.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/assets/imagetool_files/app.1bd1ba3d74ba6c9da2c4.hot-update.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/assets/imagetool_files/app.4c250ae68d07215f9b7b.hot-update.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/assets/imagetool_files/app.4c250ae68d07215f9b7b.hot-update.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/assets/imagetool_files/app.792093c6bb278b22f454.hot-update.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/assets/imagetool_files/app.792093c6bb278b22f454.hot-update.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/assets/imagetool_files/app.8aeed70abf0387e8f07a.hot-update.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/assets/imagetool_files/app.8aeed70abf0387e8f07a.hot-update.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/assets/imagetool_files/app.af423c029e2ba3dae196.hot-update.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/assets/imagetool_files/app.af423c029e2ba3dae196.hot-update.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/assets/imagetool_files/app.f9f42c84cc09c0c9df44.hot-update.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/assets/imagetool_files/app.f9f42c84cc09c0c9df44.hot-update.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/assets/imagetool_files/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/assets/imagetool_files/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/components/Bar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/components/Bar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/components/Gallery.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/components/Gallery.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/components/ImageScale.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/components/ImageScaling.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,8 +27,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="Vue Single File Component" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -72,7 +86,10 @@
       <workItem from="1586165020579" duration="12704000" />
       <workItem from="1586247854522" duration="12677000" />
       <workItem from="1586336326993" duration="4031000" />
-      <workItem from="1586423175689" duration="1682000" />
+      <workItem from="1586423175689" duration="1881000" />
+      <workItem from="1586604683046" duration="4087000" />
+      <workItem from="1586687119378" duration="4029000" />
+      <workItem from="1586695340809" duration="13668000" />
     </task>
     <servers />
   </component>
