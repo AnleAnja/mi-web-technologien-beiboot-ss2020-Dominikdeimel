@@ -24,7 +24,7 @@
                 </v-card>
             </v-layout>
             <div v-if="uploadedFile !== null && switchMode === false" style="margin-top: 20px" align="center">
-                <v-card width="1250" height="auto">
+                <v-card width="1250" height="auto" min-height="400">
                     <v-layout row wrap>
                         <div style="margin-left: 30px">
                             <h3>800Px</h3>
@@ -43,26 +43,12 @@
                             <v-img :src="uploadedImage.scaledImages[3].imagePath" width="300" contain></v-img>
                         </div>
                     </v-layout>
-
-                    <v-layout justify-center>
-                        <v-card width="500" style="margin-top: 40px">
-                            <v-row justify="space-around">
-                                <v-checkbox v-model="downloadCheckboxes[0]" class="mx-2" label="800Px"></v-checkbox>
-                                <v-checkbox v-model="downloadCheckboxes[1]" class="mx-2" label="500Px"></v-checkbox>
-                                <v-checkbox v-model="downloadCheckboxes[2]" class="mx-2" label="300Px"></v-checkbox>
-                                <v-checkbox v-model="downloadCheckboxes[3]" class="mx-2" label="Square"></v-checkbox>
-                            </v-row>
-                            <v-btn icon @click="download" style="margin-top: -20px">
-                                <v-icon>mdi-arrow-down-bold-circle-outline</v-icon>
-                            </v-btn>
-                        </v-card>
-                    </v-layout>
                 </v-card>
             </div>
 
             <div v-if="uploadedFile !== null && switchMode === true" style="margin-top: 20px" align="center">
                 <v-layout justify-center>
-                <v-card width="900" height="auto">
+                <v-card width="900" height="auto" min-height="200">
                     <div style="margin-top: 20px">
                     <v-text-field v-model="sizeToScale" label="Breite" placeholder="0" outlined style="width: 300px; margin-top: 10px"></v-text-field>
                     <v-btn icon @click="getImageInUserSize" style="float: right; margin-right: 28%; margin-top: -70px">
@@ -125,9 +111,6 @@
                 ).then(res => {
                     this.imageInPreferedSize = res.data;
                 })
-            },
-            download() {
-
             }
         }
     }

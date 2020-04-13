@@ -76,7 +76,7 @@ app.post("/image", upload.single("file"), async function (req, res) {
             .toFile(`./static/${imageId}/square.png`);
 
         log[imageId].scaledImages.push({
-            scaleFactor: "800",
+            scaleFactor: "square",
             imagePath: `./static/${imageId}/square.png`
         });
 
