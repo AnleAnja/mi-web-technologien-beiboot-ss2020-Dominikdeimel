@@ -29,7 +29,8 @@ app.post("/image", upload.single("file"), async function (req, res) {
             if (err) console.log(err);
         });
 
-        await sharp(req.file.path).toFile(`./static/${imageId}/original.png`);
+        await sharp(req.file.path)
+            .toFile(`./static/${imageId}/original.png`);
 
         log[imageId] = {
             imageId: imageId,
@@ -117,7 +118,7 @@ app.get("/image", async function (req, res) {
     }
 });
 
-app.delete("/reset", async function (req, res) {
+app.delete("/image/all", async function (req, res) {
     try {
         //delete imageLog.json
         if (fs.existsSync('imageLog.json')) await fs.unlink(path.join('', 'imageLog.json'), err => {

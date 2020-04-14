@@ -4,7 +4,7 @@
     <list default="true" id="4707854b-1ace-4548-9b55-827d55c663ef" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/components/Gallery.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/components/Gallery.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/components/ImageScaling.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/components/ImageScaling.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -79,6 +79,7 @@
       <workItem from="1586687119378" duration="4029000" />
       <workItem from="1586695340809" duration="13668000" />
       <workItem from="1586789979235" duration="1251000" />
+      <workItem from="1586849850802" duration="2955000" />
     </task>
     <servers />
   </component>

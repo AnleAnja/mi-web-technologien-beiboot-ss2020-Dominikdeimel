@@ -78,8 +78,7 @@
                 imageInPreferedSize: {},
                 uploadedImage: {},
                 uploadedFile: null,
-                switchMode: false,
-                downloadCheckboxes: [false, false, false, false]
+                switchMode: false
             }
         },
         mounted() {

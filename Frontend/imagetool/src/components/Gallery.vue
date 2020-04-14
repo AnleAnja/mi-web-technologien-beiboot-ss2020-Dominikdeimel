@@ -46,8 +46,9 @@
         methods: {
             getAllImages() {
                 axios.get(
-                    'http://localhost:3000/images/'
+                    'http://localhost:3000/image/all/'
                 ).then(res => {
+                    console
                     res.data.forEach(it => {
                         this.allUserImages.push(it[1]);
                     });
@@ -57,9 +58,9 @@
             reset() {
                 this.allUserImages = [];
                 axios.delete(
-                    'http://localhost:3000/reset/'
+                    'http://localhost:3000/image/all/'
                 ).then(res => {
-                    if (res.status === 200) this.message = "Reset erfolgreich!";
+                    if (res.status !== 200) console.log(res);
                 });
             },
             switchToImageScaling(image){
