@@ -15,6 +15,7 @@
       <list>
         <option value="Vue Single File Component" />
         <option value="JavaScript File" />
+        <option value="tsconfig.json" />
       </list>
     </option>
   </component>
@@ -27,7 +28,6 @@
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -80,11 +80,13 @@
       <workItem from="1586849850802" duration="2955000" />
       <workItem from="1586856192044" duration="1252000" />
       <workItem from="1586861676773" duration="970000" />
+      <workItem from="1586945848915" duration="35000" />
+      <workItem from="1586945925960" duration="2697000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
     <state x="240" y="65" key="#ESLint" timestamp="1585995540570">
@@ -95,6 +97,10 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="261" y="200" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.800@0.0.1280.800" timestamp="1586265524553" />
+    <state x="328" y="143" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1586945863188">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="328" y="143" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1280.800@0.0.1280.800" timestamp="1586945863188" />
     <state x="378" y="154" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1586083059617">
       <screen x="0" y="0" width="1280" height="800" />
     </state>

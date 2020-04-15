@@ -1,0 +1,8 @@
+{
+  "deviceSize": {
+    "large": 800,
+    "medium": 500,
+    "small": 300,
+    "square": 800
+  }
+}
