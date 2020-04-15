@@ -1,3 +1,5 @@
+import {Swatch} from "node-vibrant";
+
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
@@ -5,6 +7,7 @@ const path = require('path');
 const sharp = require('sharp');
 const fs = require('fs-extra');
 const bodyParser = require('body-parser');
+const Vibrant = require('node-vibrant')
 const utils = require('./Utils/Utils');
 
 
@@ -22,11 +25,21 @@ const upload = multer({
 let config = {};
 let log = {};
 
+async function getPrimaryColors(imagePath) {
+    const palette = await Vibrant.from(imagePath).getPalette()
+    console.log(palette);
+    //const test = new Swatch([ 117, 123, 125 ],5)
+    return palette;
+
+}
+
 app.post("/image", upload.single("file"), async function (req, res) {
     try {
         const imageId = utils.randomId();
         const imageName = req.file.originalName;
         const imagePath = req.file.path;
+
+        const imageColors = getPrimaryColors(imagePath);
 
         await fs.mkdir(`./static/${imageId}`, err => {
             if (err) console.log(err);
