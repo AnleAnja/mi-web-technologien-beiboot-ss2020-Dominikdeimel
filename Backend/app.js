@@ -21,6 +21,21 @@ const upload = multer({
 
 let log = {};
 
+async function scaleImage(imageId, imageName, imagePath, width, isSquare){
+    if(isSquare){
+        await sharp(imagePath)
+            .resize(800,800)
+            .toFile(`./static/${imageId}/square.png`)
+        return {
+            scaleFactor: "square",
+            imagePath: `./static/${imageId}/square.png`
+        };
+    } else if(width === 0){
+
+    }
+}
+
+
 app.post("/image", upload.single("file"), async function (req, res) {
     try {
         const imageId = utils.randomId();
