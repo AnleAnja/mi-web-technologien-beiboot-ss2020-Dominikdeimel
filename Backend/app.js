@@ -101,7 +101,7 @@ app.get("/image", async function (req, res) {
     try {
         userWidth = parseInt(req.query.width);
 
-        if(isNaN(userWidth) || userWidth === 0){
+        if (isNaN(userWidth) || userWidth === 0) {
             res.status(400).send('Invalid width input');
             return;
         }
@@ -138,12 +138,12 @@ app.delete("/image/all", async function (req, res) {
 });
 
 function saveJson() {
-    let data = JSON.stringify(log);
+    const data = JSON.stringify(log);
     fs.writeFileSync('imageLog.json', data);
 }
 
 function readJson() {
-    let rawdata = fs.readFileSync('imageLog.json');
+    const rawdata = fs.readFileSync('imageLog.json');
     log = JSON.parse(rawdata);
 }
 
