@@ -5,6 +5,7 @@ const path = require('path');
 const sharp = require('sharp');
 const fs = require('fs-extra');
 const bodyParser = require('body-parser');
+const Vibrant = require('node-vibrant')
 const utils = require('./Utils/Utils');
 
 
@@ -19,82 +20,78 @@ const upload = multer({
     dest: './uploads/'
 });
 
+let config = {};
 let log = {};
 
-async function scaleImage(imageId, imageName, imagePath, width, isSquare){
-    if(isSquare){
-        await sharp(imagePath)
-            .resize(800,800)
-            .toFile(`./static/${imageId}/square.png`)
-        return {
-            scaleFactor: "square",
-            imagePath: `./static/${imageId}/square.png`
-        };
-    } else if(width === 0){
-
-    }
+async function getPrimaryColors(imagePath) {
+    return await Vibrant.from(imagePath).getSwatches();
 }
 
+app.get("/image/colors", async function (req, res) {
+    const imagePath = req.query.path;
+    const imageId = req.query.id;
+    let imageColors = [];
+
+    if (log[imageId].colorPalette.length > 0) {
+        imageColors = log[imageId].colorPalette;
+    } else {
+        const swatches = await getPrimaryColors(imagePath);
+
+        for (swatch in swatches) {
+            imageColors.push({
+                name: swatch,
+                color: swatches[swatch].getHex(),
+                population: swatches[swatch].getPopulation()
+            })
+        }
+        imageColors.sort((a, b) => (b.population - a.population));
+        log[imageId].colorPalette = imageColors
+    }
+    // TODO: Übelegen ob Farben nochmal als gesonderete JSON gespeichert weden sollen oder nur im Log mit abgelegt werden
+    //fs.writeFileSync(`./static/${imageId}/colorPalette.json`, imageColors);
+    res.json(imageColors);
+});
 
 app.post("/image", upload.single("file"), async function (req, res) {
     try {
         const imageId = utils.randomId();
+        const imageName = req.file.originalname;
+        const imagePath = req.file.path;
 
         await fs.mkdir(`./static/${imageId}`, err => {
             if (err) console.log(err);
         });
 
-        await sharp(req.file.path)
-            .toFile(`./static/${imageId}/original.png`);
+        await scaleImage(imageId, imagePath, 0, false);
+        await scaleImage(imageId, imagePath, config.deviceSize.large, false);
+        await scaleImage(imageId, imagePath, config.deviceSize.medium, false);
+        await scaleImage(imageId, imagePath, config.deviceSize.small, false);
+        await scaleImage(imageId, imagePath, config.deviceSize.square, true);
 
         log[imageId] = {
             imageId: imageId,
-            originalName: req.file.originalname,
-            originalPath: req.file.path,
+            originalName: imageName,
+            originalPath: imagePath,
             imagePath: `./static/${imageId}/original.png`,
-            scaledImages: []
+            colorPalette: [],
+            scaledImages: [{
+                scaleFactor: config.deviceSize.large,
+                imagePath: `./static/${imageId}/${config.deviceSize.large}.png`
+            },
+                {
+                    scaleFactor: config.deviceSize.medium,
+                    imagePath: `./static/${imageId}/${config.deviceSize.medium}.png`
+                },
+                {
+                    scaleFactor: config.deviceSize.small,
+                    imagePath: `./static/${imageId}/${config.deviceSize.small}.png`
+                },
+                {
+                    scaleFactor: config.deviceSize.square,
+                    imagePath: `./static/${imageId}/${config.deviceSize.square}_square.png`
+                }
+            ]
         };
-
-
-        //Resize 800x800
-        await sharp(req.file.path)
-            .resize(800)
-            .toFile(`./static/${imageId}/800.png`);
-
-        log[imageId].scaledImages.push({
-            scaleFactor: "800",
-            imagePath: `./static/${imageId}/800.png`
-        });
-
-        //Resize 500x500
-        await sharp(req.file.path)
-            .resize(500)
-            .toFile(`./static/${imageId}/500.png`);
-
-        log[imageId].scaledImages.push({
-            scaleFactor: "500",
-            imagePath: `./static/${imageId}/500.png`
-        });
-
-        //Resize 300x300
-        await sharp(req.file.path)
-            .resize(300)
-            .toFile(`./static/${imageId}/300.png`);
-
-        log[imageId].scaledImages.push({
-            scaleFactor: "300",
-            imagePath: `./static/${imageId}/300.png`
-        });
-
-        //Square
-        await sharp(req.file.path)
-            .resize(800, 800)
-            .toFile(`./static/${imageId}/square.png`);
-
-        log[imageId].scaledImages.push({
-            scaleFactor: "square",
-            imagePath: `./static/${imageId}/square.png`
-        });
 
         res.json(log[imageId]);
         saveJson();
@@ -116,18 +113,18 @@ app.get("/image", async function (req, res) {
     try {
         userWidth = parseInt(req.query.width);
 
-        if(isNaN(userWidth) || userWidth === 0){
+        if (isNaN(userWidth) || userWidth === 0) {
             res.status(400).send('Invalid width input');
             return;
         }
-        await sharp(imagePath)
-            .resize(userWidth)
-            .toFile(`./static/${imageId}/${userWidth}.png`);
+        await scaleImage(imageId, imagePath, userWidth, false);
 
-        res.json({
+        const result = {
             scaleFactor: `${userWidth}`,
             imagePath: `./static/${imageId}/${userWidth}.png`
-        })
+        }
+        log[imageId].scaledImages.push(result)
+        res.json(result)
     } catch (err) {
         res.status(500).send(err);
     }
@@ -152,13 +149,32 @@ app.delete("/image/all", async function (req, res) {
     }
 });
 
+async function scaleImage(imageId, imagePath, width, isSquare) {
+    if (isSquare) {
+        await sharp(imagePath)
+            .resize(800, 800)
+            .sharpen()
+            .toFile(`./static/${imageId}/${width}_square.png`)
+
+    } else if (width === 0 && !isSquare) {
+        await sharp(imagePath)
+            .sharpen()
+            .toFile(`./static/${imageId}/original.png`);
+    } else {
+        await sharp(imagePath)
+            .resize(width)
+            .sharpen()
+            .toFile(`./static/${imageId}/${width}.png`)
+    }
+}
+
 function saveJson() {
-    let data = JSON.stringify(log);
+    const data = JSON.stringify(log);
     fs.writeFileSync('imageLog.json', data);
 }
 
 function readJson() {
-    let rawdata = fs.readFileSync('imageLog.json');
+    const rawdata = fs.readFileSync('imageLog.json');
     log = JSON.parse(rawdata);
 }
 
@@ -166,6 +182,7 @@ app.listen(3000, function () {
     try {
         if (fs.existsSync('imageLog.json')) readJson();
         if (!fs.existsSync('static')) fs.mkdirSync(path.join(__dirname, "static"));
+        config = JSON.parse(fs.readFileSync('config.json'));
     } catch (err) {
         console.log(err);
     }

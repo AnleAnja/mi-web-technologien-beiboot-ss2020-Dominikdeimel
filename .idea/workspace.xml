@@ -4,6 +4,7 @@
     <list default="true" id="4707854b-1ace-4548-9b55-827d55c663ef" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/components/Gallery.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/components/Gallery.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,6 +16,7 @@
       <list>
         <option value="Vue Single File Component" />
         <option value="JavaScript File" />
+        <option value="tsconfig.json" />
       </list>
     </option>
   </component>
@@ -27,7 +29,6 @@
   </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
@@ -78,12 +79,16 @@
       <workItem from="1586695340809" duration="13668000" />
       <workItem from="1586789979235" duration="1251000" />
       <workItem from="1586849850802" duration="2955000" />
-      <workItem from="1586856879494" duration="1563000" />
+      <workItem from="1586856192044" duration="1252000" />
+      <workItem from="1586861676773" duration="970000" />
+      <workItem from="1586945848915" duration="35000" />
+      <workItem from="1586945925960" duration="3555000" />
+      <workItem from="1587028851410" duration="11646000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
     <state x="240" y="65" key="#ESLint" timestamp="1585995540570">
@@ -94,6 +99,10 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="261" y="200" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.800@0.0.1280.800" timestamp="1586265524553" />
+    <state x="328" y="143" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1586945863188">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="328" y="143" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1280.800@0.0.1280.800" timestamp="1586945863188" />
     <state x="378" y="154" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1586083059617">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
