@@ -1,5 +1,3 @@
-import {Swatch} from "node-vibrant";
-
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
@@ -26,20 +24,39 @@ let config = {};
 let log = {};
 
 async function getPrimaryColors(imagePath) {
-    const palette = await Vibrant.from(imagePath).getPalette()
-    console.log(palette);
-    //const test = new Swatch([ 117, 123, 125 ],5)
-    return palette;
-
+    return await Vibrant.from(imagePath).getSwatches();
 }
+
+app.get("/image/colors", async function (req, res) {
+    const imagePath = req.query.path;
+    const imageId = req.query.id;
+    let imageColors = [];
+
+    if (log[imageId].colorPalette.length > 0) {
+        imageColors = log[imageId].colorPalette;
+    } else {
+        const swatches = await getPrimaryColors(imagePath);
+
+        for (swatch in swatches) {
+            imageColors.push({
+                name: swatch,
+                color: swatches[swatch].getHex(),
+                population: swatches[swatch].getPopulation()
+            })
+        }
+        imageColors.sort((a, b) => (b.population - a.population));
+        log[imageId].colorPalette = imageColors
+    }
+    // TODO: Übelegen ob Farben nochmal als gesonderete JSON gespeichert weden sollen oder nur im Log mit abgelegt werden
+    //fs.writeFileSync(`./static/${imageId}/colorPalette.json`, imageColors);
+    res.json(imageColors);
+});
 
 app.post("/image", upload.single("file"), async function (req, res) {
     try {
         const imageId = utils.randomId();
-        const imageName = req.file.originalName;
+        const imageName = req.file.originalname;
         const imagePath = req.file.path;
-
-        const imageColors = getPrimaryColors(imagePath);
 
         await fs.mkdir(`./static/${imageId}`, err => {
             if (err) console.log(err);
@@ -56,6 +73,7 @@ app.post("/image", upload.single("file"), async function (req, res) {
             originalName: imageName,
             originalPath: imagePath,
             imagePath: `./static/${imageId}/original.png`,
+            colorPalette: [],
             scaledImages: [{
                 scaleFactor: config.deviceSize.large,
                 imagePath: `./static/${imageId}/${config.deviceSize.large}.png`
