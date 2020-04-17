@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4707854b-1ace-4548-9b55-827d55c663ef" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/docs/adr/0000-backend-node-express.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/components/Gallery.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/components/Gallery.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/adr/0000-use-markdown-architectural-decision-records.md" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,6 +84,8 @@
       <workItem from="1586945848915" duration="35000" />
       <workItem from="1586945925960" duration="3555000" />
       <workItem from="1587028851410" duration="11646000" />
+      <workItem from="1587048434071" duration="13000" />
+      <workItem from="1587115232385" duration="3369000" />
     </task>
     <servers />
   </component>
