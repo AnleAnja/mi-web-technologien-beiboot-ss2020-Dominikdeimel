@@ -19,7 +19,7 @@
                         ></v-file-input>
                     </div>
                     <div v-if="uploadedFile !== null" align="center" style="margin-top: -20px;">
-                        <v-img :src="uploadedImage.imagePath" height="300" contain style="margin-top: -20px; "></v-img>
+                        <v-img :src="getImagePath(uploadedImage.imagePath)" height="300" contain style="margin-top: -20px; "></v-img>
                     </div>
                 </v-card>
             </v-layout>
@@ -28,19 +28,19 @@
                     <v-layout row wrap>
                         <div style="margin-left: 30px">
                             <h3>800Px</h3>
-                            <v-img :src="uploadedImage.scaledImages[0].imagePath" width="400" contain></v-img>
+                            <v-img :src="getImagePath(uploadedImage.scaledImages[0].imagePath)" width="400" contain></v-img>
                         </div>
                         <div style="margin-left: 30px">
                             <h3>500Px</h3>
-                            <v-img :src="uploadedImage.scaledImages[1].imagePath" width="250" contain></v-img>
+                            <v-img :src="getImagePath(uploadedImage.scaledImages[1].imagePath)" width="250" contain></v-img>
                         </div>
                         <div style="margin-left: 30px">
                             <h3>300Px</h3>
-                            <v-img :src="uploadedImage.scaledImages[2].imagePath" width="150" contain></v-img>
+                            <v-img :src="getImagePath(uploadedImage.scaledImages[2].imagePath)" width="150" contain></v-img>
                         </div>
                         <div style="margin-left: 30px">
                             <h3>Quadrat</h3>
-                            <v-img :src="uploadedImage.scaledImages[3].imagePath" width="300" contain></v-img>
+                            <v-img :src="getImagePath(uploadedImage.scaledImages[3].imagePath)" width="300" contain></v-img>
                         </div>
                     </v-layout>
                 </v-card>
@@ -54,7 +54,7 @@
                     <v-btn icon @click="getImageInUserSize" style="float: right; margin-right: 28%; margin-top: -70px">
                         <v-icon>mdi-format-align-middle</v-icon>
                     </v-btn>
-                        <v-img max-width="850" v-if="imageInPreferedSize" :src="imageInPreferedSize.imagePath" :width="imageInPreferedSize.scaleFactor" contain></v-img>
+                        <v-img max-width="850" v-if="imageInPreferedSize" :src="getImagePath(imageInPreferedSize.imagePath)" :width="imageInPreferedSize.scaleFactor" contain></v-img>
                     </div>
                 </v-card>
                 </v-layout>
@@ -92,7 +92,7 @@
                 const fdObject = new FormData();
                 fdObject.append('file', this.uploadedFile, this.uploadedFile.name);
                 axios.post(
-                    'http://localhost:3000/image/',
+                    'http://localhost:49160/image/',
                     fdObject)
                     .then(res => {
                         this.uploadedImage = res.data;
@@ -100,7 +100,7 @@
             },
             getImageInUserSize() {
                 axios.get(
-                    'http://localhost:3000/image/',
+                    'http://localhost:49160/image/',
                     { params: {
                             id: this.uploadedImage.imageId,
                             path: this.uploadedImage.originalPath,
@@ -110,6 +110,9 @@
                 ).then(res => {
                     this.imageInPreferedSize = res.data;
                 })
+            },
+            getImagePath(path){
+                return process.env.VUE_APP_BACKENDPATH + path;
             }
         }
     }

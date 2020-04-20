@@ -19,7 +19,7 @@
                             <v-col v-for="image in allUserImages" :key="image" cols="3" class="px-1">
                                 <v-card @click="openDialog(image)">
                                     <h3>{{image.originalName}}</h3>
-                                    <v-img :src="image.imagePath" width="300" contain></v-img>
+                                    <v-img :src="getImagePath(image.imagePath)" width="300" contain></v-img>
                                 </v-card>
                             </v-col>
                         </v-row>
@@ -36,7 +36,7 @@
                     <v-card width="800">
                         <h3 >{{currentImage.originalName}}</h3>
                         <div align="center">
-                            <v-img :src="currentImage.imagePath" width="350" contain></v-img>
+                            <v-img :src="getImagePath(currentImage.imagePath)" width="350" contain></v-img>
                         </div>
                         <v-row class="mx-2">
                             <v-col v-for="color in imageColors" :key="color" cols="4" class="px-3">
@@ -82,7 +82,7 @@
         methods: {
             getAllImages() {
                 axios.get(
-                    'http://localhost:3000/image/all/'
+                    'http://localhost:49160/image/all/'
                 ).then(res => {
                     res.data.forEach(it => {
                         this.allUserImages.push(it[1]);
@@ -92,7 +92,7 @@
             },
             getImageColors() {
                 axios.get(
-                    'http://localhost:3000/image/colors/',
+                    'http://localhost:49160/image/colors/',
                     {
                         params: {
                             id: this.currentImage.imageId,
@@ -106,7 +106,7 @@
             reset() {
                 this.allUserImages = [];
                 axios.delete(
-                    'http://localhost:3000/image/all/'
+                    'http://localhost:49160/image/all/'
                 ).then(res => {
                     if (res.status !== 200) console.log(res);
                 });
@@ -123,7 +123,10 @@
                 this.currentImage = {};
                 this.dialog = false;
                 this.imageColors = [];
-            }
+            },
+        getImagePath(path){
+            return process.env.VUE_APP_BACKENDPATH + path;
+        }
         }
     }
 </script>

@@ -72,23 +72,23 @@ app.post("/image", upload.single("file"), async function (req, res) {
             imageId: imageId,
             originalName: imageName,
             originalPath: imagePath,
-            imagePath: `./static/${imageId}/original.png`,
+            imagePath: `/static/${imageId}/original.png`,
             colorPalette: [],
             scaledImages: [{
                 scaleFactor: config.deviceSize.large,
-                imagePath: `./static/${imageId}/${config.deviceSize.large}.png`
+                imagePath: `/static/${imageId}/${config.deviceSize.large}.png`
             },
                 {
                     scaleFactor: config.deviceSize.medium,
-                    imagePath: `./static/${imageId}/${config.deviceSize.medium}.png`
+                    imagePath: `/static/${imageId}/${config.deviceSize.medium}.png`
                 },
                 {
                     scaleFactor: config.deviceSize.small,
-                    imagePath: `./static/${imageId}/${config.deviceSize.small}.png`
+                    imagePath: `/static/${imageId}/${config.deviceSize.small}.png`
                 },
                 {
                     scaleFactor: config.deviceSize.square,
-                    imagePath: `./static/${imageId}/${config.deviceSize.square}_square.png`
+                    imagePath: `/static/${imageId}/${config.deviceSize.square}_square.png`
                 }
             ]
         };
@@ -121,7 +121,7 @@ app.get("/image", async function (req, res) {
 
         const result = {
             scaleFactor: `${userWidth}`,
-            imagePath: `./static/${imageId}/${userWidth}.png`
+            imagePath: `/static/${imageId}/${userWidth}.png`
         }
         log[imageId].scaledImages.push(result)
         res.json(result)
