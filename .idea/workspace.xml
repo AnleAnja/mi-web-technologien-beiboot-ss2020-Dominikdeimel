@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="4707854b-1ace-4548-9b55-827d55c663ef" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/Backend/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/components/Gallery.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/components/Gallery.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/src/components/ImageScaling.vue" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/src/components/ImageScaling.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frontend/imagetool/vue.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/Frontend/imagetool/vue.config.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,12 +46,13 @@
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\domid\Documents\GitHub\mi-web-technologien-beiboot-ss2020-Dominikdeimel\.docker" />
+      <recent name="$PROJECT_DIR$/Frontend/imagetool/public" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\domid\Documents\GitHub\mi-web-technologien-beiboot-ss2020-Dominikdeimel\Frontend\imagetool" />
       <recent name="$PROJECT_DIR$/Frontend/imagetool/src/assets" />
-      <recent name="$PROJECT_DIR$/Frontend/imagetool/public" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/Frontend/imagetool/public" />
     </key>
   </component>
@@ -94,6 +91,8 @@
       <workItem from="1587309389943" duration="785000" />
       <workItem from="1587311142048" duration="619000" />
       <workItem from="1587374916658" duration="2391000" />
+      <workItem from="1587390059704" duration="967000" />
+      <workItem from="1587396502840" duration="2839000" />
     </task>
     <servers />
   </component>

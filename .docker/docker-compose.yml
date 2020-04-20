@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  frontend:
+    build: ../Frontend/imagetool
+    ports:
+      - "8080:8080"
+      - "80:80"
+
+  backend:
+    build: ../Backend
+    expose:
+      - "3000"
+    ports:
+      - "49160:3000"
