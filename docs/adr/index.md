@@ -1,13 +1,10 @@
 # Architectural Decision Log
 
-This log lists the architectural decisions for [project name].
+This log lists the architectural decisions for [BeibootProjekt2020](https://github.com/mi-classroom/mi-master-wt-beiboot-2020).
 
-<!-- adrlog -- Regenerate the content by using "adr-log -i". You can install it via "npm install -g adr-log" -->
+- [ADR-0001](0001-backend-node-express.md) - Node.js und Express.js als serverseitige Frameworks 
+- [ADR-0002](0002-frontend-vue-vuetify.md) - Vue.js als Javascript-Framework und Vuetify als Design-Frameworks 
 
-- [ADR-0000](0000-use-markdown-architectural-decision-records.md) - Use Markdown Architectural Decision Records
 
-<!-- adrlogstop -->
 
-For new ADRs, please use [template.md](template.md) as basis.
-More information on MADR is available at <https://adr.github.io/madr/>.
-General information about architectural decision records is available at <https://adr.github.io/>.
+

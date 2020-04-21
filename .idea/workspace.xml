@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="4707854b-1ace-4548-9b55-827d55c663ef" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/adr/0000-backend-node-express.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/adr/0001-backend-node-express.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/adr/index.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/adr/index.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +37,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="javascript.nodejs.core.library.configured.version" value="12.16.1" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/Frontend/imagetool" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/docs/adr" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -46,13 +48,14 @@
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\domid\Documents\GitHub\mi-web-technologien-beiboot-ss2020-Dominikdeimel\.docker" />
-      <recent name="$PROJECT_DIR$/Frontend/imagetool/public" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\domid\Documents\GitHub\mi-web-technologien-beiboot-ss2020-Dominikdeimel\docs\adr" />
       <recent name="C:\Users\domid\Documents\GitHub\mi-web-technologien-beiboot-ss2020-Dominikdeimel\Frontend\imagetool" />
       <recent name="$PROJECT_DIR$/Frontend/imagetool/src/assets" />
+      <recent name="$PROJECT_DIR$/Frontend/imagetool/public" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\domid\Documents\GitHub\mi-web-technologien-beiboot-ss2020-Dominikdeimel\.docker" />
       <recent name="$PROJECT_DIR$/Frontend/imagetool/public" />
     </key>
   </component>
@@ -92,7 +95,9 @@
       <workItem from="1587311142048" duration="619000" />
       <workItem from="1587374916658" duration="2391000" />
       <workItem from="1587390059704" duration="967000" />
-      <workItem from="1587396502840" duration="2839000" />
+      <workItem from="1587396502840" duration="3439000" />
+      <workItem from="1587464517279" duration="228000" />
+      <workItem from="1587470136919" duration="1677000" />
     </task>
     <servers />
   </component>
