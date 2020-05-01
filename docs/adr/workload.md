@@ -16,7 +16,7 @@ Backend
 * Express Server mit Routen (2 Stunden)
 * Speichern und verarbeiten von Fotos(2 Stunden)
 
-Insgesamt: 15 Stunden
+**Gesamt: 15 Stunden**
 
 ## Issue 2
 
@@ -31,7 +31,7 @@ Frontend
 Backend
 * Extrahieren der primären Farben (2 Stunden)
 
-Insgesamt: 9 Stunden
+**Gesamt: 9 Stunden**
 
 ## Issue 3 
 
