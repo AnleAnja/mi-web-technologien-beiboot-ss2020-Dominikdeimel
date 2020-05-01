@@ -32,3 +32,7 @@ Backend
 * Extrahieren der primären Farben (2 Stunden)
 
 Insgesamt: 9 Stunden
+
+## Issue 3 
+
+(Folgt)
