@@ -1,23 +1,22 @@
-# Node.js und Express.js als serverseitige Frameworks 
+# Node.js and Express.js as backend frameworks 
 
-* Status: Angenommen
+* Status: Accepted
 
 ## Context and Problem Statement
-Zu Beginn müssen Frameworks für den serverseitigen Teil des Beibootprojekts bestimmt werden.
-Dafür soll zum einen eine allgemeine Plattform und zum anderen ein Webframework festgelegt werden.
+Initially, frameworks must be determined for the server-side part of the BeiBoot project.
+A general plattform and a web framework should be defined.
 
 ## Considered Options
 
-* [Node.js](https://nodejs.org/en/) 13.13.0 – Serverseitige Plattform zur Realisierung von Netzwerkanwendungen
-* [Express.js](https://expressjs.com/de/) – Schnelles und leichtes Node.js Framework für Webanwendungen
+* [Node.js](https://nodejs.org/en/) 13.13.0 – Server-side javascript runtime environment for web-applications
+* [Express.js](https://expressjs.com/de/) – Node.js framework for web-applications
 
 
 ## Decision Outcome
-
-Es wurde sich für Node.js und Express.js entschieden, da diese Technologien bereits in diversen Projekten eingesetzt wurden.
+Choosen Option: **Node.js** and **Express.js**, because these technologies were already used in past projects
 
 ### Positive Consequences
-* Es ist keine gesonderte Einarbeitung notwendig
+* No further induction required 
 
 ### Negative Consequences
-* Es werden keine neuen Technologien ausprobiert
+* Already known technologies are used, instead of new ones

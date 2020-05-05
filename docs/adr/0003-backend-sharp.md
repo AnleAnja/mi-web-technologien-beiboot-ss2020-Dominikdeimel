@@ -1,10 +1,10 @@
-# Sharp als Bibliothek zum Anpassen von Bilddateien
+# Sharp as a javascript library for image resizing
 
-* Status: Angenommen
+* Status: Accepted
 
 ## Context and Problem Statement
-Im Rahmen des Beiboot Projekts sollen vom Nutzer hochgeladene Bilder skaliert und zugeschnitten werden.
-Hierfür soll eine geeignete Bibliothek implementiert werden.
+In the context of the BeiBoot project, images uploaded by the user need to be scaled and cropped.
+For this purpose a suitable library needs to be implemented.
 
 ## Considered Options
 
@@ -14,14 +14,14 @@ Hierfür soll eine geeignete Bibliothek implementiert werden.
 
 ## Decision Outcome
 
-Es wurde sich für Sharp entschieden weil:
-* sehr leichte Syntax
-* schnelle Implementiertung der benötigten Funktionen
-* zusätzliche Funtkionen für den weiteren Verlauf des Projekts (z.B. Scharfzeichnen)
+Choosen option: **Sharp**
+* Easy to use Syntax
+* Fast implementation of the required functions
+* Extended range of functions, maybe for future issues (e.g. sharpening) 
 
 ### Positive Consequences
-* Schnelle Implementierung in das Projekt
-* Großer Funktionsumfang 
+* Easy implementation into the project
+* Wide range of  
 
 ### Negative Consequences
 

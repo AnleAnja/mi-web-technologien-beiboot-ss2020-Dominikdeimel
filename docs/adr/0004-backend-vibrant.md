@@ -1,11 +1,11 @@
-# Vibrant als Bibliothek zum Extrahieren von Primärfarben aus Bilddateien
+# Vibrant as a javascript library for for extracting primary colors of an image
 
-* Status: Angenommen
+* Status: Accepted
 
 ## Context and Problem Statement
-Im Rahmen der zweiten Aufgabe des Beiboot Projekts sollen die Primärfarben aus Bildern extrahiert werden, welche 
- vorab vom Nutzer hochgeladen wurden.
-Hierfür soll eine geeignete Bibliothek implementiert werden.
+In the second issue of the BeiBoot project the primary colors need to be extracted from images which 
+ have been uploaded by the user in advance.
+For this purpose a suitable library needs to be implemented.
 
 ## Considered Options
 
@@ -14,13 +14,13 @@ Hierfür soll eine geeignete Bibliothek implementiert werden.
 * [RGBaster.js](https://github.com/briangonzalez/rgbaster.js) 
 
 ## Decision Outcome
+Choosen Option: **Vibrant**
 
-Es wurde sich für Vibrant entschieden weil:
-* Übersichtliche Syntax
-* Portierung der Palette Klasse aus Android
+* Clear syntax
+* Implementation of android palette class
 
 ### Positive Consequences
-* Schnelle Implementierung in das Projekt
+* Easy implementation into the project
  
 
 ### Negative Consequences
