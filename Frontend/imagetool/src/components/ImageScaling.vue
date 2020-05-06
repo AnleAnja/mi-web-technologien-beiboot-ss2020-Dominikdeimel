@@ -92,7 +92,7 @@
                 const fdObject = new FormData();
                 fdObject.append('file', this.uploadedFile, this.uploadedFile.name);
                 axios.post(
-                    'http://localhost:49160/image/',
+                    process.env.VUE_APP_BACKENDPATH + '/image/',
                     fdObject)
                     .then(res => {
                         this.uploadedImage = res.data;
@@ -100,7 +100,7 @@
             },
             getImageInUserSize() {
                 axios.get(
-                    'http://localhost:49160/image/',
+                    process.env.VUE_APP_BACKENDPATH + '/image/',
                     { params: {
                             id: this.uploadedImage.imageId,
                             path: this.uploadedImage.originalPath,

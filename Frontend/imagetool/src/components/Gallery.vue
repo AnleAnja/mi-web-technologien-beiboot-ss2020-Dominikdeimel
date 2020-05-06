@@ -82,7 +82,7 @@
         methods: {
             getAllImages() {
                 axios.get(
-                    'http://localhost:49160/image/all/'
+                    process.env.VUE_APP_BACKENDPATH + '/image/all/'
                 ).then(res => {
                     res.data.forEach(it => {
                         this.allUserImages.push(it[1]);
@@ -92,7 +92,7 @@
             },
             getImageColors() {
                 axios.get(
-                    'http://localhost:49160/image/colors/',
+                    process.env.VUE_APP_BACKENDPATH + '/image/colors/',
                     {
                         params: {
                             id: this.currentImage.imageId,
@@ -106,7 +106,7 @@
             reset() {
                 this.allUserImages = [];
                 axios.delete(
-                    'http://localhost:49160/image/all/'
+                    process.env.VUE_APP_BACKENDPATH + '/image/all/'
                 ).then(res => {
                     if (res.status !== 200) console.log(res);
                 });
