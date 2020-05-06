@@ -1,7 +1,7 @@
 # Conventions
 ## Code 
 
-The project is following the [standard](https://standardjs.com/rules.html) Javascript rules.
+The project is following the [standard Javascript rules](https://standardjs.com/rules.html).
 To allow for an easy contribution, the most important rules can be summarized as followed:
 
 **Use 2 spaces for indentation**
@@ -86,4 +86,4 @@ For opening an issue, please follow the [issue template](https://github.com/mi-c
 
 ## Pull-Request Template
 
-For opening a pull request, please follow the pull [request template](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/docs/pull_request_template.md)
+For opening a pull request, please follow the [pull-request template](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/docs/pull_request_template.md)
