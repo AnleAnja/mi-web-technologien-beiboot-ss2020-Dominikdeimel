@@ -9,7 +9,7 @@
 `git clone https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel`
 
 ## Starting the system
-Zum Starten des Systems, führen sie bitte die nachfolgenden Befehle aus:
+To start the system use the following command:
 
 ### Windows
     cd .\.docker\
