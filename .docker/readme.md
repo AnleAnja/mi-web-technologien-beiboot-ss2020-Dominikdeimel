@@ -29,3 +29,6 @@ To start the system use the following command:
     
         docker-compose down
     
+## Working without Docker
+To run the project without Docker and on localhost, change the following line from
+``
