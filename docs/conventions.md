@@ -82,8 +82,8 @@ When committing, please follow the following guidelines:
 
 ## Issue template
 
-For opening an issue, please follow the issue template (LINK NOCH EINFÜGEN!)
+For opening an issue, please follow the [issue template](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/docs/issue_template.md)
 
 ## Pull-Request Template
 
-For opening a pull request, please follow the pull request template (LINK NOCH EINFÜGEN!)
+For opening a pull request, please follow the pull [request template](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/docs/pull_request_template.md)
