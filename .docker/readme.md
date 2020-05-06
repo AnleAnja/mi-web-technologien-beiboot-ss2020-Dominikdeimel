@@ -24,7 +24,7 @@ To start the system use the following command:
  ### Frontend
    The Web-app ist accessible via: http://localhost:8080
     
-  ## Shut down the system
+  ## Shutting down the system
   To shut down the system use the following command:
     
         docker-compose down
