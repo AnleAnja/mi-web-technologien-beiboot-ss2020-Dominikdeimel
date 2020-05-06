@@ -1,4 +1,4 @@
-#Conventions
+# Conventions
 ## Code 
 
 The project is following the [standard](https://standardjs.com/rules.html) Javascript rules.
@@ -84,6 +84,6 @@ When committing, please follow the following guidelines:
 
 For opening an issue, please follow the issue template (LINK NOCH EINFÜGEN!)
 
-## Pull Request Template
+## Pull-Request Template
 
 For opening a pull request, please follow the pull request template (LINK NOCH EINFÜGEN!)
