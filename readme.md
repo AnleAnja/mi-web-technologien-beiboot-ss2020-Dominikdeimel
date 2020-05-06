@@ -7,6 +7,10 @@ The goal of the project is to implement a web service that allows the upload and
 The uploaded images can be scaled and cropped. Additionally, the primary colors of a picture can be extracted. 
 Furthermore, general areas such as _code of conduct_ and _conventions_ will be covered.
 
+![ImageScaling](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/.github/images/ImageScaling.png)
+![ImageScaling](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/.github/images/Gallery.png)
+![ImageScaling](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/.github/images/ColorExtraction.png)
+
 
 ## Table of Contents
 
