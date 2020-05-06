@@ -1,31 +1,31 @@
-# Installationsanleitung
-## Vorbereitungen
-### Installiern von Docker und Docker Compose
-* Docker & Docker Compose für [Windows][https://docs.docker.com/docker-for-windows/install/]
-* Docker & Docker Compose für [macOS][https://docs.docker.com/docker-for-mac/install/]
-* [Docker][https://docs.docker.com/install/linux/docker-ce/ubuntu/] & Docker [Compose][https://docs.docker.com/compose/install/#install-compose] für Ubuntu
+# Installation guide 
+## Setup 
+### Installing Docker and Docker Compose
+* Docker & Docker Compose for [Windows][https://docs.docker.com/docker-for-windows/install/]
+* Docker & Docker Compose for [macOS][https://docs.docker.com/docker-for-mac/install/]
+* [Docker][https://docs.docker.com/install/linux/docker-ce/ubuntu/] & Docker [Compose][https://docs.docker.com/compose/install/#install-compose] for Ubuntu
   
-### Git Repository klonen
+### Clone the Git Repository
 `git clone https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel`
 
-## Starten des Systems
-Zum Starten des Systems, führen sie bitte die nachfolgenden Befehle aus:
+## Starting the system
+To start the system use the following command:
 
 ### Windows
     cd .\.docker\
         
     docker-compose up -d 
    
-### MacOS und Linux
+### MacOS and Linux
     cd ./.docker
         
     docker-compose up -d 
     
  ### Frontend
-   Das Frontend können Sie nun unter folgender URL aufgerufen werden: http://localhost:8080
+   The Web-app ist accessible via: http://localhost:8080
     
-   ## Beenden des Systems
-   Zum Beenden der Anwendung, führen Sie bitte folgenden Befehl aus:
+  ## Shutting down the system
+  To shut down the system use the following command:
     
         docker-compose down
     
