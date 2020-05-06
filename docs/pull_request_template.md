@@ -15,6 +15,6 @@
 * [ ] Have you written new tests for your core changes, as applicable?
 * [ ] Have you successfully ran tests with your changes locally?
 
-##Disclaimer
+## Disclaimer
 
 The shown template is adapted from [GitHub-Issue-Templates](https://github.com/stevemao/github-issue-templates) by [Steve Mao](https://github.com/stevemao)

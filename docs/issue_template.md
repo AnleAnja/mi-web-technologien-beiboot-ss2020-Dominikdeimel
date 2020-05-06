@@ -16,7 +16,7 @@ If relevant, paste all of your challenge code in here
 #### Screenshot
 * Add a Screenshot, if needed
 
-##Disclaimer
+## Disclaimer
 
 The shown template is adapted from [GitHub-Issue-Templates](https://github.com/stevemao/github-issue-templates) by [Steve Mao](https://github.com/stevemao)
 
