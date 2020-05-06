@@ -70,3 +70,20 @@ console
 ```
 
 For further information, check the [standard Javascript Style Guide](https://standardjs.com/rules.html)
+
+## Commit Messages
+When committing, please follow the following guidelines:
+
+* Commit should be in english
+* Use past tense
+* Use the body to explain _what_ and _why_ 
+* Commit should be written in imperative
+* Keep the summary as short as possible
+
+## Issue template
+
+For opening an issue, please follow the issue template (LINK NOCH EINFÜGEN!)
+
+## Pull Request Template
+
+For opening a pull request, please follow the pull request template (LINK NOCH EINFÜGEN!)
