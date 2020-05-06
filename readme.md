@@ -5,7 +5,7 @@
 The BeiBoot Project 2020 takes place within the module _Web Technologies_, at Cologne University of applied Science. The module supervised by Prof. Christian Noss.
 The goal of the project is to implement a web service that allows the upload and processing of images. 
 The uploaded images can be scaled and cropped. Additionally, the primary colors of a picture can be extracted. 
-Furthermore, general areas such as code of conduct and conventions will be covered.
+Furthermore, general areas such as _code of conduct_ and _conventions_ will be covered.
 
 
 ## Table of Contents
