@@ -2,37 +2,47 @@
 
 
 ## Issue 1
-Vorbereitung
+Preparation
 
-* Einarbeitung in Vue.js / Vuetify (6 Stunden)
-* Einrichtung des Projekts (1 Stunde)
+* Getting startetw ith Vue.js / Vuetify (6 hours)
+* Project setup (1 hour)
 
 Frontend
-* Allgemeine GUI (2 Stunden)
-* Foto Upload (1 Stunden)
-* Gallerie (1 Stunde)
+* GUI (2 hours)
+* Image upload (1 hour)
+* Gallery (1 hour)
 
 Backend
-* Express Server mit Routen (2 Stunden)
-* Speichern und verarbeiten von Fotos(2 Stunden)
+* Express Server with routing (2 hours)
+* Saving and skaling images(2 hours)
 
-**Gesamt: 15 Stunden**
+**Complete: 15 Hours**
 
 ## Issue 2
 
-Allgemein
-* Rechereche für Farb Bibliothek (2 Stunden)
-* Einrichtung von Docker und Docker-Compose (2 Stunden)
-* ADR anlegen (2 Stunden)
+General
+* Research for color extraction librarys (4 hours)
+* Docker und Docker-Compose setup (4 hours)
+* ADR (2 hours)
 
 Frontend
-* Anzeige der primären Farben (1 Stunde)
+* View primary colors (2 hour)
 
 Backend
-* Extrahieren der primären Farben (2 Stunden)
+* Extracting of primary colors (3 hours)
 
-**Gesamt: 9 Stunden**
+**Complete: 13 hours**
 
 ## Issue 3 
 
-(Folgt)
+General
+
+* Code of Conduct (1 hour)
+* License (1 hour)
+* General contribution research (4 hours)
+* Contribution guide (1 hour)
+* Pull-request / Issue template (1 hour)
+* Other artifacts (2 hours)
+* General bug fixes (2 hours)
+
+**Complete: 12 hours**
