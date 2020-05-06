@@ -74,7 +74,7 @@
         },
         data() {
             return {
-                sizeToScale: "",
+                sizeToScale: '',
                 imageInPreferedSize: {},
                 uploadedImage: {},
                 uploadedFile: null,

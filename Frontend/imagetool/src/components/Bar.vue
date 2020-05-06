@@ -53,10 +53,10 @@
 
 <script>
     export default {
-        name: "Bar",
+        name: 'Bar',
         data(){
             return {
-                items: ["Imagescaling","Gallery"],
+                items: ['Imagescaling','Gallery'],
                 drawer: false
             }
         },
