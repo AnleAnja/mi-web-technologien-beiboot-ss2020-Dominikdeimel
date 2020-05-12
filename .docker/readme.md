@@ -1,9 +1,9 @@
 # Installation guide 
 ## Setup 
 ### Installing Docker and Docker Compose
-* Docker & Docker Compose for [Windows][https://docs.docker.com/docker-for-windows/install/]
-* Docker & Docker Compose for [macOS][https://docs.docker.com/docker-for-mac/install/]
-* [Docker][https://docs.docker.com/install/linux/docker-ce/ubuntu/] & Docker [Compose][https://docs.docker.com/compose/install/#install-compose] for Ubuntu
+* Docker & Docker Compose for [Windows](https://docs.docker.com/docker-for-windows/install/)
+* Docker & Docker Compose for [macOS](https://docs.docker.com/docker-for-mac/install/)
+* [Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/) & Docker [Compose](https://docs.docker.com/compose/install/#install-compose) for Ubuntu
   
 ### Clone the Git Repository
 `git clone https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel`
@@ -27,8 +27,5 @@ To start the system use the following command:
   ## Shutting down the system
   To shut down the system use the following command:
     
-        docker-compose down
+     docker-compose down
     
-## Working without Docker
-To run the project without Docker and on localhost, change the following line from
-``
