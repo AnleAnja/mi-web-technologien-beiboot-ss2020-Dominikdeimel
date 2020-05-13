@@ -12,33 +12,33 @@
 </template>
 
 <script>
-    import gallery from './components/Gallery.vue'
-    import imageScaling from './components/ImageScaling.vue'
-    import bar from './components/Bar'
+import gallery from './components/Gallery.vue';
+import imageScaling from './components/ImageScaling.vue';
+import bar from './components/Bar';
 
-    export default {
-        name: 'App',
-        components: {
-            imageScaling,
-            bar,
-            gallery
-        },
-        data() {
-            return {
-                activeComponent: "imageScaling",
-                recentImage: {}
-            }
-        },
-        methods: {
-            changeActiveComponent(value) {
-                this.activeComponent = value;
-            },
-            switchToImageScaling(image) {
-                this.recentImage = image;
-                this.activeComponent = 'imageScaling'
-            }
-        }
+export default {
+  name: 'App',
+  components: {
+    imageScaling,
+    bar,
+    gallery
+  },
+  data() {
+    return {
+      activeComponent: 'imageScaling',
+      recentImage: {}
+    };
+  },
+  methods: {
+    changeActiveComponent(value) {
+      this.activeComponent = value;
+    },
+    switchToImageScaling(image) {
+      this.recentImage = image;
+      this.activeComponent = 'imageScaling';
     }
+  }
+};
 </script>
 
 <style>

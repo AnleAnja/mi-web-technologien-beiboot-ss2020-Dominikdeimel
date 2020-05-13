@@ -1,8 +1,8 @@
 module.exports = {
-  "devServer": {
-    "proxy": process.env.VUE_APP_BACKENDPATH
+  'devServer': {
+    'proxy': process.env.VUE_APP_BACKENDPATH
   },
-  "transpileDependencies": [
-    "vuetify"
+  'transpileDependencies': [
+    'vuetify'
   ]
-}
+};

@@ -52,21 +52,21 @@
 </template>
 
 <script>
-    export default {
-        name: 'Bar',
-        data(){
-            return {
-                items: ['Imagescaling','Gallery'],
-                drawer: false
-            }
-        },
-        methods: {
-            changeActiveComponent(newComponent){
-                this.$emit('newComponent', newComponent);
-            }
-        }
-
+export default {
+  name: 'Bar',
+  data(){
+    return {
+      items: ['Imagescaling','Gallery'],
+      drawer: false
+    };
+  },
+  methods: {
+    changeActiveComponent(newComponent){
+      this.$emit('newComponent', newComponent);
     }
+  }
+
+};
 </script>
 
 <style scoped>

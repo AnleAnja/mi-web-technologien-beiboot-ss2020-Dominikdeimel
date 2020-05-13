@@ -64,71 +64,71 @@
 </template>
 
 <script>
-    import axios from 'axios';
+import axios from 'axios';
 
-    export default {
-        name: "gallery",
-        data() {
-            return {
-                allUserImages: [],
-                dialog: false,
-                currentImage: {},
-                imageColors: []
-            }
-        },
-        mounted() {
-            this.getAllImages()
-        },
-        methods: {
-            getAllImages() {
-                axios.get(
-                    process.env.VUE_APP_BACKENDPATH + '/image/all/'
-                ).then(res => {
-                    res.data.forEach(it => {
-                        this.allUserImages.push(it[1]);
-                    });
+export default {
+  name: 'gallery',
+  data() {
+    return {
+      allUserImages: [],
+      dialog: false,
+      currentImage: {},
+      imageColors: []
+    };
+  },
+  mounted() {
+    this.getAllImages();
+  },
+  methods: {
+    getAllImages() {
+      axios.get(
+        process.env.VUE_APP_BACKENDPATH + '/image/all/'
+      ).then(res => {
+        res.data.forEach(it => {
+          this.allUserImages.push(it[1]);
+        });
 
-                });
-            },
-            getImageColors() {
-                axios.get(
-                    process.env.VUE_APP_BACKENDPATH + '/image/colors/',
-                    {
-                        params: {
-                            id: this.currentImage.imageId,
-                            path: this.currentImage.originalPath
-                        }
-                    }
-                ).then(res => {
-                    this.imageColors = res.data;
-                });
-            },
-            reset() {
-                this.allUserImages = [];
-                axios.delete(
-                    process.env.VUE_APP_BACKENDPATH + '/image/all/'
-                ).then(res => {
-                    if (res.status !== 200) console.log(res);
-                });
-            },
-            switchToImageScaling() {
-                this.$emit('switchToImageScaling', this.currentImage);
-            },
-            openDialog(image) {
-                this.currentImage = image;
-                this.getImageColors();
-                this.dialog = true;
-            },
-            closeDialog() {
-                this.currentImage = {};
-                this.dialog = false;
-                this.imageColors = [];
-            },
-        getImagePath(path){
-            return process.env.VUE_APP_BACKENDPATH + path;
+      });
+    },
+    getImageColors() {
+      axios.get(
+        process.env.VUE_APP_BACKENDPATH + '/image/colors/',
+        {
+          params: {
+            id: this.currentImage.imageId,
+            path: this.currentImage.originalPath
+          }
         }
-        }
+      ).then(res => {
+        this.imageColors = res.data;
+      });
+    },
+    reset() {
+      this.allUserImages = [];
+      axios.delete(
+        process.env.VUE_APP_BACKENDPATH + '/image/all/'
+      ).then(res => {
+        if (res.status !== 200) console.log(res);
+      });
+    },
+    switchToImageScaling() {
+      this.$emit('switchToImageScaling', this.currentImage);
+    },
+    openDialog(image) {
+      this.currentImage = image;
+      this.getImageColors();
+      this.dialog = true;
+    },
+    closeDialog() {
+      this.currentImage = {};
+      this.dialog = false;
+      this.imageColors = [];
+    },
+    getImagePath(path){
+      return process.env.VUE_APP_BACKENDPATH + path;
     }
+  }
+};
 </script>
 
 <style scoped>

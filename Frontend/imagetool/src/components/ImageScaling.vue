@@ -65,57 +65,57 @@
 
 <script>
 
-    import axios from 'axios';
+import axios from 'axios';
 
-    export default {
-        name: 'imageScaling',
-        props: {
-          recentImage: {}
-        },
-        data() {
-            return {
-                sizeToScale: '',
-                imageInPreferedSize: {},
-                uploadedImage: {},
-                uploadedFile: null,
-                switchMode: false
-            }
-        },
-        mounted() {
-            if(this.recentImage){
-                this.uploadedImage = this.recentImage;
-                this.uploadedFile = this.recentImage;
-            }
-        },
-        methods: {
-            uploadFile() {
-                const fdObject = new FormData();
-                fdObject.append('file', this.uploadedFile, this.uploadedFile.name);
-                axios.post(
-                    process.env.VUE_APP_BACKENDPATH + '/image/',
-                    fdObject)
-                    .then(res => {
-                        this.uploadedImage = res.data;
-                    })
-            },
-            getImageInUserSize() {
-                axios.get(
-                    process.env.VUE_APP_BACKENDPATH + '/image/',
-                    { params: {
-                            id: this.uploadedImage.imageId,
-                            path: this.uploadedImage.originalPath,
-                            width: this.sizeToScale
-                        }
-                    }
-                ).then(res => {
-                    this.imageInPreferedSize = res.data;
-                })
-            },
-            getImagePath(path){
-                return process.env.VUE_APP_BACKENDPATH + path;
-            }
-        }
+export default {
+  name: 'imageScaling',
+  props: {
+    recentImage: {}
+  },
+  data() {
+    return {
+      sizeToScale: '',
+      imageInPreferedSize: {},
+      uploadedImage: {},
+      uploadedFile: null,
+      switchMode: false
+    };
+  },
+  mounted() {
+    if(this.recentImage){
+      this.uploadedImage = this.recentImage;
+      this.uploadedFile = this.recentImage;
     }
+  },
+  methods: {
+    uploadFile() {
+      const fdObject = new FormData();
+      fdObject.append('file', this.uploadedFile, this.uploadedFile.name);
+      axios.post(
+        process.env.VUE_APP_BACKENDPATH + '/image/',
+        fdObject)
+        .then(res => {
+          this.uploadedImage = res.data;
+        });
+    },
+    getImageInUserSize() {
+      axios.get(
+        process.env.VUE_APP_BACKENDPATH + '/image/',
+        { params: {
+          id: this.uploadedImage.imageId,
+          path: this.uploadedImage.originalPath,
+          width: this.sizeToScale
+        }
+        }
+      ).then(res => {
+        this.imageInPreferedSize = res.data;
+      });
+    },
+    getImagePath(path){
+      return process.env.VUE_APP_BACKENDPATH + path;
+    }
+  }
+};
 </script>
 
 <style scoped>
