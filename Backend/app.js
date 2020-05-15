@@ -14,10 +14,10 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use('/static', express.static(path.join(__dirname, 'static')));
+app.use('/userData/static', express.static(path.join(__dirname, 'userData/static')));
 
 const upload = multer({
-  dest: './uploads/'
+  dest: './userData/uploads/'
 });
 
 let config = {};
@@ -56,7 +56,7 @@ app.post('/image', upload.single('file'), async function (req, res) {
     const imageName = req.file.originalname;
     const imagePath = req.file.path;
 
-    await fs.mkdir(`./static/${imageId}`, err => {
+    await fs.mkdir(`./userData/static/${imageId}`, err => {
       if (err) console.log(err);
     });
 
@@ -70,23 +70,23 @@ app.post('/image', upload.single('file'), async function (req, res) {
       imageId: imageId,
       originalName: imageName,
       originalPath: imagePath,
-      imagePath: `/static/${imageId}/original.png`,
+      imagePath: `/userData/static/${imageId}/original.png`,
       colorPalette: [],
       scaledImages: [{
         scaleFactor: config.deviceSize.large,
-        imagePath: `/static/${imageId}/${config.deviceSize.large}.png`
+        imagePath: `/userData/static/${imageId}/${config.deviceSize.large}.png`
       },
       {
         scaleFactor: config.deviceSize.medium,
-        imagePath: `/static/${imageId}/${config.deviceSize.medium}.png`
+        imagePath: `/userData/static/${imageId}/${config.deviceSize.medium}.png`
       },
       {
         scaleFactor: config.deviceSize.small,
-        imagePath: `/static/${imageId}/${config.deviceSize.small}.png`
+        imagePath: `/userData/static/${imageId}/${config.deviceSize.small}.png`
       },
       {
         scaleFactor: config.deviceSize.square,
-        imagePath: `/static/${imageId}/${config.deviceSize.square}_square.png`
+        imagePath: `/userData/static/${imageId}/${config.deviceSize.square}_square.png`
       }
       ]
     };
@@ -117,7 +117,7 @@ app.get('/image', async function (req, res) {
 
     const result = {
       scaleFactor: `${userWidth}`,
-      imagePath: `/static/${imageId}/${userWidth}.png`
+      imagePath: `/userData/static/${imageId}/${userWidth}.png`
     };
     log[imageId].scaledImages.push(result);
     res.json(result);
@@ -129,16 +129,16 @@ app.get('/image', async function (req, res) {
 app.delete('/image/all', async function (req, res) {
   try {
     // delete imageLog.json
-    if (fs.existsSync('imageLog.json')) {
-      await fs.unlink(path.join('', 'imageLog.json'), err => {
+    if (fs.existsSync('/userData/imageLog.json')) {
+      await fs.unlink(path.join('', '/userData/imageLog.json'), err => {
         if (err) throw err;
       });
     }
     // reset Log
     log = {};
     // Empty static and uploads
-    await fs.emptyDirSync('static');
-    await fs.emptyDirSync('uploads');
+    await fs.emptyDirSync('userData/static');
+    await fs.emptyDirSync('userData/uploads');
 
     res.status(200).send();
   } catch (err) {
@@ -151,33 +151,34 @@ async function scaleImage (imageId, imagePath, width, isSquare) {
     await sharp(imagePath)
       .resize(800, 800)
       .sharpen()
-      .toFile(`./static/${imageId}/${width}_square.png`);
+      .toFile(`./userData/static/${imageId}/${width}_square.png`);
   } else if (width === 0 && !isSquare) {
     await sharp(imagePath)
       .sharpen()
-      .toFile(`./static/${imageId}/original.png`);
+      .toFile(`./userData/static/${imageId}/original.png`);
   } else {
     await sharp(imagePath)
       .resize(width)
       .sharpen()
-      .toFile(`./static/${imageId}/${width}.png`);
+      .toFile(`./userData/static/${imageId}/${width}.png`);
   }
 }
 
 function saveJson () {
   const data = JSON.stringify(log);
-  fs.writeFileSync('imageLog.json', data);
+  fs.writeFileSync('./userData/imageLog.json', data);
 }
 
 function readJson () {
-  const rawdata = fs.readFileSync('imageLog.json');
+  const rawdata = fs.readFileSync('./userData/imageLog.json');
   log = JSON.parse(rawdata);
 }
 
 app.listen(3000, function () {
   try {
-    if (fs.existsSync('imageLog.json')) readJson();
-    if (!fs.existsSync('static')) fs.mkdirSync(path.join(__dirname, 'static'));
+    if (fs.existsSync('userData/imageLog.json')) readJson();
+    if (!fs.existsSync('userData')) fs.mkdirSync(path.join(__dirname, 'userData'));
+    if (!fs.existsSync('userData/static')) fs.mkdirSync(path.join(__dirname, 'userData/static'));
     config = JSON.parse(fs.readFileSync('config.json'));
   } catch (err) {
     console.log(err);

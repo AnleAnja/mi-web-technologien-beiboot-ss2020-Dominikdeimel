@@ -1,7 +1,6 @@
 **/node_modules
 .DS_Store
-**/static
-**/uploads
+**/userData
 imageLog.json
 workspace.xml
 .idea

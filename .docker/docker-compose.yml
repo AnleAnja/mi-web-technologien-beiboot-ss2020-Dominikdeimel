@@ -1,5 +1,4 @@
 version: '3.4'
-
 services:
   frontend:
     build: ../Frontend/imagetool
@@ -10,3 +9,11 @@ services:
     build: ../Backend
     ports:
       - "3000:3000"
+    volumes:
+      - type: volume
+        source: backendData
+        target: /app/userData
+
+volumes:
+  backendData:
+
