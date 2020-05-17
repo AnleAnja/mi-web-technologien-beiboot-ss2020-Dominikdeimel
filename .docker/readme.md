@@ -33,13 +33,17 @@ To start the system use the following command:
 
 ### Frontend
   ```cd Frontend/imagetool```
-  
+ 
+  ```npm install```
+ 
   ```npm run serve```
   
   The Web-app is accessible via: http://localhost:8080
   
 ### Backend
  ```cd Backend```
+ 
+ ```npm install```
   
   ```node app.js```
   
