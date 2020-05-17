@@ -8,7 +8,6 @@ The uploaded images can be scaled and cropped. Additionally, the primary colors 
 Furthermore, general areas such as _code of conduct_ and _conventions_ will be covered.
 
 ![ImageScaling](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/.github/images/ImageScaling.png)
-![ImageScaling](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/.github/images/Gallery.png)
 ![ImageScaling](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/.github/images/ColorExtraction.png)
 
 
@@ -16,8 +15,8 @@ Furthermore, general areas such as _code of conduct_ and _conventions_ will be c
 
 * [Installation Guide](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/.docker/readme.md)
    *  [Setup](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/.docker/readme.md#setup) 
-   * [Starting the system](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/.docker/readme.md#starting-the-system)
-   * [Shutting down the system](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/.docker/readme.md#shutting-down-the-system)
+   * [Starting the system with docker](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/.docker/readme.md#starting-the-system-with-docker)
+   * [Starting the system without docker](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/.docker/readme.md#start-the-system-without-docker)
 *  [Code of Conduct](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/docs/code-of-conduct.md)   
    * [Our Pledge](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/docs/code-of-conduct.md#our-pledge)
    * [Our Standards](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/docs/code-of-conduct.md#our-standards)
