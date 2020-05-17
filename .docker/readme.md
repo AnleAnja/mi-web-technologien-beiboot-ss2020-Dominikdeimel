@@ -8,7 +8,7 @@
 ### Clone the Git Repository
 `git clone https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel`
 
-## Starting the system
+## Starting the system with Docker
 To start the system use the following command:
 
 ### Windows
@@ -22,10 +22,26 @@ To start the system use the following command:
     docker-compose up -d 
     
  ### Frontend
-   The Web-app ist accessible via: http://localhost:8080
+   The Web-app is accessible via: http://localhost:8080
     
   ## Shutting down the system
   To shut down the system use the following command:
     
      docker-compose down
     
+## Start the system without docker
+
+### Frontend
+  ```cd Frontend/imagetool```
+  
+  ```npm run serve```
+  
+  The Web-app is accessible via: http://localhost:8080
+  
+### Backend
+ ```cd Backend```
+  
+  ```node app.js```
+  
+### Shutting down the system
+  To shut down the system press **Ctrl + c**
