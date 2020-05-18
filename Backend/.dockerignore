@@ -1,5 +1,4 @@
 node_modules
 npm-debug.log
-static
-uploads
+userData
 imageLog.json
