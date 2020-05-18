@@ -1,10 +1,10 @@
 # Conventions
 ## Code 
 
-The project is following the [standard Javascript rules](https://standardjs.com/rules.html).
+The following guidelines are adapted from the the [standard Javascript rules](https://standardjs.com/rules.html).
 To allow for an easy contribution, the most important rules can be summarized as followed:
 
-**Use 2 spaces for indentation**
+**Use 4 spaces for indentation**
 ```js
 function helloWorld () {
   console.log('Hello world')
