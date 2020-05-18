@@ -60,11 +60,11 @@ app.post('/image', upload.single('file'), async function (req, res) {
       if (err) console.log(err);
     });
 
-    await scaleImage(imageId, imagePath, 0, false);
-    await scaleImage(imageId, imagePath, config.deviceSize.large, false);
-    await scaleImage(imageId, imagePath, config.deviceSize.medium, false);
-    await scaleImage(imageId, imagePath, config.deviceSize.small, false);
-    await scaleImage(imageId, imagePath, config.deviceSize.square, true);
+    await scaleImage(imageId, imagePath, 0, false, false);
+    await scaleImage(imageId, imagePath, config.deviceSize.large, false, false);
+    await scaleImage(imageId, imagePath, config.deviceSize.medium, false, false);
+    await scaleImage(imageId, imagePath, config.deviceSize.small, false, false);
+    await scaleImage(imageId, imagePath, config.deviceSize.square, true, false);
 
     log[imageId] = {
       imageId: imageId,
@@ -86,7 +86,7 @@ app.post('/image', upload.single('file'), async function (req, res) {
       },
       {
         scaleFactor: config.deviceSize.square,
-        imagePath: `/userData/static/${imageId}/${config.deviceSize.square}_square.png`
+        imagePath: `/userData/static/${imageId}/square.png`
       }
       ]
     };
@@ -105,22 +105,19 @@ app.get('/image/all', function (req, res) {
 app.get('/image', async function (req, res) {
   const imageId = req.query.id;
   const imagePath = req.query.path;
+  const greyscaleParam = req.query.grey;
+  
   let userWidth;
   try {
-    userWidth = parseInt(req.query.width);
-
+    //userWidth = parseInt(req.query.width);
+    userWidth = 800;
     if (isNaN(userWidth) || userWidth === 0) {
       res.status(400).send('Invalid width input');
       return;
     }
-    await scaleImage(imageId, imagePath, userWidth, false);
-
-    const result = {
-      scaleFactor: `${userWidth}`,
-      imagePath: `/userData/static/${imageId}/${userWidth}.png`
-    };
+    let result = await scaleImage(imageId, imagePath, userWidth, false, greyscaleParam);
     log[imageId].scaledImages.push(result);
-    res.json(result);
+    res.send(result);
   } catch (err) {
     res.status(500).send(err);
   }
@@ -146,22 +143,35 @@ app.delete('/image/all', async function (req, res) {
   }
 });
 
-async function scaleImage (imageId, imagePath, width, isSquare) {
+async function scaleImage (imageId, imagePath, width, isSquare, greyscale) {
+  
+  let path = `userData/static/${imageId}/`;
+
+  if(isSquare) path += `square${greyscale ? '-grey' : ''}.png`;
+  else if (width === 0 && !isSquare) path += `original${greyscale ? '-grey' : ''}.png`;
+  else path += `${width}${greyscale ? '-grey' : ''}.png`;
+  
   if (isSquare) {
     await sharp(imagePath)
       .resize(800, 800)
       .sharpen()
-      .toFile(`./userData/static/${imageId}/${width}_square.png`);
+      .greyscale(greyscale)
+      .toFile(path);
   } else if (width === 0 && !isSquare) {
     await sharp(imagePath)
       .sharpen()
-      .toFile(`./userData/static/${imageId}/original.png`);
+      .greyscale(greyscale)
+      .toFile(path);
   } else {
     await sharp(imagePath)
       .resize(width)
       .sharpen()
-      .toFile(`./userData/static/${imageId}/${width}.png`);
+      .greyscale(greyscale)
+      .toFile(path);
   }
+
+  return path;
+
 }
 
 function saveJson () {
