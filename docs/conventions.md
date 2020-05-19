@@ -71,6 +71,14 @@ console
 
 For further information, check the [standard Javascript Style Guide](https://standardjs.com/rules.html)
 
+## Architectual & Design Decisions
+
+Architectual and Design decisions should be documented using the following [ADR template](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/docs/adr/template.md).
+
+The ADR file should follow the patter: "0001-xyz-topicOfDecisions"
+
+After documenting your Decision add the ADR File to the [ADR Index](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/docs/adr/index.md).
+
 ## Commit Messages
 When committing, please follow the following guidelines:
 
