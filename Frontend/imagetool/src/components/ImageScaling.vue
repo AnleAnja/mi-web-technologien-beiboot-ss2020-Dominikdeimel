@@ -2,7 +2,7 @@
     <div class="hello">
         <v-app class="background">
             <div style="margin-left: 85%">
-                <v-switch v-model="switchMode" @change="switchView" inset label="Eigene Skalierung"></v-switch>
+                <v-switch v-model="switchMode" inset label="Eigene Skalierung"></v-switch>
                 <v-switch v-model="greySwitch" @change="greyscaling" inset label="Graustufen"></v-switch>
             </div>
             <v-layout justify-center>
@@ -15,12 +15,14 @@
                                 placeholder="Foto auswählen"
                                 prepend-icon="mdi-camera"
                                 outlined
+                                type="file"
+                                accept="image/*"
                                 @change="uploadFile"
                                 style="width: 600px; margin-top: 10px;"
                         ></v-file-input>
                     </div>
                     <div v-if="uploadedFile !== null" align="center" style="margin-top: -20px;">
-                        <v-img :src="uploadedImage.imagePath" height="300" contain
+                        <v-img :src="mainImagePath" height="300" contain
                                style="margin-top: -20px; "></v-img>
                     </div>
                 </v-card>
@@ -30,22 +32,22 @@
                     <v-layout row wrap>
                         <div style="margin-left: 30px">
                             <h3>800Px</h3>
-                            <v-img :src="getImagePath(uploadedImage.scaledImages[0].imagePath)" width="400"
+                            <v-img :src="uploadedImage.small" width="400"
                                    contain></v-img>
                         </div>
                         <div style="margin-left: 30px">
                             <h3>500Px</h3>
-                            <v-img :src="getImagePath(uploadedImage.scaledImages[1].imagePath)" width="250"
+                            <v-img :src="uploadedImage.medium" width="250"
                                    contain></v-img>
                         </div>
                         <div style="margin-left: 30px">
                             <h3>300Px</h3>
-                            <v-img :src="getImagePath(uploadedImage.scaledImages[2].imagePath)" width="150"
+                            <v-img :src="uploadedImage.large" width="150"
                                    contain></v-img>
                         </div>
                         <div style="margin-left: 30px">
                             <h3>Quadrat</h3>
-                            <v-img :src="getImagePath(uploadedImage.scaledImages[3].imagePath)" width="300"
+                            <v-img :src="uploadedImage.square" width="300"
                                    contain></v-img>
                         </div>
                     </v-layout>
@@ -78,74 +80,77 @@
 import axios from 'axios';
 
 export default {
-  name: 'imageScaling',
-  props: {
-    recentImage: {}
-  },
-  data() {
-    return {
-      sizeToScale: '',
-      imageInPreferedSize: {},
-      uploadedImage: {},
-      uploadedFile: null,
-      switchMode: false,
-      greySwitch: false,
-      originalPath: ''
-    };
-  },
-  mounted() {
-    if (this.recentImage) {
-      this.uploadedImage = this.recentImage;
-      this.uploadedFile = this.recentImage;
-    }
-  },
-  methods: {
-    uploadFile() {
-      const fdObject = new FormData();
-      fdObject.append('file', this.uploadedFile, this.uploadedFile.name);
-      axios.post(
-        process.env.VUE_APP_BACKENDPATH + '/image/',
-        fdObject)
-        .then(res => {
-          this.uploadedImage = res.data;
-        });
+    name: 'imageScaling',
+    props: {
+        recentImage: {}
     },
-    getImageInUserSize() {
-      axios.get(
-        process.env.VUE_APP_BACKENDPATH + '/image/',
-        {
-          params: {
-            id: this.uploadedImage.imageId,
-            path: this.uploadedImage.originalPath,
-            width: this.sizeToScale
-          }
-        }
-      ).then(res => {
-        this.imageInPreferedSize = res.data;
-      });
+    data() {
+        return {
+            sizeToScale: '',
+            imageInPreferedSize: {},
+            uploadedImage: {},
+            uploadedFile: null,
+            switchMode: false,
+            greySwitch: false,
+            mainImagePath: ''
+        };
     },
-    getImagePath(path) {
-      return process.env.VUE_APP_BACKENDPATH + path;
+    mounted() {
+        //Todo
     },
-    greyscaling() {
-      if(this.greySwitch) {
-        axios.get(
-          process.env.VUE_APP_BACKENDPATH + '/image/',
-          {
-            params: {
-              id: this.uploadedImage.imageId,
-              path: this.uploadedImage.originalPath,
-              grey: this.greySwitch
+    methods: {
+        uploadFile() {
+            const fdObject = new FormData();
+            fdObject.append('file', this.uploadedFile, this.uploadedFile.name);
+            console.log(fdObject);
+            axios.post(
+                process.env.VUE_APP_BACKENDPATH + '/image/',
+                fdObject
+            )
+                .then(res => {
+                    this.uploadedImage = res.data;
+                    this.mainImagePath = this.uploadedImage.original;
+                });
+        },
+        getImageInUserSize() {
+            if (isNaN(this.sizeToScale)) {
+                alert('Only valid numbers allowed!');
+            } else {
+                axios.get(
+                    process.env.VUE_APP_BACKENDPATH + '/image/',
+                    {
+                        params: {
+                            id: this.uploadedImage.imageId,
+                            path: this.uploadedImage.originalPath,
+                            size: this.sizeToScale
+                        }
+                    }
+                ).then(res => {
+                    this.imageInPreferedSize = res.data;
+                });
             }
-          }
-        )
-          .then(res => {
-            this.originalPath = this.uploadedImage.imagePath;
-            this.uploadedImage.imagePath = `${process.env.VUE_APP_BACKENDPATH}/${res.data}`;
-          });
-      } else this.uploadedImage.imagePath = this.originalPath;
+        },
+        getImagePath(path) {
+            return process.env.VUE_APP_BACKENDPATH + path;
+        },
+        greyscaling() {
+            if(this.greySwitch) {
+                axios.get(
+                    process.env.VUE_APP_BACKENDPATH + '/image/',
+                    {
+                        params: {
+                            id: this.uploadedImage.imageId,
+                            path: this.uploadedImage.originalPath,
+                            grey: this.greySwitch
+                        }
+                    }
+                )
+                    .then(res => {
+                        this.mainImagePath = res.data;
+                    });
+            } else this.mainImagePath = this.uploadedImage.orignal;
+        }
     }
-  }
 };
 </script>
 
