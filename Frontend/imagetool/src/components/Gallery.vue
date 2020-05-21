@@ -18,8 +18,8 @@
                         <v-row class="mx-2">
                             <v-col v-for="image in allUserImages" :key="image" cols="3" class="px-1">
                                 <v-card @click="openDialog(image)">
-                                    <h3>{{image.originalName}}</h3>
-                                    <v-img :src="getImagePath(image.imagePath)" width="300" contain></v-img>
+                                    <h3>{{image.name}}</h3>
+                                    <v-img :src="image.path" width="300" contain></v-img>
                                 </v-card>
                             </v-col>
                         </v-row>
@@ -34,9 +34,9 @@
             >
                 <v-layout justify-center>
                     <v-card width="800">
-                        <h3 >{{currentImage.originalName}}</h3>
+                        <h3 >{{currentImage.name}}</h3>
                         <div align="center">
-                            <v-img :src="getImagePath(currentImage.imagePath)" width="350" contain></v-img>
+                            <v-img :src="currentImage.path" width="350" contain></v-img>
                         </div>
                         <v-row class="mx-2">
                             <v-col v-for="color in imageColors" :key="color" cols="4" class="px-3">
@@ -67,67 +67,62 @@
 import axios from 'axios';
 
 export default {
-  name: 'gallery',
-  data() {
-    return {
-      allUserImages: [],
-      dialog: false,
-      currentImage: {},
-      imageColors: []
-    };
-  },
-  mounted() {
-    this.getAllImages();
-  },
-  methods: {
-    getAllImages() {
-      axios.get(
-        process.env.VUE_APP_BACKENDPATH + '/image/all/'
-      ).then(res => {
-        res.data.forEach(it => {
-          this.allUserImages.push(it[1]);
-        });
+    name: 'gallery',
+    data() {
+        return {
+            allUserImages: [],
+            dialog: false,
+            currentImage: {},
+            imageColors: []
+        };
+    },
+    mounted() {
+        this.getAllImages();
+    },
+    methods: {
+        getAllImages() {
+            axios.get(
+                process.env.VUE_APP_BACKENDPATH + '/image/all/'
+            ).then(res => {
+                res.data.forEach(it => {
+                    this.allUserImages.push(it[1]);
+                });
+                console.log(this.allUserImages);
 
-      });
-    },
-    getImageColors() {
-      axios.get(
-        process.env.VUE_APP_BACKENDPATH + '/image/colors/',
-        {
-          params: {
-            id: this.currentImage.imageId,
-            path: this.currentImage.originalPath
-          }
+            });
+        },
+        getImageColors() {
+            axios.get(
+                process.env.VUE_APP_BACKENDPATH + '/image/colors/',
+                {
+                    params: {
+                        id: this.currentImage.id,
+                    }
+                }
+            ).then(res => {
+                this.imageColors = res.data;
+            });
+        },
+        async reset() {
+            this.allUserImages = [];
+            await axios.delete(
+                process.env.VUE_APP_BACKENDPATH + '/image/all/'
+            );
+        },
+        switchToImageScaling() {
+            this.$emit('switchToImageScaling', this.currentImage.id);
+        },
+        openDialog(image) {
+            this.currentImage = image;
+            this.getImageColors();
+            this.dialog = true;
+        },
+        closeDialog() {
+            this.currentImage = {};
+            this.dialog = false;
+            this.imageColors = [];
         }
-      ).then(res => {
-        this.imageColors = res.data;
-      });
-    },
-    reset() {
-      this.allUserImages = [];
-      axios.delete(
-        process.env.VUE_APP_BACKENDPATH + '/image/all/'
-      ).then(res => {
-        if (res.status !== 200) console.log(res);
-      });
-    },
-    switchToImageScaling() {
-      this.$emit('switchToImageScaling', this.currentImage);
-    },
-    openDialog(image) {
-      this.currentImage = image;
-      this.getImageColors();
-      this.dialog = true;
-    },
-    closeDialog() {
-      this.currentImage = {};
-      this.dialog = false;
-      this.imageColors = [];
-    },
-    getImagePath(path){
-      return process.env.VUE_APP_BACKENDPATH + path;
     }
-  }
 };
 </script>
 

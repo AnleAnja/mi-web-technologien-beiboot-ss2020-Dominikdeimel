@@ -65,8 +65,8 @@
                                 <v-icon>mdi-format-align-middle</v-icon>
                             </v-btn>
                             <v-img max-width="850" v-if="imageInPreferedSize"
-                                   :src="getImagePath(imageInPreferedSize.imagePath)"
-                                   :width="imageInPreferedSize.scaleFactor" contain></v-img>
+                                   :src="imageInPreferedSize"
+                                   :width="parseInt(sizeToScale)" contain></v-img>
                         </div>
                     </v-card>
                 </v-layout>
@@ -81,13 +81,11 @@ import axios from 'axios';
 
 export default {
     name: 'imageScaling',
-    props: {
-        recentImage: {}
-    },
+    props: ['recentImageId'],
     data() {
         return {
             sizeToScale: '',
-            imageInPreferedSize: {},
+            imageInPreferedSize: '',
             uploadedImage: {},
             uploadedFile: null,
             switchMode: false,
@@ -96,13 +94,26 @@ export default {
         };
     },
     mounted() {
-        //Todo
+        if(this.recentImageId !== ''){
+            axios.get(
+                process.env.VUE_APP_BACKENDPATH + '/image/main/',
+                {
+                    params: {
+                        id: this.recentImageId,
+                    }
+                }
+            ).then(res => {
+                this.uploadedImage = res.data;
+                this.mainImagePath = this.uploadedImage.original;
+                this.uploadedFile = res.data;
+            });
+        }
     },
     methods: {
         uploadFile() {
             const fdObject = new FormData();
-            fdObject.append('file', this.uploadedFile, this.uploadedFile.name);
-            console.log(fdObject);
+            fdObject.append('image', this.uploadedFile, this.uploadedFile.name);
+
             axios.post(
                 process.env.VUE_APP_BACKENDPATH + '/image/',
                 fdObject
@@ -120,8 +131,7 @@ export default {
                     process.env.VUE_APP_BACKENDPATH + '/image/',
                     {
                         params: {
-                            id: this.uploadedImage.imageId,
-                            path: this.uploadedImage.originalPath,
+                            id: this.uploadedImage.id,
                             size: this.sizeToScale
                         }
                     }
@@ -130,17 +140,13 @@ export default {
                 });
             }
         },
-        getImagePath(path) {
-            return process.env.VUE_APP_BACKENDPATH + path;
-        },
         greyscaling() {
             if(this.greySwitch) {
                 axios.get(
                     process.env.VUE_APP_BACKENDPATH + '/image/',
                     {
                         params: {
-                            id: this.uploadedImage.imageId,
-                            path: this.uploadedImage.originalPath,
+                            id: this.uploadedImage.id,
                             grey: this.greySwitch
                         }
                     }
@@ -148,7 +154,9 @@ export default {
                     .then(res => {
                         this.mainImagePath = res.data;
                     });
-            } else this.mainImagePath = this.uploadedImage.orignal;
+            } else {
+                this.mainImagePath = this.uploadedImage.original;
+            }
         }
     }
 };

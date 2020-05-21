@@ -11,45 +11,52 @@ const app = express();
 
 app.use(cors());
 app.use(formData.parse());
-
+app.use(express.static(__dirname + '/'));
 let config = {};
 
-
-async function getPrimaryColors (imagePath) {
-    return await Vibrant.from(imagePath).getSwatches();
-}
-
-app.get('/image/colors', async function (req, res) {
-    const imagePath = req.query.path;
-    const imageId = req.query.id;
-    let imageColors = [];
-
-    if (log[imageId].colorPalette.length > 0) {
-        imageColors = log[imageId].colorPalette;
-    } else {
-        const swatches = await getPrimaryColors(imagePath);
-
-        for (swatch in swatches) {
-            imageColors.push({
-                name: swatch,
-                color: swatches[swatch].getHex(),
-                population: swatches[swatch].getPopulation()
-            });
-        }
-        imageColors.sort((a, b) => (b.population - a.population));
-        log[imageId].colorPalette = imageColors;
-    }
-    res.json(imageColors);
-});
-//, upload.single('file')
 app.post('/image', async function (req, res) {
     try {
         const imageId = utils.randomId();
-        const imageName = req.files.file.originalFileName;
-        const imageBuffer = req.files.file.path;
-        let response = {
-            id: imageId
-        };
+        const imageName = req.files.image.name;
+        const imageBuffer = req.files.image.path;
+
+        let response = await getMainImages(imageId,imageName, imageBuffer);
+
+        res.json(response);
+    } catch (e) {
+        res.status(422).send(e);
+    }
+});
+
+app.get('/image/main', async function(req, res){
+    const imageId = req.query.id;
+    try {
+        const response = await getMainImages(imageId);
+        res.json(response);
+    } catch (e) {
+        res.status(500).send(e);
+    }
+});
+
+/***
+ * @param {Int} imageId
+ * @param {String} imageName
+ * @param {imageBuffer} imageBuffer
+ * @returns {Promise<{id: *}>}
+ */
+async function getMainImages(imageId, imageName, imageBuffer){
+    const path = `./userData/${imageId}`;
+    let response = {
+        id: imageId
+    };
+
+    if(await fs.pathExists(path)){
+        response['original'] = `./userData/${imageId}/original`;
+        response['large'] = `./userData/${imageId}/${config.deviceSize.large}`;
+        response['medium'] = `./userData/${imageId}/${config.deviceSize.medium}`;
+        response['small'] = `./userData/${imageId}/${config.deviceSize.small}`;
+        response['square'] = `./userData/${imageId}/square`;
+    } else {
         await fs.mkdir(`./userData/${imageId}`);
 
         response['original'] = await getImagePath(imageId, imageBuffer, 0, false, false);
@@ -58,55 +65,26 @@ app.post('/image', async function (req, res) {
         response['small'] = await getImagePath(imageId, imageBuffer, config.deviceSize.small, false, false);
         response['square'] = await getImagePath(imageId, imageBuffer, config.deviceSize.square, true, false);
 
-        await fs.outputJson(`./userData/${imageId}/imageParams.json`, {name: imageName});
-
-        res.json(response);
-    } catch (err) {
-        res.status(422).json({ err });
+        await fs.outputJson(`./userData/${imageId}/imageParam.json`, {id: imageId, name: imageName, primaryColors: undefined});
     }
-});
-
-app.get('/image/all', function (req, res) {
-    res.send(Object.entries(log));
-});
+    return response;
+}
 
 app.get('/image', async function (req, res) {
     const imageId = req.query.id;
-    const greyscale = req.query.grey;
-    const square = req.query.square;
-    const size = req.query.size;
+    const greyscale = req.query.grey || false;
+    const size = parseInt(req.query.size) || 0;
 
     try {
-        const originalPath = `/userData/${imageId}/original.png`;
-        const result = await getImagePath(imageId, originalPath, size, square, greyscale);
+        const originalPath = `./userData/${imageId}/original`;
+        const result = await getImagePath(imageId, originalPath, size, false, greyscale);
         res.send(result);
     }catch (err) {
         res.status(500).send(err);
     }
 });
 
-app.delete('/image/all', async function (req, res) {
-    try {
-    // delete imageLog.json
-        if (fs.existsSync('/userData/imageLog.json')) {
-            await fs.unlink(path.join('', '/userData/imageLog.json'), err => {
-                if (err) throw err;
-            });
-        }
-        // reset Log
-        log = {};
-        // Empty static and uploads
-        await fs.emptyDirSync('userData/static');
-        await fs.emptyDirSync('userData/uploads');
-
-        res.status(200).send();
-    } catch (err) {
-        res.status(500).send(err);
-    }
-});
-
 /***
- *
  * @param {Int} imageId
  * @param {String} originalPath
  * @param {Int} size
@@ -117,18 +95,19 @@ app.delete('/image/all', async function (req, res) {
 async function getImagePath(imageId, originalPath,  size, square, greyscale){
     let path = `userData/${imageId}/`;
 
-    if(square) path += `square${greyscale ? '-grey' : ''}.png`;
-    else if (size === 0 && !square) path += `original${greyscale ? '-grey' : ''}.png`;
-    else path += `${size}${greyscale ? '-grey' : ''}.png`;
+    if(square) path += `square${greyscale ? '-grey' : ''}`;
+    else if (size === 0 || size === undefined && !square) path += `original${greyscale ? '-grey' : ''}`;
+    else path += `${size}${greyscale ? '-grey' : ''}`;
 
     const exists = await fs.pathExists(path);
     if(!exists) {
-        await scaleImage(imageId, originalPath, path, size, square,greyscale);
+        const buffer = await scaleImage(imageId, originalPath, path, size, square,greyscale);
+        await fs.writeFile(path, buffer);
     }
     return path;
 }
+
 /***
- *
  * @param{Int} imageId
  * @param {String} originalPath
  * @param {String} pathToWrite
@@ -138,25 +117,95 @@ async function getImagePath(imageId, originalPath,  size, square, greyscale){
  * @returns {Promise<void>}
  */
 async function scaleImage (imageId, originalPath, pathToWrite, size, square, greyscale) {
+    let buffer;
     if (square) {
         size = config.deviceSize.square;
-        await sharp(originalPath)
+        buffer = await sharp(originalPath)
             .resize(size, size)
             .sharpen()
             .greyscale(greyscale)
-            .toFile(pathToWrite);
-    } else if (size === 0 && !square) {
-        await sharp(originalPath)
+            .toFormat('png', {quality: 100})
+            .toBuffer();
+    } else if (size === 0 || size === undefined && !square) {
+        buffer = await sharp(originalPath)
             .greyscale(greyscale)
-            .toFile(pathToWrite);
+            .toFormat('png', {quality: 100})
+            .toBuffer();
     } else {
-        await sharp(originalPath)
+        buffer = await sharp(originalPath)
             .resize(size)
             .sharpen()
             .greyscale(greyscale)
-            .toFile(pathToWrite);
+            .toFormat('png', {quality: 100})
+            .toBuffer();
     }
+    return buffer;
 }
+
+app.get('/image/all', async function (req, res) {
+    try {
+        const directoryList = await fs.readdir('userData');
+        let response = {};
+
+        for (const dir of directoryList) {
+            const imageParams = JSON.parse(await fs.readFile(`./userData/${dir}/imageParam.json`));
+            response[`${dir}`] = {
+                id: dir,
+                name: imageParams.name,
+                path: `userData/${dir}/original`
+            };
+        }
+        res.send(Object.entries(response));
+
+    } catch (e) {
+        res.status(500).send(e);
+    }
+});
+
+app.delete('/image/all', async function (req, res) {
+    try {
+        await fs.emptyDir('userData');
+
+        res.status(200).send();
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
+
+/***
+ * @param {Int} imageId
+ * @returns {Promise<[]>}
+ */
+async function getPrimaryColors (imageId) {
+    const imagePath =  `./userData/${imageId}/original`;
+    const swatches = await Vibrant.from(imagePath).getSwatches();
+    let primaryImageColors = [];
+
+    for (swatch in swatches) {
+        primaryImageColors.push({
+            name: swatch,
+            color: swatches[swatch].getHex(),
+            population: swatches[swatch].getPopulation()
+        });
+    }
+    primaryImageColors.sort((a, b) => (b.population - a.population));
+
+    return primaryImageColors;
+}
+
+app.get('/image/colors', async function (req, res) {
+    const imageId = req.query.id;
+    const imageParam = JSON.parse(await fs.readFile(`./userData/${imageId}/imageParam.json`));
+    let primaryColors;
+    if(imageParam.primaryColors === undefined){
+        primaryColors = await getPrimaryColors(imageId);
+        await fs.outputJson(`./userData/${imageId}/imageParam.json`, imageParam);
+    } else {
+        primaryColors = imageParam.primaryColors;
+    }
+    res.json(primaryColors);
+});
+
 app.listen(3000, function () {
     try {
         if (!fs.existsSync('userData')) fs.mkdirSync(path.join(__dirname, 'userData'));

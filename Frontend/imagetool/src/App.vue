@@ -4,7 +4,7 @@
             <bar @newComponent="changeActiveComponent"></bar>
         </div>
         <div style="margin-top: 60px; height: auto">
-            <imageScaling v-if="activeComponent === 'imageScaling'" :recentImage="recentImage"></imageScaling>
+            <imageScaling v-if="activeComponent === 'imageScaling'" :recentImageId="recentImageId"></imageScaling>
             <gallery v-if="activeComponent === 'gallery'" @switchToImageScaling="switchToImageScaling"></gallery>
         </div>
 
@@ -17,27 +17,27 @@ import imageScaling from './components/ImageScaling.vue';
 import bar from './components/Bar';
 
 export default {
-  name: 'App',
-  components: {
-    imageScaling,
-    bar,
-    gallery
-  },
-  data() {
-    return {
-      activeComponent: 'imageScaling',
-      recentImage: {}
-    };
-  },
-  methods: {
-    changeActiveComponent(value) {
-      this.activeComponent = value;
+    name: 'App',
+    components: {
+        imageScaling,
+        bar,
+        gallery
     },
-    switchToImageScaling(image) {
-      this.recentImage = image;
-      this.activeComponent = 'imageScaling';
+    data() {
+        return {
+            activeComponent: 'imageScaling',
+            recentImageId: ''
+        };
+    },
+    methods: {
+        changeActiveComponent(value) {
+            this.activeComponent = value;
+        },
+        switchToImageScaling(imageId) {
+            this.recentImageId = imageId;
+            this.activeComponent = 'imageScaling';
+        }
     }
-  }
 };
 </script>
 
