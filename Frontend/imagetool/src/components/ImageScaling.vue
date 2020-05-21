@@ -22,7 +22,7 @@
                         ></v-file-input>
                     </div>
                     <div v-if="uploadedFile !== null" align="center" style="margin-top: -20px;">
-                        <v-img :src="mainImagePath" height="300" contain
+                        <v-img :src="getImagePath(mainImagePath)" height="300" contain
                                style="margin-top: -20px; "></v-img>
                     </div>
                 </v-card>
@@ -32,22 +32,22 @@
                     <v-layout row wrap>
                         <div style="margin-left: 30px">
                             <h3>800Px</h3>
-                            <v-img :src="uploadedImage.small" width="400"
+                            <v-img :src="getImagePath(uploadedImage.small)" width="400"
                                    contain></v-img>
                         </div>
                         <div style="margin-left: 30px">
                             <h3>500Px</h3>
-                            <v-img :src="uploadedImage.medium" width="250"
+                            <v-img :src="getImagePath(uploadedImage.medium)" width="250"
                                    contain></v-img>
                         </div>
                         <div style="margin-left: 30px">
                             <h3>300Px</h3>
-                            <v-img :src="uploadedImage.large" width="150"
+                            <v-img :src="getImagePath(uploadedImage.large)" width="150"
                                    contain></v-img>
                         </div>
                         <div style="margin-left: 30px">
                             <h3>Quadrat</h3>
-                            <v-img :src="uploadedImage.square" width="300"
+                            <v-img :src="getImagePath(uploadedImage.square)" width="300"
                                    contain></v-img>
                         </div>
                     </v-layout>
@@ -65,7 +65,7 @@
                                 <v-icon>mdi-format-align-middle</v-icon>
                             </v-btn>
                             <v-img max-width="850" v-if="imageInPreferedSize"
-                                   :src="imageInPreferedSize"
+                                   :src="getImagePath(imageInPreferedSize)"
                                    :width="parseInt(sizeToScale)" contain></v-img>
                         </div>
                     </v-card>
@@ -96,7 +96,7 @@ export default {
     mounted() {
         if(this.recentImageId !== ''){
             axios.get(
-                process.env.VUE_APP_BACKENDPATH + '/image/main/',
+                process.env.VUE_APP_BACKENDPATH + 'image/main/',
                 {
                     params: {
                         id: this.recentImageId,
@@ -115,7 +115,7 @@ export default {
             fdObject.append('image', this.uploadedFile, this.uploadedFile.name);
 
             axios.post(
-                process.env.VUE_APP_BACKENDPATH + '/image/',
+                process.env.VUE_APP_BACKENDPATH + 'image/',
                 fdObject
             )
                 .then(res => {
@@ -128,7 +128,7 @@ export default {
                 alert('Only valid numbers allowed!');
             } else {
                 axios.get(
-                    process.env.VUE_APP_BACKENDPATH + '/image/',
+                    process.env.VUE_APP_BACKENDPATH + 'image/',
                     {
                         params: {
                             id: this.uploadedImage.id,
@@ -143,7 +143,7 @@ export default {
         greyscaling() {
             if(this.greySwitch) {
                 axios.get(
-                    process.env.VUE_APP_BACKENDPATH + '/image/',
+                    process.env.VUE_APP_BACKENDPATH + 'image/',
                     {
                         params: {
                             id: this.uploadedImage.id,
@@ -157,6 +157,9 @@ export default {
             } else {
                 this.mainImagePath = this.uploadedImage.original;
             }
+        },
+        getImagePath(originalPath){
+            return `${process.env.VUE_APP_BACKENDPATH}${originalPath}`;
         }
     }
 };

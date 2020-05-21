@@ -19,7 +19,7 @@
                             <v-col v-for="image in allUserImages" :key="image" cols="3" class="px-1">
                                 <v-card @click="openDialog(image)">
                                     <h3>{{image.name}}</h3>
-                                    <v-img :src="image.path" width="300" contain></v-img>
+                                    <v-img :src="getImagePath(image.path)" width="300" contain></v-img>
                                 </v-card>
                             </v-col>
                         </v-row>
@@ -36,7 +36,7 @@
                     <v-card width="800">
                         <h3 >{{currentImage.name}}</h3>
                         <div align="center">
-                            <v-img :src="currentImage.path" width="350" contain></v-img>
+                            <v-img :src="getImagePath(currentImage.path)" width="350" contain></v-img>
                         </div>
                         <v-row class="mx-2">
                             <v-col v-for="color in imageColors" :key="color" cols="4" class="px-3">
@@ -82,7 +82,7 @@ export default {
     methods: {
         getAllImages() {
             axios.get(
-                process.env.VUE_APP_BACKENDPATH + '/image/all/'
+                process.env.VUE_APP_BACKENDPATH + 'image/all/'
             ).then(res => {
                 res.data.forEach(it => {
                     this.allUserImages.push(it[1]);
@@ -93,7 +93,7 @@ export default {
         },
         getImageColors() {
             axios.get(
-                process.env.VUE_APP_BACKENDPATH + '/image/colors/',
+                process.env.VUE_APP_BACKENDPATH + 'image/colors/',
                 {
                     params: {
                         id: this.currentImage.id,
@@ -106,7 +106,7 @@ export default {
         async reset() {
             this.allUserImages = [];
             await axios.delete(
-                process.env.VUE_APP_BACKENDPATH + '/image/all/'
+                process.env.VUE_APP_BACKENDPATH + 'image/all/'
             );
         },
         switchToImageScaling() {
@@ -121,6 +121,9 @@ export default {
             this.currentImage = {};
             this.dialog = false;
             this.imageColors = [];
+        },
+        getImagePath(originalPath){
+            return `${process.env.VUE_APP_BACKENDPATH}${originalPath}`;
         }
     }
 };
