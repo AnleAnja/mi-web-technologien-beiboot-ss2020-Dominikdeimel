@@ -34,13 +34,15 @@ To start the system use the following command:
 Example data to simulate 30 uploaded images.
 The images are provided by [Unplash](https://unsplash.com/)
 
-1. ```docker ps```
+1. ```cd .docker```
 
-2. Copy the **Container Id** of the backend container
+2. ```docker ps```
+
+3. Copy the **Container Id** of the backend container
 
 ![](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/.github/images/docker_container.png)
 
-3. ```docker cp ../example_content/userData <Container Id>:/app/``` 
+4. ```docker cp ../example_content/userData <Container Id>:/app/``` 
 
 Example images for manual upload can be found [here](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/tree/master/example_content/example_images).
 
