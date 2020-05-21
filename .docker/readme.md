@@ -24,11 +24,26 @@ To start the system use the following command:
  ### Frontend
    The Web-app is accessible via: http://localhost:8080
     
-  ### Shutting down the system
+ ### Shutting down the system
   To shut down the system use the following command:
     
      docker-compose down
-    
+
+### Scaffolding
+
+Example data to simulate 30 uploaded images.
+The images are provided by [Unplash](https://unsplash.com/)
+
+1. ```docker ps```
+
+2. Copy the **Container Id** of the backend container
+
+![](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/.github/images/docker_container.png)
+
+3. ```docker cp ../example_content/userData <Container Id>:/app/``` 
+
+Example images for manual upload can be found [here](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/tree/master/example_content/example_images).
+
 ## Start the system without docker
 
 ### Frontend
