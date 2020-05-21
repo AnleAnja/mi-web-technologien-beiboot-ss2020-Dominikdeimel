@@ -47,20 +47,20 @@ Example images for manual upload can be found [here](https://github.com/mi-class
 ## Start the system without docker
 
 ### Frontend
-  ```cd Frontend/imagetool```
+1.  ```cd Frontend/imagetool```
  
-  ```npm install```
+2.  ```npm install```
  
-  ```npm run serve```
+3.  ```npm run serve```
   
   The Web-app is accessible via: http://localhost:8080
   
 ### Backend
- ```cd Backend```
+1. ```cd Backend```
  
- ```npm install```
+2.  ```npm install```
   
-  ```node app.js```
+3.  ```node app.js```
   
 ### Shutting down the system
   To shut down the system press **Ctrl + c**
