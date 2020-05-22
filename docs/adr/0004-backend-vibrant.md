@@ -23,5 +23,4 @@ Choosen Option: **Vibrant**
 * Easy implementation into the project
  
 
-### Negative Consequences
 

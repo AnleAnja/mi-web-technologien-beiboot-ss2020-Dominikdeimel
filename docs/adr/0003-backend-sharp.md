@@ -23,5 +23,5 @@ Choosen option: **Sharp**
 * Easy implementation into the project
 * Wide range of  
 
-### Negative Consequences
+
 

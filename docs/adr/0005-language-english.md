@@ -12,7 +12,7 @@ The current language used in the project is german. The goal of the third issue 
 
 ## Decision Outcome
 
-Choosen Option: English
+Choosen Option: **English**
 * World language
 * Main Language in technical and scientific domains
 
