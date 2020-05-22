@@ -46,3 +46,19 @@ General
 * General bug fixes (2 hours)
 
 **Complete: 12 hours**
+
+## Issue 4 
+Coding
+
+* General refactoring (6 hours)
+
+General
+
+* Docker persistence (3 hours)
+* Scaffolding (1 hours)
+* Setting up an issue for another contributor (1 hour)
+* Contributing to another project (5 hours)
+* Setting up ESLint (2 hours)
+
+
+**Complete: 18 hours**
