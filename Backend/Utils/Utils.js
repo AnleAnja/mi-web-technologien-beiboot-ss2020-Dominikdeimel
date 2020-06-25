@@ -7,6 +7,18 @@ module.exports = {
             result += characters.charAt(Math.floor(Math.random() * characters.length));
         }
         return result;
+    },
+    sortByNames: function (objectA, objectB) {
+        const nameA = objectA.name.toUpperCase();
+        const nameB = objectB.name.toUpperCase();
+
+        let comparison = 0;
+        if(nameA > nameB){
+            comparison = 1;
+        } else if(nameA < nameB){
+            comparison = -1;
+        }
+        return comparison;
     }
 };
 
