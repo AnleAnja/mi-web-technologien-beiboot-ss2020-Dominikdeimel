@@ -12,7 +12,9 @@ const app = express();
 app.use(cors());
 app.use(formData.parse());
 app.use(express.static(__dirname + '/'));
+
 let config = {};
+const backendUrl = 'http//:localhost:3000';
 
 app.post('/image', async function (req, res) {
     try {
@@ -65,7 +67,12 @@ async function getMainImages(imageId, imageName, imageBuffer){
         response['small'] = await getImagePath(imageId, imageBuffer, config.deviceSize.small, false, false);
         response['square'] = await getImagePath(imageId, imageBuffer, config.deviceSize.square, true, false);
 
-        await fs.outputJson(`./userData/${imageId}/imageParam.json`, {id: imageId, name: imageName, primaryColors: undefined});
+        await fs.outputJson(`./userData/${imageId}/imageParam.json`, {
+            id: imageId,
+            name: imageName,
+            imagePath: `${backendUrl}/userData/${imageId}/original`,
+            primaryColors: undefined
+        });
     }
     return response;
 }
@@ -199,6 +206,7 @@ app.get('/image/colors', async function (req, res) {
     let primaryColors;
     if(imageParam.primaryColors === undefined){
         primaryColors = await getPrimaryColors(imageId);
+        imageParam['primaryColors'] = primaryColors;
         await fs.outputJson(`./userData/${imageId}/imageParam.json`, imageParam);
     } else {
         primaryColors = imageParam.primaryColors;

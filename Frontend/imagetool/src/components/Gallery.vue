@@ -16,7 +16,7 @@
 
                     <div v-if="allUserImages.length !== 0">
                         <v-row class="mx-2">
-                            <v-col v-for="image in allUserImages" :key="image" cols="3" class="px-1">
+                            <v-col v-for="image in allUserImages" :key="image.imageId" cols="3" class="px-1">
                                 <v-card @click="openDialog(image)">
                                     <h3>{{image.name}}</h3>
                                     <v-img :src="getImagePath(image.path)" width="300" contain></v-img>
@@ -39,7 +39,7 @@
                             <v-img :src="getImagePath(currentImage.path)" width="350" contain></v-img>
                         </div>
                         <v-row class="mx-2">
-                            <v-col v-for="color in imageColors" :key="color" cols="4" class="px-3">
+                            <v-col v-for="color in imageColors" :key="color.name" cols="4" class="px-3">
                                 <h3>{{color.color}}</h3>
                                 <h6>Population: {{color.population}}</h6>
                                 <v-layout justify-center>
@@ -87,8 +87,6 @@ export default {
                 res.data.forEach(it => {
                     this.allUserImages.push(it[1]);
                 });
-                console.log(this.allUserImages);
-
             });
         },
         getImageColors() {
