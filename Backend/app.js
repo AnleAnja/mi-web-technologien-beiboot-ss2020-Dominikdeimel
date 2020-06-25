@@ -271,7 +271,9 @@ async function getSortedImagesList(sortBy) {
         if (sortBy === 'alphabetic') {
             sortedImageList.sort(utils.sortByNames);
         } else if(sortBy === 'birthTime'){
-            sortedImageList.sort((a, b) => a.imageStats.birthTimeMs - b.imageStats.birthTimeMs);
+            sortedImageList.sort(utils.sortByBirthName);
+        } else if(sortBy === 'random'){
+            sortedImageList = utils.shuffle(sortedImageList);
         }
         return sortedImageList;
 
