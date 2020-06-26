@@ -6,6 +6,7 @@ const fs = require('fs').promises;
 const fs_extra = require('fs-extra');
 const Vibrant = require('node-vibrant');
 const utils = require('./Utils/Utils');
+const sort = require('./Utils/Sort');
 const formData = require('express-form-data');
 
 const app = express();
@@ -231,16 +232,23 @@ app.get('/image/colors', async function (req, res) {
     res.json(imageParam.primaryColors);
 });
 app.get('/image/collection', async function (req, res) {
-    const preferredImageCount = req.query.preferredImageCount;
+    const preferredImageCount = req.query.preferredImageCount || 0 ;
     const sortBy = req.query.sortBy;
 
-    if (preferredImageCount === undefined || preferredImageCount < 1 || sortBy === undefined || sortBy === '') {
-        res.status(500).send('Invalid params!');
+    if (sortBy === undefined || sortBy === '') {
+        res.status(500).send('No sort type given!');
     } else {
         try {
             const sortedImageList = await getSortedImagesList(sortBy);
             const imageCollection = getImageCollection(preferredImageCount, sortedImageList);
-            res.send(imageCollection);
+
+            const result = {
+                sortBy: sortBy,
+                imageCount: imageCollection.length,
+                imageCollection: imageCollection
+            };
+
+            res.send(result);
         } catch (e) {
             res.status(500).send(e);
         }
@@ -248,9 +256,11 @@ app.get('/image/collection', async function (req, res) {
 });
 
 function getImageCollection(preferredImageCount, sortedImageList) {
-    const imageCollection = { imageCollection: [] };
+    const imageCollection = [];
+    if(preferredImageCount < 1 || preferredImageCount > sortedImageList.length) preferredImageCount = sortedImageList.length;
+
     for(let i = 0; i < preferredImageCount; i++){
-        imageCollection.imageCollection.push(sortedImageList[i]);
+        imageCollection.push(sortedImageList[i]);
     }
 
     return imageCollection;
@@ -259,23 +269,20 @@ function getImageCollection(preferredImageCount, sortedImageList) {
 async function getSortedImagesList(sortBy) {
     try {
         const directoryList = await fs_extra.readdir(path.join(__dirname, 'userData'));
-        let sortedImageList = [];
+        let imageList = [];
 
-        // eslint-disable-next-line no-undef
         for (let i = 0; i < directoryList.length; i++) {
-            // eslint-disable-next-line no-undef
             const imageParam = JSON.parse(await fs_extra.readFile(path.join(__dirname, `userData/${directoryList[i]}/imageParam.json`)));
-            sortedImageList.push(imageParam);
+            imageList.push(imageParam);
+        }
+        switch(sortBy){
+        case 'alphabetic' : imageList.sort(sort.sortByNames); break;
+        case 'birthTime'  : imageList.sort(sort.sortByBirthName); break;
+        case 'random'     : imageList = sort.shuffle(imageList); break;
+        case 'color'      : imageList = sort.sortByColors(imageList); break;
         }
         
-        if (sortBy === 'alphabetic') {
-            sortedImageList.sort(utils.sortByNames);
-        } else if(sortBy === 'birthTime'){
-            sortedImageList.sort(utils.sortByBirthName);
-        } else if(sortBy === 'random'){
-            sortedImageList = utils.shuffle(sortedImageList);
-        }
-        return sortedImageList;
+        return imageList;
 
     } catch (e) {
         console.log(e);
