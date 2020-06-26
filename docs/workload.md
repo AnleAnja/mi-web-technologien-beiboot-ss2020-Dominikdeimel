@@ -62,3 +62,14 @@ General
 
 
 **Complete: 18 hours**
+
+## Issue 5 
+Coding
+* API Endpoint (2 hour)
+* Sorting of images (3 hours)
+* General refactoring (3 hours)
+
+General
+* API Documentation (2 hours)
+
+**Complete: 10 hours**
