@@ -20,11 +20,10 @@ API endpoint: **GET** `http://localhost:3000/collection`
 | `imageCount`      | Int                    | Number of images in the collection                                                                                                                   |
 | `imageCollection` | Array of image objects | An image object contains all information for one image of the collection. Most importantly the image name, image url and primary colors. If the images are sorted by `color` a `primaryColorDetails` object is also added, which contains information about the most vibrant color of the image.   |
 
-An example response can be found [here]().
 
 ### Example Response
 
-```json
+```javascript
 {
     "sortBy": "color",
     "imageCount": 3,
