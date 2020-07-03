@@ -2,6 +2,7 @@ const path = require('path');
 const fs_extra = require('fs-extra');
 
 module.exports = {
+    sortOptions: ['alphabetical','birthTime','random','color'],
     shuffle: function (a) {
         for (let i = a.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -12,7 +13,7 @@ module.exports = {
     sortByNames: function (objectA, objectB) {
         const nameA = objectA.name.toUpperCase();
         const nameB = objectB.name.toUpperCase();
-
+        
         let comparison = 0;
         if (nameA > nameB) {
             comparison = 1;

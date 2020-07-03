@@ -7,13 +7,17 @@ const sort = require('../Utils/Sort');
 
 router.get('/images/collection', async function (req, res) {
     const preferredImageCount = req.query.preferredImageCount || 0 ;
+    const sortOrder = req.query.sortOrder || 'ascending';
     const sortBy = req.query.sortBy;
 
-    if (sortBy === undefined || sortBy === '') {
-        res.status(500).send('No sort type given!');
+    if (!sort.sortOptions.includes(sortBy)) {
+        res.status(500).send('Invalid sort type given!');
     } else {
         try {
             const sortedImageList = await getSortedImagesList(sortBy);
+
+            if(sortOrder === 'descending') sortedImageList.reverse();
+
             const imageCollection = getImageCollection(preferredImageCount, sortedImageList);
 
             const result = {
