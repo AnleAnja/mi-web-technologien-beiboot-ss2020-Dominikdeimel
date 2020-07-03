@@ -3,7 +3,7 @@
 As part of the 5th issue, the BeiBoot project was extended with an API endpoint. This endpoint is complementary to the frontend ui and allows the request of image collections.
 An image collection consists of already uploaded images. The number and the sorting of the images within the collection can be parameterized. 
 
-API endpoint: **GET** `http://localhost:3000/collection`
+API endpoint: **GET** `http://localhost:3000/api/images/collection`
 
 ### Query Parameters
 
