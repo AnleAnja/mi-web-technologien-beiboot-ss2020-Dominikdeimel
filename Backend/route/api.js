@@ -22,6 +22,7 @@ router.get('/images/collection', async function (req, res) {
 
             const result = {
                 sortBy: sortBy,
+                sortOrder: sortOrder,
                 imageCount: imageCollection.length,
                 imageCollection: imageCollection
             };
