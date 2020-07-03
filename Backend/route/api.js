@@ -5,7 +5,7 @@ const path = require('path');
 const sort = require('../Utils/Sort');
 
 
-router.get('/', async function (req, res) {
+router.get('/images/collection', async function (req, res) {
     const preferredImageCount = req.query.preferredImageCount || 0 ;
     const sortBy = req.query.sortBy;
 

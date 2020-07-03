@@ -4,7 +4,7 @@ const path = require('path');
 const fs_extra = require('fs-extra');
 const formData = require('express-form-data');
 
-const collectionRouter = require('./route/collection');
+const apiRouter = require('./route/api');
 const imageRouter = require('./route/image');
 
 const app = express();
@@ -13,7 +13,7 @@ app.use(cors());
 app.use(formData.parse());
 app.use(express.static(__dirname + '/'));
 
-app.use('/collection', collectionRouter);
+app.use('/api', apiRouter);
 app.use('/image', imageRouter);
 
 app.listen(3000, function () {
