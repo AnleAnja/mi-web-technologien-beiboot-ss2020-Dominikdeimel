@@ -9,8 +9,9 @@ API endpoint: **GET** `http://localhost:3000/api/images/collection`
 
 | **Parameter**           | **Type**   | **Description**                                                                                                                                                                                                                                                                                                                        | **Required**  |
 |---------------------|--------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
-| sortBy              | String | Specifies the order in which the images are sorted within the collection. <br></br>Valid values are: <br></br> `alphabetical` Images are sorted alphabeticaly by the image name <br></br> `birthTime` Images are sorted by the time of upload <br></br> `color` = Images are sorted by the hue value of their most vibrant color <br></br> `random` = Images are sorted random | Required |
-| preferredImageCount | Int    | Specifies the number of images for the collection. Only positiv _Int_ values are allowed. If no _preferredImageCount_ is specified, all pictures are taken by default.                                                                                                                                                                                                      | Optional     |
+| sortBy              | String | Specifies how the images are sorted within the collection. <br></br>Valid values are: <br></br> `alphabetical` : Images are sorted alphabeticaly by the image name <br></br> `birthTime` : Images are sorted by the time of upload <br></br> `color` : Images are sorted by the hue value of their most vibrant color <br></br> `random` : Images are sorted random | Required |
+| sortOrder | String | Specifies whether the images in the collection are sorted in ascending or descending order. <br></br> Valid values are: `ascending` and `descending`. <br></br>  If no _sortOrder_ is specified, an `ascending` order is taken by default.
+| preferredImageCount | Int    | Specifies the number of images for the collection. Only positiv _Int_ values are allowed. If no _preferredImageCount_ is specified, all images are taken by default.                                                                                                                                                                                                      | Optional     | 
 
 ### Response 
 
@@ -26,6 +27,7 @@ API endpoint: **GET** `http://localhost:3000/api/images/collection`
 ```javascript
 {
     "sortBy": "color",
+    "sortOrder": "ascending",
     "imageCount": 3,
     "imageCollection": [
         {
