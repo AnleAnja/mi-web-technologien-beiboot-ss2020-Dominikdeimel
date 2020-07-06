@@ -43,7 +43,7 @@ module.exports = {
         const sortedColorList = sortColorsByHue(paramHexList);
         const result = [];
 
-        for(i = 0; i < sortedColorList.length; i++) {
+        for(let i = 0; i < sortedColorList.length; i++) {
             const imageParam = JSON.parse(await fs_extra.readFile(path.join(__dirname, `../userData/${sortedColorList[i].id}/imageParam.json`)));
             imageParam.primaryColorDetails = sortedColorList[i].colorObject;
             result.push(imageParam);
@@ -58,22 +58,22 @@ const Color = function Color(hexVal) { //define a Color class for the color obje
 };
 
 function constructColor (colorObj){
-    var hex = colorObj.hex.substring(1);
+    const hex = colorObj.hex.substring(1);
     /* Get the RGB values to calculate the Hue. */
-    var r = parseInt(hex.substring(0, 2), 16) / 255;
-    var g = parseInt(hex.substring(2, 4), 16) / 255;
-    var b = parseInt(hex.substring(4, 6), 16) / 255;
+    const r = parseInt(hex.substring(0, 2), 16) / 255;
+    const g = parseInt(hex.substring(2, 4), 16) / 255;
+    const b = parseInt(hex.substring(4, 6), 16) / 255;
 
     /* Getting the Max and Min values for Chroma. */
-    var max = Math.max.apply(Math, [r, g, b]);
-    var min = Math.min.apply(Math, [r, g, b]);
+    const max = Math.max.apply(Math, [r, g, b]);
+    const min = Math.min.apply(Math, [r, g, b]);
 
 
     /* Variables for HSV value of hex color. */
-    var chr = max - min;
-    var hue = 0;
-    var val = max;
-    var sat = 0;
+    const chr = max - min;
+    let hue = 0;
+    const val = max;
+    let sat = 0;
 
 
     if (val > 0) {
