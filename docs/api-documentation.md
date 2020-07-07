@@ -5,7 +5,7 @@ An image collection consists of already uploaded images. The number and the sort
 
 API endpoint: **GET** `http://localhost:3000/api/images/collection`
 
-### Query Parameters
+## Query Parameters
 
 | **Parameter**           | **Type**   | **Description**                                                                                                                                                                                                                                                                                                                        | **Required**  |
 |---------------------|--------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
@@ -21,6 +21,11 @@ API endpoint: **GET** `http://localhost:3000/api/images/collection`
 | `imageCount`      | Int                    | Number of images in the collection                                                                                                                   |
 | `imageCollection` | Array of image objects | An image object contains all information for one image of the collection. Most importantly the image name, image url and primary colors. If the images are sorted by `color` a `primaryColorDetails` object is also added, which contains information about the most vibrant color of the image.   |
 
+## Response
+
+### Example Request 
+
+`http://localhost:3000/api/images/collection?sortBy=color&imageCount=3&sortOrder=ascending`
 
 ### Example Response
 
