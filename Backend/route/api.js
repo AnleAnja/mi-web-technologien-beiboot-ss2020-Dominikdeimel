@@ -6,9 +6,10 @@ const sort = require('../Utils/Sort');
 
 
 router.get('/images/collection', async function (req, res) {
-    const preferredImageCount = req.query.preferredImageCount || 0 ;
     const sortOrder = req.query.sortOrder || 'ascending';
-    const sortBy = req.query.sortBy;
+    const sortBy = req.query.sortBy || 'alphabetical';
+    let preferredImageCount = req.query.preferredImageCount || 0 ;
+    let from = req.query.from || 0;
 
     if (!sort.sortOptions.includes(sortBy)) {
         res.status(500).send('Invalid sort type given!');
@@ -17,13 +18,16 @@ router.get('/images/collection', async function (req, res) {
             const sortedImageList = await getSortedImagesList(sortBy);
 
             if(sortOrder === 'descending') sortedImageList.reverse();
+            if(preferredImageCount < 1 || preferredImageCount > sortedImageList.length) preferredImageCount = sortedImageList.length;
+            if(from > sortedImageList.length) from = 0;
 
-            const imageCollection = getImageCollection(preferredImageCount, sortedImageList);
+            const imageCollection = getImageCollection(preferredImageCount, from,  sortedImageList);
 
             const result = {
                 sortBy: sortBy,
                 sortOrder: sortOrder,
                 imageCount: imageCollection.length,
+                from: from,
                 imageCollection: imageCollection
             };
 
@@ -34,11 +38,10 @@ router.get('/images/collection', async function (req, res) {
     }
 });
 
-function getImageCollection(preferredImageCount, sortedImageList) {
+function getImageCollection(preferredImageCount, from, sortedImageList) {
     const imageCollection = [];
-    if(preferredImageCount < 1 || preferredImageCount > sortedImageList.length) preferredImageCount = sortedImageList.length;
 
-    for(let i = 0; i < preferredImageCount; i++){
+    for(let i = from; i < preferredImageCount; i++){
         imageCollection.push(sortedImageList[i]);
     }
 
