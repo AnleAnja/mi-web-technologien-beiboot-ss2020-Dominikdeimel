@@ -59,13 +59,7 @@ The images are provided by [Unsplash](https://unsplash.com/)
 
 1. ```cd .docker```
 
-2. ```docker ps```
-
-3. Copy the **Container Id** of the backend container
-
-![](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/.github/images/docker_container.png)
-
-4. ```docker cp ../example_content/userData <Container Id>:/app/``` 
+2. ```docker cp ../example_content/userData beiboot_backend:/app/``` 
 
 ### Without docker
 
