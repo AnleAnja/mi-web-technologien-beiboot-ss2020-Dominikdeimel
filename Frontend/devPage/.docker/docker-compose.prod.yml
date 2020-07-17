@@ -1,0 +1,9 @@
+version: '3.4'
+services:
+  devpage_frontend:
+    restart: always
+
+
+  backend:
+    restart: always
+

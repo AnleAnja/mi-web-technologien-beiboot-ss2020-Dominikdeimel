@@ -2,15 +2,14 @@ version: '3.4'
 services:
   devpage_frontend:
     build: ../
+    container_name: devpage_frontend
     ports:
       - "8080:8080"
-    volumes:
-      - type: bind
-        source: ../
-        target: /app
+
 
   backend:
     build: ../../../Backend
+    container_name: api_backend
     ports:
       - "3000:3000"
     volumes:
