@@ -5,6 +5,7 @@
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",
+    "build": "echo \"Error: no test specified\" && exit 1",
     "lint": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

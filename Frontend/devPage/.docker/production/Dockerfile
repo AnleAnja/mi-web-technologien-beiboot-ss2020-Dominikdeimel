@@ -3,8 +3,7 @@ FROM node:alpine
 #Create app directory
 WORKDIR /app
 
-#Install nodemon for hot reloading
-RUN npm install nodemon -g
+RUN npm install sass -g
 
 #Install app dependencies
 #A wildcard is used to ensure both package.json AND package-lock.json are copied
@@ -14,6 +13,7 @@ RUN npm install
 
 #Bundle app source
 COPY . .
+RUN sass --quiet --style=compressed assets/scss:public/css
 
 EXPOSE 8080
-CMD [ "nodemon", "-L", "src/app.js" ]
+CMD [ "node", "src/app.js" ]

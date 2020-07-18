@@ -1,7 +1,6 @@
 version: '3.4'
 services:
   devpage_frontend:
-    build: ../
     container_name: devpage_frontend
     ports:
       - "8080:8080"

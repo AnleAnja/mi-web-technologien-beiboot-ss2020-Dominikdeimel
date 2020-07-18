@@ -1,3 +1,5 @@
 node_modules
 npm-debug.log
 .docker
+!/.docker/development/entryPoint.js
+public

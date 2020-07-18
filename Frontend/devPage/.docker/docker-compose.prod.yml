@@ -1,6 +1,9 @@
 version: '3.4'
 services:
   devpage_frontend:
+    build:
+      context: ../
+      dockerfile: .docker/production/Dockerfile
     restart: always
 
 

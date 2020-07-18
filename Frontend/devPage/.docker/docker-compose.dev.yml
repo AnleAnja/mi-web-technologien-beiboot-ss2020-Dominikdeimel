@@ -1,9 +1,15 @@
 version: '3.4'
 services:
   devpage_frontend:
+    build:
+      context: ../
+      dockerfile: .docker/development/Dockerfile
     volumes:
       - type: bind
         source: ../
         target: /app
+      - type: bind
+        source: ./development/entryPoint.js
+        target: /app/entryPoint.js
 
 
