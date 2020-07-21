@@ -13,7 +13,7 @@ RUN npm install
 
 #Bundle app source
 COPY . .
-RUN sass --quiet --style=compressed assets/scss:public/css
+RUN sass --quiet --style=compressed assets/scss/styles.scss:public/css/styles.min.css
 
 EXPOSE 8080
 CMD [ "node", "src/app.js" ]

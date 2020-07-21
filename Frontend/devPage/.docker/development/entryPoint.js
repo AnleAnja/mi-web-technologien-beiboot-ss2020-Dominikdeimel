@@ -1,5 +1,5 @@
 const { spawn } = require('child_process');
-const sassWatcher = spawn('sass', ['--watch', 'assets/scss:public/css']);
+const sassWatcher = spawn('sass', ['--style=compressed', '--watch', 'assets/scss/styles.scss:public/css/styles.min.css']);
 const startApp = spawn('nodemon', ['-L', 'src/app.js']);
 
 // sassWatcher Console Output
