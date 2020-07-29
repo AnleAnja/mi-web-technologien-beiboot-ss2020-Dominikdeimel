@@ -13,7 +13,7 @@ In order to provide an additional hot reload function, an appropriate node watch
 * [Supervisor](https://github.com/petruisfan/node-supervisor) 
 
 ## Decision Outcome
-Choosen Option: **Nodemon**
+Chosen Option: **Nodemon**
 
 * Automatic file extension detection
 * Can be used as CLI

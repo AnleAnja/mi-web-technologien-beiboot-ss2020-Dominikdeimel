@@ -13,7 +13,7 @@ To make it easier for contributors to publish issues, a template should be defin
 
 ## Decision Outcome
 
-Choosen Option: **Issue Template provided by Github**
+Chosen Option: **Issue Template provided by Github**
 * Short template provided by Github
 * Can be directly set as an automated template when creating an issue
  

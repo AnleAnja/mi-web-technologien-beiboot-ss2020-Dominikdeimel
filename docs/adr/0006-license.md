@@ -13,7 +13,7 @@ In order to make the project accessible for people to contribute a license shoul
 
 ## Decision Outcome
 
-Choosen Option: **MIT**
+Chosen Option: **MIT**
 * Relatively short
  
 * Permissions for

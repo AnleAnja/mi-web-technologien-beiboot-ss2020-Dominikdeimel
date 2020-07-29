@@ -14,7 +14,7 @@ For this purpose a suitable library needs to be implemented.
 * [RGBaster.js](https://github.com/briangonzalez/rgbaster.js) 
 
 ## Decision Outcome
-Choosen Option: **Vibrant**
+Chosen Option: **Vibrant**
 
 * Clear syntax
 * Implementation of android palette class

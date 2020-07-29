@@ -13,7 +13,7 @@ A pull request template can provide a uniform way for setting up a pull request.
 
 ## Decision Outcome
 
-Choosen Option: **Pull Request Templates by Steve Mao with self written additions**
+Chosen Option: **Pull Request Templates by Steve Mao with self written additions**
 * Template which covers the ost important areas
 * Self written additions allow for more customization
  

@@ -14,7 +14,7 @@ For this purpose a suitable library needs to be implemented.
 
 ## Decision Outcome
 
-Choosen option: **Sharp**
+Chosen option: **Sharp**
 * Easy to use Syntax
 * Fast implementation of the required functions
 * Extended range of functions, maybe for future issues (e.g. sharpening) 

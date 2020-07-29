@@ -12,7 +12,7 @@ The core of good contribution is a good communication between the contributors. 
 
 ## Decision Outcome
 
-Choosen Option: **Contributor Covenant**
+Chosen Option: **Contributor Covenant**
 * Widely used template
  
 ### Positive Consequences

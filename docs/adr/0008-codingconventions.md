@@ -14,7 +14,7 @@ In order to maintain a uniform code even with several participants, coding conve
 
 ## Decision Outcome
 
-Choosen Option: **Javascript Standard Style with self written additions**
+Chosen Option: **Javascript Standard Style with self written additions**
 * Template which covers the most important aspects
 * Self written additions allows for more customization 
  

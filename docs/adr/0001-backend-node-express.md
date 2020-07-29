@@ -13,7 +13,7 @@ A general plattform and a web framework should be defined.
 
 
 ## Decision Outcome
-Choosen Option: **Node.js** and **Express.js**, because these technologies were already used in past projects
+Chosen Option: **Node.js** and **Express.js**, because these technologies were already used in past projects
 
 ### Positive Consequences
 * No further induction required 
