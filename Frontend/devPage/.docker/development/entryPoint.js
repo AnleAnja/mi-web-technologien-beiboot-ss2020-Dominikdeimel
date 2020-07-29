@@ -1,5 +1,6 @@
 const { spawn } = require('child_process');
 const sassWatcher = spawn('sass', ['--style=compressed', '--watch', 'assets/scss/styles.scss:public/css/styles.min.css']);
+const babelWatcher = spawn('npx', ['babel', 'assets/js/main.js', '-w', '-o', 'public/js/main.min.js']);
 const startApp = spawn('nodemon', ['-L', 'src/app.js']);
 
 // sassWatcher Console Output
@@ -12,6 +13,19 @@ sassWatcher.stderr.on('data', (data) => {
 });
 
 sassWatcher.on('close', (code) => {
+    console.log(`child process exited with code ${code}`);
+});
+
+// babelWatcher Console Output
+babelWatcher.stdout.on('data', (data) => {
+    console.log(`stdout: ${data}`);
+});
+
+babelWatcher.stderr.on('data', (data) => {
+    console.error(`stderr: ${data}`);
+});
+
+babelWatcher.on('close', (code) => {
     console.log(`child process exited with code ${code}`);
 });
 

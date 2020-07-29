@@ -5,7 +5,6 @@
   "main": "src/app.js",
   "scripts": {
     "start": "node src/app.js",
-    "build": "echo \"Error: no test specified\" && exit 1",
     "lint": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -17,6 +16,9 @@
     "express": "^4.17.1"
   },
   "devDependencies": {
-
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "babel-preset-minify": "^0.5.1"
   }
 }
