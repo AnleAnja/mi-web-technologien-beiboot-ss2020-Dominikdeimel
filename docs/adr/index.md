@@ -12,5 +12,11 @@ This log lists the architectural decisions for [BeibootProjekt2020](https://gith
 - [ADR-0008](0008-codingconventions.md) - Coding conventions for the BeiBoot project 
 - [ADR-0009](0009-issuetemplate.md) - Issue Templates for the BeiBoot project 
 - [ADR-0010](0010-pullrequesttemplate.md) - Pull Request Template for the BeiBoot project
+- [ADR-0011](0011-devPage-nodemon.md) - Nodemon as a Node.js Watcher for hot reloading
+- [ADR-0012](0012-devPage-express.md) - Express as a server-side framework
+- [ADR-0013](0013-devPage-eslint.md) - Eslint as a coding linter
+- [ADR-0014](0014-devPage-babel.md) - Babel as a javascript transpiler 
+
+
 
 
