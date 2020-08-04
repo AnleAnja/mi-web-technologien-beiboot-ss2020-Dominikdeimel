@@ -1,4 +1,4 @@
-# Nodemon as an Node.js Watcher for hot reloading
+# Nodemon as a Node.js Watcher for hot reloading
 
 * Status: Accepted
 
