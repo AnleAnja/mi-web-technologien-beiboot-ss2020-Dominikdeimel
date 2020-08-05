@@ -1,4 +1,4 @@
-# _devPage_ development environment 
+# _devPage_ Development Environment 
 
 As part of Issue 6, a front-end container based on Node.js is provided, which is deployed in an independent Docker Container. 
 The goal was to implement different development tools to enable a sufficient development process.
