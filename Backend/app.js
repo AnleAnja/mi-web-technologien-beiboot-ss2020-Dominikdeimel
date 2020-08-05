@@ -4,8 +4,8 @@ const path = require('path');
 const fs_extra = require('fs-extra');
 const formData = require('express-form-data');
 
-const apiRouter = require('./route/api');
-const imageRouter = require('./route/image');
+const apiRouter = require('./routes/api');
+const imageRouter = require('./routes/image');
 
 const app = express();
 
