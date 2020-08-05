@@ -33,3 +33,4 @@ Furthermore, general areas such as _code of conduct_ and _conventions_ will be c
    * [Pull-Request Template](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/docs/conventions.md#pull-request-template)
 * [Workflow](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/docs/workflow.md)
 * [API Documentation](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/docs/api-documentation.md)
+* [devPage development enviroment](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/Frontend/devPage/readme.md)
