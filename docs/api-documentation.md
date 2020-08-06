@@ -16,15 +16,13 @@ API endpoint: **GET** `http://localhost:3000/api/images/collection`
 
 ### Response 
 
-| Key             | Type                   | Description                                                                                                                                          |
-|-----------------|------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `sortBy`          | String                 | Type of sorting                                                                                                                                      |
-| `sortOrder` | String | Specifies whether the images in the collection are sorted in ascending or descending order.
-            |
-| `imageCount`      | Int                    | Number of images in the collection.                                                                                                                   |
-| `from` | Int | Specifies the starting element in the collection.
-                    |
-| `imageCollection` | Array of image objects | An image object contains all information for one image of the collection. Most importantly the image name, image url and primary colors.    | 
+| Key             | Type                   | Description                                                                                                                              |
+|-----------------|------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| `sortBy`          | String                 | Type of sorting                                                                                                                          |
+| `sortOrder`       | String                 | Specifies whether the images in the collection are sorted in ascending or descending order                                              |
+| `imageCount`      | Int                    | Number of images in the collection                                                                                                       |
+| `from`          | Int                    | Specifies the starting element in the collection.                                                                                        |
+| `imageCollection` | Array of image objects | An image object contains all information for one image of the collection. Most importantly the image name, image url and primary colors. |   
 
 
 ## Response
