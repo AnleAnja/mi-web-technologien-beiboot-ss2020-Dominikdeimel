@@ -2,7 +2,7 @@
 
 As part of the 5th issue, the BeiBoot project was extended with an API to fetch uploaded images. At the moment there a two endpoints available:
 
-*[_Get_ single image](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/docs/api-documentation.md#get-single-image)
+* [_Get_ single image](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/docs/api-documentation.md#get-single-image)
 * [_Get_ Collection of images](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/docs/api-documentation.md#get-collection-of-images)
 
 
