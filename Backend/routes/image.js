@@ -95,7 +95,7 @@ function getImageDimensions(imagePath){
         let format;
 
         if (dimensions.height > dimensions.width) {
-            format = 'portait';
+            format = 'portrait';
         } else if (dimensions.height < dimensions.width) {
             format = 'landscape';
         } else format = 'square';

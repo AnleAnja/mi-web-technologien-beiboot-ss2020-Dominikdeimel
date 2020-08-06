@@ -4,6 +4,14 @@ const fs_extra = require('fs-extra');
 const path = require('path');
 const sort = require('../Utils/Sort');
 
+router.get('/images/single', async function (req, res) {
+    const format = req.query.format || 'portrait';
+    const imageListInFormat = await getImageListInFormat(format);
+    console.log(imageListInFormat);
+    const randomImage = imageListInFormat[Math.floor(Math.random()*imageListInFormat.length)];
+
+    res.status(200).send(randomImage);
+});
 
 router.get('/images/collection', async function (req, res) {
     const sortOrder = req.query.sortOrder || 'ascending';
@@ -37,6 +45,19 @@ router.get('/images/collection', async function (req, res) {
         }
     }
 });
+
+async function getImageListInFormat(format){
+    const directoryList = await fs_extra.readdir(path.join(__dirname, '../userData'));
+    let imageList = [];
+
+    for (let i = 0; i < directoryList.length; i++) {
+        const imageParam = JSON.parse(await fs_extra.readFile(path.join(__dirname, `../userData/${directoryList[i]}/imageParam.json`)));
+        if(imageParam.imageDimensions.format === format){
+            imageList.push(imageParam);
+        }
+    }
+    return imageList;
+}
 
 function getImageCollection(preferredImageCount, from, sortedImageList) {
     const imageCollection = [];
