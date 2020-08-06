@@ -7,7 +7,6 @@ const sort = require('../Utils/Sort');
 router.get('/images/single', async function (req, res) {
     const format = req.query.format || 'portrait';
     const imageListInFormat = await getImageListInFormat(format);
-    console.log(imageListInFormat);
     const randomImage = imageListInFormat[Math.floor(Math.random()*imageListInFormat.length)];
 
     res.status(200).send(randomImage);
