@@ -3,6 +3,7 @@ const router = express.Router();
 const sharp = require('sharp');
 const fs = require('fs').promises;
 const fs_extra = require('fs-extra');
+const sizeOf = require('image-size');
 const path = require('path');
 const Vibrant = require('node-vibrant');
 const utils = require('../Utils/Utils');
@@ -88,6 +89,25 @@ router.get('/colors', async function (req, res) {
     res.json(imageParam.primaryColors);
 });
 
+function getImageDimensions(imagePath){
+    try {
+        const dimensions = sizeOf(path.join(__dirname, imagePath));
+        let format;
+
+        if (dimensions.height > dimensions.width) {
+            format = 'portait';
+        } else if (dimensions.height < dimensions.width) {
+            format = 'landscape';
+        } else format = 'square';
+
+        dimensions['format'] = format;
+
+        return dimensions;
+    } catch (e) {
+        console.log(e);
+    }
+}
+
 /***
  * @param {Int} imageId
  * @param {String} imageName
@@ -119,6 +139,7 @@ async function getMainImages(imageId, imageName, imageBuffer) {
             id: imageId,
             name: imageName,
             imagePath: `${backendUrl}/userData/${imageId}/original`,
+            imageDimensions: getImageDimensions(`../userData/${imageId}/original`),
             imageStats: await getImageStats(imageId),
             primaryColors: await getPrimaryColors(imageId)
         });
@@ -228,6 +249,8 @@ async function getPrimaryColors(imageId) {
     } catch (e) {
         console.log(e);
     }
+
+
 
 }
 
