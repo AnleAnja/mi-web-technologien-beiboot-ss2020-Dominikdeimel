@@ -1,11 +1,110 @@
 # API Documentation
 
-As part of the 5th issue, the BeiBoot project was extended with an API endpoint. This endpoint is complementary to the frontend ui and allows the request of image collections.
-An image collection consists of already uploaded images. The number and the sorting of the images within the collection can be parameterized. 
+As part of the 5th issue, the BeiBoot project was extended with an API to fetch uploaded images. At the moment there a two endpoints available:
+
+* [_Get_ single image](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/docs/api-documentation.md#get-single-image)
+* [_Get_ Collection of images](https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel/blob/master/docs/api-documentation.md#get-collection-of-images)
+
+
+## _Get_ single image
+
+API endpoint: **GET** `http://localhost:3000/api/images/single`
+
+### Query Parameters
+
+| **Parameter**           | **Type**   | **Description**                                                                                                                                                                                                                                                                                                                        | **Required**  |
+|---------------------|--------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
+| _format_              | String | Specifies the format for the image. <br></br>Valid values are: <br></br> `portrait` : Get an image in portrait format. <br></br>`landscape` : Get an image in landscape format. <br></br> `square` : Get an image in square format. <br></br> If no format is specified, `portrait` is taken by default. | Optional |
+|
+
+### Response 
+
+| Key             | Type                   | Description                                                                                                                              |
+|-----------------|------------------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| `id`          | Int                 | Id of the image                                                                                                                         |
+| `name`       | String                 | Name of the image                                            |
+| `imagePath`      | String                    | Path to the image file                                                                                                      |
+| `imageDimensions`          | Object                    | Dimensions and format of the image                                                                                       |
+| `imageStats` | Object | Different image stats like _time of upload_ or _file size_  | 
+| `primaryColors` | Object | Primary colors of the image. The Colors are sorted in an descending order, based on their population |
+| `primaryColorDetails` | Object | Details for the primary color of the image. Contains informations like _hue_ or _chroma_ value
+
+
+### API Response
+
+**Example Request** 
+
+`http://localhost:3000/api/images/single?format=landscape`
+
+**Example Response**
+
+```javascript
+{
+    "id": "ZWYzgR2KAq",
+    "name": "fpM13Kcn1WU.jpg",
+    "imagePath": "http//:localhost:3000/userData/ZWYzgR2KAq/original",
+    "imageDimensions": {
+        "height": 1000,
+        "width": 1500,
+        "type": "png",
+        "format": "landscape"
+    },
+    "imageStats": {
+        "birthTime": "2020-08-06T15:39:16.323Z",
+        "birthTimeMs": 1596728356322.862,
+        "size": 747320
+    },
+    "primaryColors": [
+        {
+            "name": "Muted",
+            "color": "#978862",
+            "population": 588
+        },
+        {
+            "name": "DarkMuted",
+            "color": "#4e4f32",
+            "population": 393
+        },
+        {
+            "name": "LightMuted",
+            "color": "#d2c4a4",
+            "population": 273
+        },
+        {
+            "name": "Vibrant",
+            "color": "#c0a957",
+            "population": 94
+        },
+        {
+            "name": "LightVibrant",
+            "color": "#d9bc61",
+            "population": 19
+        },
+        {
+            "name": "DarkVibrant",
+            "color": "#5c3c1c",
+            "population": 1
+        }
+    ],
+    "primaryColorDetails": {
+        "hex": "#978862",
+        "chroma": 0.20784313725490194,
+        "hue": 43.0188679245283,
+        "sat": 0.35099337748344367,
+        "val": 0.592156862745098,
+        "luma": 0.5345882352941176,
+        "red": 151,
+        "green": 136,
+        "blue": 98
+    }
+}
+```
+
+## _Get_ Collection of images
 
 API endpoint: **GET** `http://localhost:3000/api/images/collection`
 
-## Query Parameters
+### Query Parameters
 
 | **Parameter**           | **Type**   | **Description**                                                                                                                                                                                                                                                                                                                        | **Required**  |
 |---------------------|--------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------|
@@ -25,13 +124,13 @@ API endpoint: **GET** `http://localhost:3000/api/images/collection`
 | `imageCollection` | Array of image objects | An image object contains all information for one image of the collection. Most importantly the image name, image url and primary colors. |   
 
 
-## Response
+### API Response
 
-### Example Request 
+**Example Request** 
 
 `http://localhost:3000/api/images/collection?sortBy=color&from=3&sortOrder=ascending&preferredImageCount=3`
 
-### Example Response
+**Example Response**
 
 ```javascript
 {
