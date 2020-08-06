@@ -29,7 +29,7 @@ API endpoint: **GET** `http://localhost:3000/api/images/collection`
 
 ### Example Request 
 
-`http://localhost:3000/api/images/collection?sortBy=color&imageCount=3&sortOrder=ascending`
+`http://localhost:3000/api/images/collection?sortBy=color&from=3&sortOrder=ascending&preferredImageCount=3`
 
 ### Example Response
 
