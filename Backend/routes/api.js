@@ -61,9 +61,11 @@ async function getImageListInFormat(format){
 
 function getImageCollection(preferredImageCount, from, sortedImageList) {
     const imageCollection = [];
+    let i = from;
 
-    for(let i = from; i < preferredImageCount; i++){
+    while(imageCollection.length < preferredImageCount){
         imageCollection.push(sortedImageList[i]);
+        i++;
     }
 
     return imageCollection;
