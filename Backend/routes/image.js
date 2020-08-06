@@ -7,6 +7,7 @@ const sizeOf = require('image-size');
 const path = require('path');
 const Vibrant = require('node-vibrant');
 const utils = require('../Utils/Utils');
+const color = require('../Utils/Color');
 
 const config = JSON.parse(fs_extra.readFileSync('config.json'));
 const backendUrl = 'http//:localhost:3000';
@@ -135,13 +136,17 @@ async function getMainImages(imageId, imageName, imageBuffer) {
         response['small'] = await getImagePath(imageId, imageBuffer, config.deviceSize.small, false, false);
         response['square'] = await getImagePath(imageId, imageBuffer, config.deviceSize.square, true, false);
 
+        const primaryImageColors = await getPrimaryColors(imageId)
+        const primaryColorDetails = await color.getColorObject(primaryImageColors[0].color);
+
         await fs_extra.outputJson(path.join(__dirname, `../userData/${imageId}/imageParam.json`), {
             id: imageId,
             name: imageName,
             imagePath: `${backendUrl}/userData/${imageId}/original`,
             imageDimensions: getImageDimensions(`../userData/${imageId}/original`),
             imageStats: await getImageStats(imageId),
-            primaryColors: await getPrimaryColors(imageId)
+            primaryColors: primaryImageColors,
+            primaryColorDetails: primaryColorDetails
         });
     }
     return response;
