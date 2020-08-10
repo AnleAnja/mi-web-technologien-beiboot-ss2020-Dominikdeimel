@@ -15,7 +15,7 @@ app.get('/', function (req, res) {
 
 app.get('/collection', async function (req, res) {
     try {
-        const result = await axios.get('http://backend:3000/api/images/collection?sortBy=color&imageCount=3&sortOrder=ascending');
+        const result = await axios.get('http://localhost:3000/api/images/collection?sortBy=color&from=3&sortOrder=ascending&preferredImageCount=3');
         res.send(result.data);
     } catch (e) {
         res.send(e);
