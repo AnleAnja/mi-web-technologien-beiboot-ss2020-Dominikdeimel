@@ -16,7 +16,8 @@ This log lists the architectural decisions for [BeibootProjekt2020](https://gith
 - [ADR-0012](0012-devPage-express.md) - Express as a server-side framework
 - [ADR-0013](0013-devPage-eslint.md) - Eslint as a coding linter
 - [ADR-0014](0014-devPage-babel.md) - Babel as a javascript transpiler 
-
+- [ADR-0015](0015-devPage-docker-compose.md) - Multiple docker compose files to realise a production and development build
+- [ADR-0016](0016-backend-image-size.md) - Image-size as a library to get the size of an image bugger 
 
 
 
