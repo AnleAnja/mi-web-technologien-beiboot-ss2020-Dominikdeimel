@@ -27,6 +27,14 @@ Deployment takes place inside a docker container. There are different _docker-co
 
 `git clone https://github.com/mi-classroom/mi-web-technologien-beiboot-ss2020-Dominikdeimel`
 
+3. Change to the _devPage_ folder
+
+`cd frontend/devPage`
+
+4. Install dependencies
+
+`npm install`
+
 ### Starting the container
 
 1. Switch to the `.docker` folder
