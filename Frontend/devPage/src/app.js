@@ -13,11 +13,12 @@ app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname + '/../views/index.html'));
 });
 
-app.get('/collection', async function (req, res) {
+app.get('/images/single', async function (req, res) {
     try {
-        const result = await axios.get('http://localhost:3000/api/images/collection?sortBy=color&from=3&sortOrder=ascending&preferredImageCount=3');
+        const result = await axios.get('http://localhost:3000/api/images/single', {params: req.query });
         res.send(result.data);
     } catch (e) {
+        res.statusCode = 500;
         res.send(e);
     }
 });
