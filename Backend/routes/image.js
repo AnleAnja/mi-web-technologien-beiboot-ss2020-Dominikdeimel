@@ -10,7 +10,7 @@ const utils = require('../Utils/Utils');
 const color = require('../Utils/Color');
 
 const config = JSON.parse(fs_extra.readFileSync('config.json'));
-const backendUrl = 'http//:localhost:3000';
+const backendUrl = 'http://localhost:3000';
 
 
 router.post('/', async function (req, res) {

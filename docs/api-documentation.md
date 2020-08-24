@@ -42,7 +42,7 @@ API endpoint: **GET** `http://localhost:3000/api/images/single`
 {
     "id": "ZWYzgR2KAq",
     "name": "fpM13Kcn1WU.jpg",
-    "imagePath": "http//:localhost:3000/userData/ZWYzgR2KAq/original",
+    "imagePath": "http://localhost:3000/userData/ZWYzgR2KAq/original",
     "imageDimensions": {
         "height": 1000,
         "width": 1500,
@@ -142,7 +142,7 @@ API endpoint: **GET** `http://localhost:3000/api/images/collection`
         {
             "id": "ogxXoMd6xh",
             "name": "CD0xj1FzCwY.jpg",
-            "imagePath": "http//:localhost:3000/userData/ogxXoMd6xh/original",
+            "imagePath": "http://localhost:3000/userData/ogxXoMd6xh/original",
             "imageDimensions": {
                 "height": 1500,
                 "width": 1000,
@@ -201,7 +201,7 @@ API endpoint: **GET** `http://localhost:3000/api/images/collection`
         {
             "id": "nlIZpwuDmy",
             "name": "9VZr0RO_CwQ.jpg",
-            "imagePath": "http//:localhost:3000/userData/nlIZpwuDmy/original",
+            "imagePath": "http://localhost:3000/userData/nlIZpwuDmy/original",
             "imageDimensions": {
                 "height": 1000,
                 "width": 1500,
@@ -260,7 +260,7 @@ API endpoint: **GET** `http://localhost:3000/api/images/collection`
         {
             "id": "dmr09hSDlP",
             "name": "YOjyt8aenzo.jpg",
-            "imagePath": "http//:localhost:3000/userData/dmr09hSDlP/original",
+            "imagePath": "http://localhost:3000/userData/dmr09hSDlP/original",
             "imageDimensions": {
                 "height": 1500,
                 "width": 1000,
