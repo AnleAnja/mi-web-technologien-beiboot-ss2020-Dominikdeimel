@@ -9,7 +9,7 @@ services:
 
   backend:
     build: ../../../Backend
-    container_name: api_backend
+    container_name: beiboot_backend
     ports:
       - "3000:3000"
     volumes:
