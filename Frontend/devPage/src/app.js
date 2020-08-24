@@ -15,7 +15,7 @@ app.get('/', function (req, res) {
 
 app.get('/images/single', async function (req, res) {
     try {
-        const result = await axios.get('http://localhost:3000/api/images/single', {params: req.query });
+        const result = await axios.get('http://backend:3000/api/images/single', {params: req.query });
         res.send(result.data);
     } catch (e) {
         res.statusCode = 500;
