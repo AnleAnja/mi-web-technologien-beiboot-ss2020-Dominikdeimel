@@ -1,3 +1,15 @@
-body {
-  background-color: green;
+@import url('https://fonts.googleapis.com/css?family=Barlow');
+
+.container {
+  position: relative;
+  text-align: center;
+  display:inline-block;
+}
+.text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20pt;
+  font-family: Barlow;
 }
