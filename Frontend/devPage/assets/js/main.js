@@ -1,5 +1,3 @@
-console.log('Test');
-
 /**
  * @returns {Promise<String>}
  */
@@ -35,13 +33,26 @@ async function getRandomImageMeta(orientation = 'portrait') {
  */
 function renderRandomImage(metadata) {
     const img = document.createElement('img');
+    img.setAttribute('class', 'img')
     img.src = metadata.imagePath;
     document.getElementById('content').append(img);
 }
 
+/**
+ *
+ * @returns {Promise<void>}
+ */
+async function renderGradient(metadata) {
+    const div = document.createElement('div');
+    div.setAttribute('class', 'gradient');
+    metadata.primaryColorDetails.hex;
+}
+
 async function main() {
+    const metadata = await getRandomImageMeta();
     renderQuote(await getQuote());
-    renderRandomImage(await getRandomImageMeta());
+    renderRandomImage(metadata);
+    renderGradient(metadata);
 }
 
 main();
