@@ -23,7 +23,7 @@ async function getQuote() {
 function renderQuote(quotes, metadata) {
     const ctx = document.getElementById('canvas').getContext('2d');
     ctx.font = '25pt Barlow';
-    if (metadata.primaryColorDetails.luma < 50) {
+    if (metadata.primaryColorDetails.luma < 0.5) {
         ctx.fillStyle = '#ffffff';
     } else {
         ctx.fillStyle = '#000000';
