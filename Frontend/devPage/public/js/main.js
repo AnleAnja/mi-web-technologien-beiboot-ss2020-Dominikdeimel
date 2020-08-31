@@ -1,9 +1,17 @@
+/**
+ * @var { HTMLCanvasElement }
+ */
+let canvas;
+const fontFamily = 'Barlow';
+
 async function main() {
     const metadata = await getRandomImageMeta();
     await renderRandomImage(metadata);
 }
-
-main();
+document.addEventListener('DOMContentLoaded', () => {
+    canvas = document.getElementById('canvas');
+    main();
+});
 
 /**
  * @returns {Promise<String>}
@@ -21,21 +29,103 @@ async function getQuote() {
  * @returns {void}
  */
 function renderQuote(quotes, metadata) {
-    const ctx = document.getElementById('canvas').getContext('2d');
-    ctx.font = '25pt Barlow';
-    if (metadata.primaryColorDetails.luma < 0.5) {
-        ctx.fillStyle = '#ffffff';
-    } else {
-        ctx.fillStyle = '#000000';
-    }
-    ctx.textAlign = 'center';
-    ctx.fillText(quotes.quote, canvas.width/2, 3 * canvas.height/4);
-    ctx.font = '18pt Barlow';
+    const ctx = canvas.getContext('2d');
+    const quote = formatUsingLinebreaks(quotes.quote, 25);
+    const textColor = metadata.primaryColorDetails.luma < 0.5 ? '#ffffff' : '#000000';
+    renderMultilineString(quote, canvas.width/2, 3 * canvas.height/4, textColor, 25);
+    ctx.fillStyle = textColor;
+    ctx.font = `15pt ${fontFamily}`;
     ctx.textAlign = 'center';
     ctx.fillText(quotes.date, canvas.width/2, canvas.height/8);
-    ctx.font = '20pt Barlow';
+    ctx.font = `18pt ${fontFamily}`;
     ctx.textAlign = 'center';
     ctx.fillText(quotes.author, canvas.width/2, 6 * canvas.height / 7);
+}
+
+/**
+ *
+ * @param { String } quote
+ * @returns { String[] }
+ */
+function formatUsingLinebreaks(quote, fontSize) {
+    const ctx = canvas.getContext('2d');
+    const maxLineBreaks = 2;
+    const lines = [];
+    ctx.font = `${fontSize}pt ${fontFamily}`;
+    const metrics = ctx.measureText(quote);
+
+    for(let lineBreak = maxLineBreaks; lineBreak > 0; lineBreak--) {
+        // check if the current amount of linebreaks is justified
+        if (metrics.width >= canvas.width * lineBreak) {
+            // get how many characters are supposed to be in a line
+            const charCount = quote.length / (lineBreak + 1);
+            let lastIndex = 0;
+            for (let i = 0; i < lineBreak; i++) {
+                // for each target linebreak, replace the closest space with a linebreak
+                const spaceIndex = findClosestSpace(quote, charCount * (i + 1));
+                lines.push(quote.substring(lastIndex, spaceIndex));
+                lastIndex = spaceIndex +1;
+            }
+            lines.push(quote.substring(lastIndex));
+            // end of function, the quite has been partitioned
+            return lines;
+        }
+    }
+
+    // if the quote needed no change, it is returned as-is
+    return [quote];
+}
+
+/**
+ *
+ * @param { String } text
+ * @param { Number } position
+ * @returns { Number }
+ * */
+function findClosestSpace(text, position) {
+    const right = text.indexOf(' ', position);
+    const left = text.lastIndexOf(' ', position);
+    if(left === -1 || right - position < position - left) {
+        return right;
+    } else {
+        return left;
+    }
+}
+
+/**
+ *
+ * @param { String[] } lines
+ * @param { Number } x
+ * @param { Number } y
+ * @param { String } textColor
+ * @param { Number } fontSize
+ */
+function renderMultilineString(lines, x, y, textColor, fontSize) {
+    const ctx = canvas.getContext('2d');
+    ctx.textAlign = 'center';
+    ctx.fillStyle = textColor;
+    ctx.font = `${fontSize}pt ${fontFamily}`;
+    for(let i = 0; i < lines.length; i++) {
+        const height = calculateTextHeight(lines[i], fontSize);
+        ctx.fillText(lines[i], x, y);
+        y += height + 5;
+    }
+}
+
+/**
+ * @param { String } text
+ * @param { Number } fontSize
+ * @returns { Number }
+ */
+function calculateTextHeight(text, fontSize) {
+    const span = document.createElement('span');
+    span.innerText = text;
+    span.style.font = `${fontSize}pt ${fontFamily}`;
+    span.style.whiteSpace = 'nowrap';
+    document.body.append(span);
+    const dimensions = span.getBoundingClientRect();
+    document.body.removeChild(span);
+    return dimensions.height;
 }
 
 /**
@@ -53,7 +143,6 @@ async function getRandomImageMeta(orientation = 'portrait') {
  * @param {Metadata} metadata
  */
 async function renderRandomImage(metadata) {
-    const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     const image = new Image();
     image.onload = drawImage;
@@ -68,7 +157,6 @@ async function renderRandomImage(metadata) {
 }
 
 async function renderGradient(metadata) {
-    const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
     const gradient = ctx.createLinearGradient(0, canvas.height, 0, canvas.height/2);
     gradient.addColorStop(0, metadata.primaryColorDetails.hex.toString());
