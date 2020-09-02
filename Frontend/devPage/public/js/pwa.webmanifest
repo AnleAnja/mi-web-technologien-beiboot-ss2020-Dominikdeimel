@@ -1,0 +1,22 @@
+{
+  "name": "Inspiring Images",
+  "short_name": "INSPIMAG",
+  "description": "Get daily inspiring quotes on beautiful images",
+  "icons": [
+    {
+      "src": "/../images/splash-screen.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "/../images/apple-touch.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "start_url": "/",
+  "display": "fullscreen",
+  "theme_color": "#764ABC",
+  "background_color": "#764ABC"
+}

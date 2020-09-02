@@ -1,3 +1,5 @@
+document.addEventListener('DOMContentLoaded', init, false);
+
 /**
  * @var { HTMLCanvasElement }
  */
@@ -5,14 +7,22 @@ let canvas;
 const fontFamily = 'Barlow';
 
 async function main() {
+    canvas = document.getElementById('canvas');
     const metadata = await getRandomImageMeta();
     await renderRandomImage(metadata);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    canvas = document.getElementById('canvas');
+function init() {
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js')
+            .then((reg) => {
+                console.log('Service worker registered', reg);
+            }, (err) => {
+                console.error('Service worker not registered', err);
+            });
+    }
     main();
-});
+}
 
 /**
  * @returns {Promise<Object>}
