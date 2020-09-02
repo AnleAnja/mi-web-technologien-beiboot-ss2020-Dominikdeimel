@@ -8,13 +8,14 @@ async function main() {
     const metadata = await getRandomImageMeta();
     await renderRandomImage(metadata);
 }
+
 document.addEventListener('DOMContentLoaded', () => {
     canvas = document.getElementById('canvas');
     main();
 });
 
 /**
- * @returns {Promise<String>}
+ * @returns {Promise<Object>}
  */
 async function getQuote() {
     const request = new Request('http://quotes.rest/qod');
@@ -25,26 +26,43 @@ async function getQuote() {
 }
 
 /**
- * @param {String} quotes
+ * @param {Object} quotes
+ * @param {Metadata} metadata
  * @returns {void}
  */
 function renderQuote(quotes, metadata) {
+    let fontSize = 25;
     const ctx = canvas.getContext('2d');
-    const quote = formatUsingLinebreaks(quotes.quote, 25);
+    const quote = formatUsingLinebreaks(quotes.quote, fontSize);
     const textColor = metadata.primaryColorDetails.luma < 0.5 ? '#ffffff' : '#000000';
-    renderMultilineString(quote, canvas.width/2, 3 * canvas.height/4, textColor, 25);
+    let lines = [];
+    let width = [];
+    for (let i = 0; i < quote.length; i++) {
+        const dimensions = calculateTextDimensions(quote[i], fontSize);
+        lines.push(dimensions);
+    }
+    for (let i = 0; i < lines.length; i++) {
+        width.push(lines[i].width);
+    }
+    const excess = Math.max(...width) + 40;
+    if (excess > canvas.width) {
+        const factor = excess / canvas.width;
+        fontSize = fontSize / factor;
+    }
+    renderMultilineString(lines, canvas.width / 2, 3 * canvas.height / 4, textColor, fontSize);
     ctx.fillStyle = textColor;
     ctx.font = `15pt ${fontFamily}`;
     ctx.textAlign = 'center';
-    ctx.fillText(quotes.date, canvas.width/2, canvas.height/8);
+    ctx.fillText(quotes.date, canvas.width / 2, canvas.height / 8);
     ctx.font = `18pt ${fontFamily}`;
     ctx.textAlign = 'center';
-    ctx.fillText(quotes.author, canvas.width/2, 6 * canvas.height / 7);
+    ctx.fillText(quotes.author, canvas.width / 2, 6 * canvas.height / 7);
 }
 
 /**
  *
  * @param { String } quote
+ * @param { Number } fontSize
  * @returns { String[] }
  */
 function formatUsingLinebreaks(quote, fontSize) {
@@ -54,7 +72,7 @@ function formatUsingLinebreaks(quote, fontSize) {
     ctx.font = `${fontSize}pt ${fontFamily}`;
     const metrics = ctx.measureText(quote);
 
-    for(let lineBreak = maxLineBreaks; lineBreak > 0; lineBreak--) {
+    for (let lineBreak = maxLineBreaks; lineBreak > 0; lineBreak--) {
         // check if the current amount of linebreaks is justified
         if (metrics.width >= canvas.width * lineBreak) {
             // get how many characters are supposed to be in a line
@@ -64,7 +82,7 @@ function formatUsingLinebreaks(quote, fontSize) {
                 // for each target linebreak, replace the closest space with a linebreak
                 const spaceIndex = findClosestSpace(quote, charCount * (i + 1));
                 lines.push(quote.substring(lastIndex, spaceIndex));
-                lastIndex = spaceIndex +1;
+                lastIndex = spaceIndex + 1;
             }
             lines.push(quote.substring(lastIndex));
             // end of function, the quite has been partitioned
@@ -85,7 +103,7 @@ function formatUsingLinebreaks(quote, fontSize) {
 function findClosestSpace(text, position) {
     const right = text.indexOf(' ', position);
     const left = text.lastIndexOf(' ', position);
-    if(left === -1 || right - position < position - left) {
+    if (left === -1 || right - position < position - left) {
         return right;
     } else {
         return left;
@@ -94,7 +112,7 @@ function findClosestSpace(text, position) {
 
 /**
  *
- * @param { String[] } lines
+ * @param { StringWithDimensions[] } lines
  * @param { Number } x
  * @param { Number } y
  * @param { String } textColor
@@ -105,19 +123,18 @@ function renderMultilineString(lines, x, y, textColor, fontSize) {
     ctx.textAlign = 'center';
     ctx.fillStyle = textColor;
     ctx.font = `${fontSize}pt ${fontFamily}`;
-    for(let i = 0; i < lines.length; i++) {
-        const height = calculateTextHeight(lines[i], fontSize);
-        ctx.fillText(lines[i], x, y);
-        y += height + 5;
+    for (let i = 0; i < lines.length; i++) {
+        ctx.fillText(lines[i].content, x, y);
+        y += lines[i].height + 5;
     }
 }
 
 /**
  * @param { String } text
  * @param { Number } fontSize
- * @returns { Number }
+ * @returns { StringWithDimensions }
  */
-function calculateTextHeight(text, fontSize) {
+function calculateTextDimensions(text, fontSize) {
     const span = document.createElement('span');
     span.innerText = text;
     span.style.font = `${fontSize}pt ${fontFamily}`;
@@ -125,7 +142,7 @@ function calculateTextHeight(text, fontSize) {
     document.body.append(span);
     const dimensions = span.getBoundingClientRect();
     document.body.removeChild(span);
-    return dimensions.height;
+    return {content: text, width: dimensions.width, height: dimensions.height};
 }
 
 /**
@@ -152,17 +169,17 @@ async function renderRandomImage(metadata) {
         canvas.width = this.naturalWidth;
         canvas.height = this.naturalHeight;
         ctx.drawImage(this, 0, 0);
-        renderGradient(await getRandomImageMeta());
+        await renderGradient(await getRandomImageMeta());
     }
 }
 
 async function renderGradient(metadata) {
     const ctx = canvas.getContext('2d');
-    const gradient = ctx.createLinearGradient(0, canvas.height, 0, canvas.height/2);
+    const gradient = ctx.createLinearGradient(0, canvas.height, 0, canvas.height / 2);
     gradient.addColorStop(0, metadata.primaryColorDetails.hex.toString());
     gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
     ctx.fillStyle = gradient;
-    ctx.fillRect(0, canvas.height/2, canvas.width, canvas.height);
+    ctx.fillRect(0, canvas.height / 2, canvas.width, canvas.height);
     renderQuote(await getQuote(), metadata);
 }
 
@@ -210,4 +227,11 @@ async function renderGradient(metadata) {
  * @property {number} red
  * @property {number} green
  * @property {number} blue
+ */
+
+/**
+ * @typedef {Object} StringWithDimensions
+ * @property {String} content
+ * @property {Number} width
+ * @property {Number} height
  */
