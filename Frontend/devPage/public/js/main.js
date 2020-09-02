@@ -58,6 +58,9 @@ function renderQuote(quotes, metadata) {
     if (excess > canvas.width) {
         const factor = excess / canvas.width;
         fontSize = fontSize / factor;
+        for (let i = 0; i < lines.length; i++) {
+            lines[i].height = lines[i].height / factor;
+        }
     }
     renderMultilineString(lines, canvas.width / 2, 3 * canvas.height / 4, textColor, fontSize);
     ctx.fillStyle = textColor;
