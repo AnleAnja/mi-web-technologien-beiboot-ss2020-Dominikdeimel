@@ -12,7 +12,8 @@ module.exports = {
         'swatch': 'true'
     },
     'parserOptions': {
-        'ecmaVersion': 11
+        'ecmaVersion': 11,
+        'sourceType': 'module'
     },
     'rules': {
         'indent': [

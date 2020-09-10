@@ -15,7 +15,7 @@ RUN npm install
 COPY . .
 RUN sass --quiet --style=compressed assets/scss/styles.scss:public/css/styles.min.css
 
-RUN npx babel assets/js/main.js -o public/js/main.min.js
+RUN npm run production
 
 EXPOSE 8080
 CMD [ "node", "src/app.js" ]
