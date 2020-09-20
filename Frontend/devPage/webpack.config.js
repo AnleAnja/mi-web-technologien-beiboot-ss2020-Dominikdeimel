@@ -10,8 +10,9 @@ module.exports = {
         ]
     },
     resolve: {
-        extensions: ['*', '.js']
+        extensions: ['.js']
     },
+    devtool: 'inline-source-map',
     output: {
         path: __dirname + '/public/js',
         publicPath: '/',

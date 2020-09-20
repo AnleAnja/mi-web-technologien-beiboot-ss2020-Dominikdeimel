@@ -1,6 +1,5 @@
 // regeneratorRuntime is needed for webpack, specifically for async / await
-// eslint-disable-next-line no-unused-vars
-import regeneratorRuntime from 'regenerator-runtime';
+import 'regenerator-runtime';
 
 document.addEventListener('DOMContentLoaded', setup, false);
 
@@ -22,6 +21,9 @@ function setup() {
     }
 }
 
+/**
+ * @returns {void}
+ */
 function init() {
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/service-worker.js')
@@ -33,10 +35,28 @@ function init() {
     }
 }
 
+/**
+ * @returns {Promise<void>}
+ * */
 async function main() {
-    canvas = document.getElementById('canvas');
-    const metadata = await getRandomImageMeta();
+    canvas = document.querySelector('#canvas');
+    const containerBox = document.querySelector('.container').getBoundingClientRect();
+    canvas.width = containerBox.width;
+    canvas.height = containerBox.height;
+    const metadata = await getRandomImageMeta(getOrientation());
     await renderRandomImage(metadata);
+}
+
+/**
+ * @returns {string}
+ */
+function getOrientation() {
+    if (window.innerHeight > window.innerWidth) {
+        return 'portrait';
+    } else if (window.innerWidth > window.innerHeight) {
+        return 'landscape';
+    } else
+        return 'square';
 }
 
 /**
@@ -59,7 +79,6 @@ async function getQuote() {
     };
 }
 
-
 /**
  * @returns {string}
  */
@@ -75,39 +94,66 @@ function getDate() {
 /**
  * @param {Object} quotes
  * @param {Metadata} metadata
+ * @param {'portrait' | 'landscape' | 'square'} orientation
  * @returns {void}
  */
-function renderQuote(quotes, metadata) {
+function calculateQuoteMeasurements(quotes, metadata, orientation) {
+    const textContainerWidth = orientation === 'landscape' ? canvas.width / 2 : canvas.width;
     let fontSize = 25;
-    const ctx = canvas.getContext('2d');
-    const quote = formatUsingLinebreaks(quotes.quote, fontSize);
+    const quoteLines = formatUsingLinebreaks(quotes.quote, fontSize);
     const textColor = metadata.primaryColorDetails.luma < 0.5 ? '#ffffff' : '#000000';
-    let lines = [];
-    let width = [];
-    for (let i = 0; i < quote.length; i++) {
-        const dimensions = calculateTextDimensions(quote[i], fontSize);
-        lines.push(dimensions);
+    const lines = quoteLines.map(ql => calculateTextDimensions(ql, fontSize));
+    const widestLine = Math.max(...lines.map(l => l.width)) + 40;
+    if (widestLine > textContainerWidth) {
+        fontSize /= widestLine / textContainerWidth;
     }
-    for (let i = 0; i < lines.length; i++) {
-        width.push(lines[i].width);
+
+    let quoteX, quoteY, dateX, dateY, authorX, authorY;
+
+    switch (orientation) {
+    case 'landscape':
+        quoteX = 0.75;
+        quoteY = 0.5;
+
+        dateX = 0.75;
+        dateY = 0.15;
+
+        authorX = 0.75;
+        authorY = 0.85;
+        break;
+    case 'portrait':
+        quoteX = 0.5;
+        quoteY = 0.75;
+
+        dateX = 0.5;
+        dateY = 0.15;
+
+        authorX = 0.5;
+        authorY = 0.85;
+        break;
     }
-    const excess = Math.max(...width) + 40;
-    if (excess > canvas.width) {
-        const factor = excess / canvas.width;
-        fontSize = fontSize / factor;
-    }
-    renderMultilineString(lines, canvas.width / 2, 3 * canvas.height / 4, textColor, fontSize);
-    ctx.fillStyle = textColor;
-    ctx.font = `15pt ${fontFamily}`;
-    ctx.textAlign = 'center';
-    ctx.fillText(quotes.date, canvas.width / 2, canvas.height / 8);
-    ctx.font = `18pt ${fontFamily}`;
-    ctx.textAlign = 'center';
-    ctx.fillText(quotes.author, canvas.width / 2, 6 * canvas.height / 7);
+
+    renderMultilineString(lines, quoteX, quoteY, textColor, fontSize);
+    renderString(quotes.date, dateX, dateY, textColor, 15);
+    renderString(quotes.author, authorX, authorY, textColor, 18);
 }
 
 /**
- *
+ * @param {String} text
+ * @param {Number} x
+ * @param {Number} y
+ * @param {String} color
+ * @param {Number} size
+ */
+function renderString(text, x, y, color, size) {
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = color;
+    ctx.font = `${size}pt ${fontFamily}`;
+    ctx.textAlign = 'center';
+    ctx.fillText(text, canvas.width * x, canvas.height * y);
+}
+
+/**
  * @param { String } quote
  * @param { Number } fontSize
  * @returns { String[] }
@@ -158,7 +204,6 @@ function findClosestSpace(text, position) {
 }
 
 /**
- *
  * @param { StringWithDimensions[] } lines
  * @param { Number } x
  * @param { Number } y
@@ -170,16 +215,22 @@ function renderMultilineString(lines, x, y, textColor, fontSize) {
     ctx.textAlign = 'center';
     ctx.fillStyle = textColor;
     ctx.font = `${fontSize}pt ${fontFamily}`;
+
+    const xAbsolute = canvas.width * x;
+    let yAbsolute = canvas.height * y;
+
     for (let i = 0; i < lines.length; i++) {
-        ctx.fillText(lines[i].content, x, y);
-        y += lines[i].height + 5;
+        ctx.fillText(lines[i].content, xAbsolute, yAbsolute);
+        yAbsolute += lines[i].height + 5;
     }
 }
 
 /**
- * @param { String } text
- * @param { Number } fontSize
- * @returns { StringWithDimensions }
+ * Checks how much space would be occupied when rendering the given text using the given font size
+ *
+ * @param { String } text The text that should be rendered
+ * @param { Number } fontSize The font size that should be used for rendering
+ * @returns { StringWithDimensions } The given text along with it's width and height
  */
 function calculateTextDimensions(text, fontSize) {
     const span = document.createElement('span');
@@ -193,10 +244,10 @@ function calculateTextDimensions(text, fontSize) {
 }
 
 /**
- * @param {'portrait' | 'landscape' | 'square'} [orientation='portrait']
+ * @param {'portrait' | 'landscape' | 'square'} orientation
  * @returns {Promise<Metadata>}
  */
-async function getRandomImageMeta(orientation = 'portrait') {
+async function getRandomImageMeta(orientation) {
     const url = new URL('http://localhost:3000/api/images/single');
     url.searchParams.append('format', orientation);
     return fetch(url.toString())
@@ -213,21 +264,30 @@ async function renderRandomImage(metadata) {
     image.src = metadata.imagePath;
 
     async function drawImage() {
-        canvas.width = this.naturalWidth;
-        canvas.height = this.naturalHeight;
-        ctx.drawImage(this, 0, 0);
-        await renderGradient(await getRandomImageMeta());
+        let scale = this.height < canvas.height ? canvas.height / this.height : this.width < canvas.width ? canvas.width / this.width : 1;
+        ctx.drawImage(this, 0, 0, this.width * scale, image.height * scale);
+        await renderGradient(metadata, getOrientation());
     }
 }
 
-async function renderGradient(metadata) {
+/**
+ *
+ * @param {Metadata} metadata
+ * @param {'portrait' | 'landscape' | 'square'} orientation
+ * @returns {Promise<void>}
+ */
+async function renderGradient(metadata, orientation) {
     const ctx = canvas.getContext('2d');
-    const gradient = ctx.createLinearGradient(0, canvas.height, 0, canvas.height / 2);
+
+    const gradient = orientation === 'landscape' ?
+        ctx.createLinearGradient(canvas.width, 0, canvas.width / 2, 0) :
+        ctx.createLinearGradient(0, canvas.height, 0, canvas.height / 2);
     gradient.addColorStop(0, metadata.primaryColorDetails.hex.toString());
-    gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    gradient.addColorStop(1, `rgba(${metadata.primaryColorDetails.red}, ${metadata.primaryColorDetails.green}, ${metadata.primaryColorDetails.blue}, 0)`);
     ctx.fillStyle = gradient;
-    ctx.fillRect(0, canvas.height / 2, canvas.width, canvas.height);
-    renderQuote(await getQuote(), metadata);
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    calculateQuoteMeasurements(await getQuote(), metadata, orientation);
 }
 
 /**
