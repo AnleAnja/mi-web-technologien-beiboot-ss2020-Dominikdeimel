@@ -6,29 +6,24 @@ const toCache = [
     '/js/pwa.webmanifest'
 ];
 
-self.addEventListener('install', function(event) {
+self.addEventListener('install', function (event) {
     event.waitUntil(
         caches.open(CACHE_NAME)
-            .then(function(cache) {
-                return cache.addAll(toCache);
-            })
+            .then(cache => cache.addAll(toCache))
             .then(self.skipWaiting())
     );
 });
 
-self.addEventListener('fetch', function(event) {
+self.addEventListener('fetch', function (event) {
     event.respondWith(
         fetch(event.request)
-            .catch(() => {
-                return caches.open(CACHE_NAME)
-                    .then((cache) => {
-                        return cache.match(event.request);
-                    });
-            })
+            .catch(() => caches.open(CACHE_NAME)
+                .then((cache) => cache.match(event.request))
+            )
     );
 });
 
-self.addEventListener('activate', function(event) {
+self.addEventListener('activate', function (event) {
     event.waitUntil(
         caches.keys()
             .then((keyList) => {

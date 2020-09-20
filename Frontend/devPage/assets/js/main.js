@@ -1,30 +1,34 @@
 // regeneratorRuntime is needed for webpack, specifically for async / await
 import 'regenerator-runtime';
 
-document.addEventListener('DOMContentLoaded', setup, false);
+document.addEventListener('DOMContentLoaded', main, false);
+window.addEventListener('resize', () => rerenderOnResize().catch(console.error));
 
-/**
- * @var { HTMLCanvasElement }
- */
-let canvas;
+
+let canvas, orientation, metadata, quote, image;
 const fontFamily = 'Barlow';
 
-/**
- * @returns {Promise<void>}
- */
-function setup() {
-    init();
-    if (navigator.onLine) {
-        main();
-    } else {
-        renderOffline();
+async function rerenderOnResize() {
+    const currentOrientation = getOrientation();
+
+    if (currentOrientation !== orientation) {
+        await reloadImage();
     }
+
+    reloadCanvasSize();
+    render();
+}
+
+function reloadCanvasSize() {
+    const containerBox = document.querySelector('.container').getBoundingClientRect();
+    canvas.width = containerBox.width;
+    canvas.height = containerBox.height;
 }
 
 /**
  * @returns {void}
  */
-function init() {
+async function init() {
     if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('/service-worker.js')
             .then((reg) => {
@@ -33,18 +37,48 @@ function init() {
                 console.error('Service worker not registered', err);
             });
     }
+
+    canvas = document.querySelector('#canvas');
+    reloadCanvasSize();
+    await reloadImage();
+
+    quote = await getQuote();
+}
+
+async function reloadImage() {
+    orientation = getOrientation();
+    metadata = await getRandomImageMeta(orientation);
+    image = await fetchImage(metadata);
 }
 
 /**
  * @returns {Promise<void>}
  * */
 async function main() {
-    canvas = document.querySelector('#canvas');
-    const containerBox = document.querySelector('.container').getBoundingClientRect();
-    canvas.width = containerBox.width;
-    canvas.height = containerBox.height;
-    const metadata = await getRandomImageMeta(getOrientation());
-    await renderRandomImage(metadata);
+    await init();
+    render();
+}
+
+function render() {
+    renderImage(image);
+    renderGradient(metadata, orientation);
+    renderQuoteWithAuthor(quote, metadata, orientation);
+}
+
+/**
+ *
+ * @returns {Promise<Image>}
+ */
+function fetchImage(metadata) {
+    return new Promise((resolve) => {
+        const image = new Image();
+        image.onload = done;
+        image.src = metadata.imagePath;
+
+        function done() {
+            resolve(this);
+        }
+    });
 }
 
 /**
@@ -97,7 +131,8 @@ function getDate() {
  * @param {'portrait' | 'landscape' | 'square'} orientation
  * @returns {void}
  */
-function calculateQuoteMeasurements(quotes, metadata, orientation) {
+function renderQuoteWithAuthor(quotes, metadata, orientation) {
+
     const textContainerWidth = orientation === 'landscape' ? canvas.width / 2 : canvas.width;
     let fontSize = 25;
     const quoteLines = formatUsingLinebreaks(quotes.quote, fontSize);
@@ -250,44 +285,39 @@ function calculateTextDimensions(text, fontSize) {
 async function getRandomImageMeta(orientation) {
     const url = new URL('http://localhost:3000/api/images/single');
     url.searchParams.append('format', orientation);
-    return fetch(url.toString())
-        .then(response => response.json());
+    const response = await fetch(url.toString());
+    return response.json();
 }
 
 /**
- * @param {Metadata} metadata
+ * @param {Image} metadata
  */
-async function renderRandomImage(metadata) {
+function renderImage(image) {
     const ctx = canvas.getContext('2d');
-    const image = new Image();
-    image.onload = drawImage;
-    image.src = metadata.imagePath;
+    const scale = Math.max(
+        canvas.height / image.height,
+        canvas.width / image.width
+    );
 
-    async function drawImage() {
-        let scale = this.height < canvas.height ? canvas.height / this.height : this.width < canvas.width ? canvas.width / this.width : 1;
-        ctx.drawImage(this, 0, 0, this.width * scale, image.height * scale);
-        await renderGradient(metadata, getOrientation());
-    }
+    ctx.drawImage(image, 0, 0, image.width * scale, image.height * scale);
 }
 
 /**
  *
  * @param {Metadata} metadata
  * @param {'portrait' | 'landscape' | 'square'} orientation
- * @returns {Promise<void>}
  */
-async function renderGradient(metadata, orientation) {
+function renderGradient(metadata, orientation) {
     const ctx = canvas.getContext('2d');
 
     const gradient = orientation === 'landscape' ?
         ctx.createLinearGradient(canvas.width, 0, canvas.width / 2, 0) :
         ctx.createLinearGradient(0, canvas.height, 0, canvas.height / 2);
+
     gradient.addColorStop(0, metadata.primaryColorDetails.hex.toString());
     gradient.addColorStop(1, `rgba(${metadata.primaryColorDetails.red}, ${metadata.primaryColorDetails.green}, ${metadata.primaryColorDetails.blue}, 0)`);
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    calculateQuoteMeasurements(await getQuote(), metadata, orientation);
 }
 
 /**
