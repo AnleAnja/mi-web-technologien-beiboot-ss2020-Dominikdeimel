@@ -1,6 +1,8 @@
 # Deciding on PWA features
 
-Lighthouse
+[Lighthouse](https://developers.google.com/web/ilt/pwa/lighthouse-pwa-analysis-tool) is an open-source tool from Google that audits a web app for PWA features. It provides a set of metrics to help guide in building a PWA with a full application-like experience for users.
+
+In order to decide which PWA features should be implemented, a Lighthouse report was generated. Within this report, Lighthouse checks for the fulfillment of various features and explains their relevance.
 
 ## Fast and reliable
 
@@ -38,3 +40,9 @@ Your app should display some content when JavaScript is disabled, even if it's j
 For ideal appearance on iOS when users add a progressive web app to the home screen, define an `apple-touch-icon`. It must point to a non-transparent 192px (or 180px) square PNG.
 #### Manifest has a maskable icon
 A maskable icon ensures that the image fills the entire shape without being letterboxed when installing the app on a device.
+
+## Caching
+
+To allow the PWA to be used in offline mode and to intercept possible errors, the caching has been optimized.
+
+At the first usage of the application a picture, its metadata and a quote from the API are cached. If the first request fails, the application uses a default picture with its gradient and a default quote.
