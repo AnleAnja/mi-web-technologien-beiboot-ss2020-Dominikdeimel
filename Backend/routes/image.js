@@ -245,7 +245,9 @@ async function getPrimaryColors(imageId) {
             primaryImageColors.push({
                 name: swatch,
                 color: swatches[swatch].getHex(),
-                population: swatches[swatch].getPopulation()
+                population: swatches[swatch].getPopulation(),
+                hsl: swatches[swatch].getHsl(),
+                rgb: swatches[swatch].getRgb()
             });
         }
         primaryImageColors.sort((a, b) => (b.population - a.population));
