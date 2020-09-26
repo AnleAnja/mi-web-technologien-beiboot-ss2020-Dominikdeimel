@@ -1,6 +1,5 @@
 // regeneratorRuntime is needed for webpack, specifically for async / await
 import 'regenerator-runtime';
-
 document.addEventListener('DOMContentLoaded', main, false);
 window.addEventListener('resize', () => rerenderOnResize().catch(console.error));
 
@@ -29,15 +28,6 @@ function reloadCanvasSize() {
  * @returns {void}
  */
 async function init() {
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/service-worker.js')
-            .then((reg) => {
-                console.log('Service worker registered', reg);
-            }, (err) => {
-                console.error('Service worker not registered', err);
-            });
-    }
-
     canvas = document.querySelector('#canvas');
     reloadCanvasSize();
     await reloadImage();
@@ -62,7 +52,6 @@ async function main() {
 function render() {
     renderImage(image);
     renderGradient(metadata, orientation);
-    renderQuoteWithAuthor(quote, metadata, orientation);
 }
 
 /**
@@ -73,7 +62,8 @@ function fetchImage(metadata) {
     return new Promise((resolve) => {
         const image = new Image();
         image.onload = done;
-        image.src = metadata.imagePath;
+        image.src = `http://192.168.2.106:3000${metadata.imagePath}`;
+        console.log(image.src);
 
         function done() {
             resolve(this);
@@ -127,16 +117,16 @@ function getDate() {
 
 /**
  * @param {Object} quotes
- * @param {Metadata} metadata
+ * @param {primaryColorData} gradientColor
  * @param {'portrait' | 'landscape' | 'square'} orientation
  * @returns {void}
  */
-function renderQuoteWithAuthor(quotes, metadata, orientation) {
+function renderQuoteWithAuthor(quotes, gradientColor, orientation) {
 
     const textContainerWidth = orientation === 'landscape' ? canvas.width / 2 : canvas.width;
     let fontSize = 25;
     const quoteLines = formatUsingLinebreaks(quotes.quote, fontSize);
-    const textColor = metadata.primaryColorDetails.luma < 0.5 ? '#ffffff' : '#000000';
+    const textColor = gradientColor.hsl[2] < 0.5 ? '#ffffff' : '#000000';
     const lines = quoteLines.map(ql => calculateTextDimensions(ql, fontSize));
     const widestLine = Math.max(...lines.map(l => l.width)) + 40;
     if (widestLine > textContainerWidth) {
@@ -283,7 +273,7 @@ function calculateTextDimensions(text, fontSize) {
  * @returns {Promise<Metadata>}
  */
 async function getRandomImageMeta(orientation) {
-    const url = new URL('http://localhost:3000/api/images/single');
+    const url = new URL('http://192.168.2.106:3000/api/images/single');
     url.searchParams.append('format', orientation);
     const response = await fetch(url.toString());
     return response.json();
@@ -309,16 +299,52 @@ function renderImage(image) {
  */
 function renderGradient(metadata, orientation) {
     const ctx = canvas.getContext('2d');
-
+    const gradientColor = pickGradientColor(metadata.primaryColors);
+    console.log(gradientColor);
     const gradient = orientation === 'landscape' ?
         ctx.createLinearGradient(canvas.width, 0, canvas.width / 2, 0) :
         ctx.createLinearGradient(0, canvas.height, 0, canvas.height / 2);
 
-    gradient.addColorStop(0, metadata.primaryColorDetails.hex.toString());
-    gradient.addColorStop(1, `rgba(${metadata.primaryColorDetails.red}, ${metadata.primaryColorDetails.green}, ${metadata.primaryColorDetails.blue}, 0)`);
+    gradient.addColorStop(0, gradientColor.color);
+    gradient.addColorStop(
+        0.3,
+        `rgba(${gradientColor.rgb[0]}, 
+        ${gradientColor.rgb[1]}, 
+        ${gradientColor.rgb[2]}, 
+        0.8)`);
+    gradient.addColorStop(
+        1,
+        `rgba(${gradientColor.rgb[0]}, 
+        ${gradientColor.rgb[1]}, 
+        ${gradientColor.rgb[2]}, 
+        0)`);
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    renderQuoteWithAuthor(quote, gradientColor, orientation);
 }
+
+function pickGradientColor(primaryColors){
+    let result = '';
+    let difference = 0;
+
+    for(let i = 1; i < primaryColors.length; i++){
+        let currentDifference = 0;
+        if(primaryColors[0].hsl[2] < primaryColors[i].hsl[2]){
+            currentDifference = primaryColors[i].hsl[2] - primaryColors[0].hsl[2];
+        } else {
+            currentDifference = primaryColors[0].hsl[2] - primaryColors[i].hsl[2];
+        }
+
+        if(difference < currentDifference){
+            difference = currentDifference;
+            result = primaryColors[i];
+        }
+    }
+
+    return result;
+}
+
 
 /**
  * @returns {void}
@@ -369,6 +395,8 @@ function renderOffline() {
  * @property {String} name
  * @property {String} color
  * @property {number} population
+ * @property {Array} hsl
+ * @property {Array} rgb
  */
 
 /**
