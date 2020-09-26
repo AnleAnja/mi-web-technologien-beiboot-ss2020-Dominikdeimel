@@ -11,8 +11,8 @@ const toCache = [
     '/css/styles.min.css',
     '/images/splash-screen.png',
     '/images/apple-touch.png',
-    'https://fonts.gstatic.com/s/barlow/v5/7cHpv4kjgoGqM7E_DMs5.woff2',
-    'https://fonts.googleapis.com/css?family=Barlow',
+    '/font/Barlow-Light.ttf',
+    '/font/Barlow-Regular.ttf',
     landscapeReq,
     portraitReq,
 ];

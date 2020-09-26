@@ -5,7 +5,7 @@ window.addEventListener('resize', () => rerenderOnResize().catch(console.error))
 
 
 let canvas, orientation, metadata, quote, image;
-const fontFamily = 'Barlow';
+const fontFamily = 'Barlow Regular';
 
 async function rerenderOnResize() {
     const currentOrientation = getOrientation();

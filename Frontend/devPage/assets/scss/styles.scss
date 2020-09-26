@@ -1,4 +1,12 @@
-@import url('https://fonts.googleapis.com/css?family=Barlow');
+@font-face {
+  font-family: 'Barlow Light';
+  src: url(/font/Barlow-Light.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Barlow Regular';
+  src: url(/font/Barlow-Regular.ttf) format('truetype');
+}
 
 @media only screen and (max-width: 1499px){
 
@@ -9,6 +17,7 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
+    font-family: "Barlow Regular";
   }
   
 }
@@ -21,6 +30,7 @@
     height: 100%;
     align-items: center;
     justify-content: center;
+    font-family: "Barlow Regular";
   }
   
 }
