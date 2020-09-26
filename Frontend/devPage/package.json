@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node src/app.js",
     "watch": "webpack --watch --mode=development",
-    "production": "webpack -p"
+    "development": "cd .docker && docker-compose -f docker-compose.yml -f docker-compose.dev.yml up",
+    "production": "cd .docker && docker-compose -f docker-compose.yml -f docker-compose.prod.yml up"
   },
   "author": "",
   "license": "ISC",
