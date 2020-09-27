@@ -85,7 +85,7 @@ function fetchImage(metadata) {
     return new Promise((resolve) => {
         const image = new Image();
         image.onload = done;
-        image.src = `http://192.168.2.106:3000${metadata.imagePath}`; //TODO
+        image.src = metadata.imagePath;
 
         function done() {
             resolve(this);
@@ -294,7 +294,7 @@ function formatAsMultiline(text, maxWidth, maxHeight, maxLineBreaks) {
         lines = [];
         lineHeight = 0;
         width = 0;
-        spaceWidth = calculateTextDimensions(' ', fontSize).width; // das ist immer 0 :'( wieso
+        spaceWidth = calculateTextDimensions(' ', fontSize).width;
     };
 
     reset();
@@ -358,7 +358,7 @@ function calculateTextDimensions(text, fontSize) {
  * @returns {Promise<Metadata>}
  */
 async function getRandomImageMeta(orientation) {
-    const url = new URL('http://192.168.2.106:3000/api/images/single');
+    const url = new URL('https://beiboot.herokuapp.com/api/images/single');
     url.searchParams.append('format', orientation);
     const response = await fetch(url.toString());
     return response.json();
