@@ -5,7 +5,6 @@ const quoteReq = new Request('http://quotes.rest/qod', { headers: {'Accept': 'ap
 
 const toCache = [
     '/',
-    '/js/status.js',
     '/js/pwa.webmanifest',
     '/js/main.min.js',
     '/css/styles.min.css',

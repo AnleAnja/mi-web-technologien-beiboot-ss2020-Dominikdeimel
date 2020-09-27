@@ -6,7 +6,7 @@ window.addEventListener('resize', () => rerenderOnResize().catch(console.error))
 
 
 let canvas, orientation, metadata, quote, image, containerElement;
-const fontFamily = 'Barlow Regular';
+const fontFamily = 'Barlow';
 let currentDate = new Date().toLocaleString('de-DE', {year: 'numeric', month: 'long', day: 'numeric'});
 const renard = [10, 11, 12, 14, 16, 18, 20, 22, 25, 28, 30]; //35, 40, 45, 50, 55, 60, 70, 80, 90, 100];
 
@@ -37,6 +37,7 @@ async function init() {
     await reloadImage();
 
     quote = await getQuote();
+    if (quote.author === ('none' || '')) quote.author = 'Unknown';
 }
 
 async function reloadImage() {
@@ -47,7 +48,7 @@ async function reloadImage() {
 
 /**
  * @returns {Promise<void>}
- * */
+ */
 async function main() {
     await init();
     render();
@@ -56,19 +57,24 @@ async function main() {
 function render() {
     renderImage(image);
     renderGradient(metadata, orientation);
+    renderDate(currentDate, orientation);
 
-    let quoteFontSize;
+    let quoteMeasurements;
     try {
-        quoteFontSize = renderQuote(quote, metadata, orientation);
-        containerElement.classList.remove('failure');
+        quoteMeasurements = renderQuote(quote, metadata, orientation);
     } catch (err) {
-        console.error(err);
-        containerElement.classList.add('failure');
-        return;
+
+        try {
+            quoteMeasurements = renderQuote(getDefaultQuote(), metadata, orientation);
+        } catch (err2) {
+            console.log(err2);
+            containerElement.classList.add('failure');
+            return;
+        }
     }
 
-    renderDate(currentDate, orientation);
-    renderAuthor(quoteFontSize - 2);
+    containerElement.classList.remove('failure');
+    renderAuthor(quoteMeasurements);
 }
 
 /**
@@ -128,10 +134,19 @@ function getTextColor() {
 }
 
 /**
+ * @typedef {Object} QuoteMeasurements
+ * @property {number} x
+ * @property {number} y
+ * @property {number} height
+ * @property {number} lineHeight
+ * @property {number} fontSize
+ */
+
+/**
  * @param {Object} quotes
  * @param {primaryColorData} gradientColor
  * @param {'portrait' | 'landscape' | 'square'} orientation
- * @returns {number} the fontsize used to render the quote
+ * @returns {QuoteMeasurements} Measurements of the rendered quote
  */
 function renderQuote(quotes, gradientColor, orientation) {
 
@@ -140,116 +155,45 @@ function renderQuote(quotes, gradientColor, orientation) {
     const yOffset = xOffset;
     const maxLineBreaks = orientation === 'landscape' ? 3 : 4;
     const textColor = getTextColor();
-    let fontSize = renard[renard.length - 1];
 
-    const lines = formatUsingLinebreaks(quotes.quote, fontSize, maxLineBreaks);
+    const x = (orientation === 'landscape' ? (canvas.width / 2) : 0) + xOffset;
+    const y = canvas.height / 2 + yOffset;
+    const availableWidth = canvas.width - x - xOffset;
+    const availableHeight = canvas.height - y - yOffset;
 
-    const textContainer = {};
-    textContainer.x = (orientation === 'landscape' ? (canvas.width / 2) : 0) + xOffset;
-    textContainer.y = canvas.height / 2 + yOffset;
+    const formattedText = formatAsMultiline(
+        quotes.quote,
+        availableWidth,
+        availableHeight,
+        maxLineBreaks
+    );
 
-    const availableWidth = canvas.width - textContainer.x - xOffset;
-    const availableHeight = canvas.height - textContainer.y - yOffset;
-
-    populateTextContainerMeasurements(textContainer, lines, fontSize);
-
-    let scale = 1;
-    if (textContainer.height > availableHeight) {
-        scale = availableHeight / textContainer.height;
-    }
-
-    if (textContainer.width * scale > availableWidth) {
-        scale = availableWidth / textContainer.width;
-    }
-
-    if (scale !== 1) {
-        fontSize *= scale;
-        populateTextContainerMeasurements(textContainer, lines, fontSize);
-    }
-
-    try {
-        fontSize = findNextLowestRenard(fontSize);
-    } catch (err) {
-        quote = getDefaultQuote();
-        fontSize = findNextLowestRenard(fontSize);
-    }
-
-    ctx.font = `${fontSize}pt Barlow Regular`;
+    ctx.font = `${formattedText.fontSize}pt ${fontFamily} Regular`;
     ctx.fillStyle = textColor;
     ctx.textBaseline = 'alphabetic';
 
     const drawTextLine = (i, withEndSign = false) => {
         ctx.fillText(
-            lines[i] + (withEndSign ? ' »' : ''),
-            textContainer.x,
-            textContainer.y + textContainer.lineHeight * i
+            formattedText.lines[i] + (withEndSign ? ' »' : ''),
+            x,
+            y + formattedText.lineHeight * i
         );
     };
 
     ctx.textAlign = 'right';
-    ctx.fillText('« ', textContainer.x, textContainer.y);
+    ctx.fillText('« ', x, y);
     ctx.textAlign = 'left';
-    for (let i = 0; i < lines.length - 1; i++) {
+    for (let i = 0; i < formattedText.lines.length - 1; i++) {
         drawTextLine(i);
     }
-    drawTextLine(lines.length - 1, true);
+    drawTextLine(formattedText.lines.length - 1, true);
 
-    return fontSize;
-
-    /*const textContainerWidth = orientation === 'landscape' ? canvas.width / 2 : canvas.width;
-    let fontSize = 25;
-    const quoteLines = formatUsingLinebreaks(quotes.quote, fontSize, 3, );
-    const textColor = gradientColor.hsl[2] < 0.5 ? '#ffffff' : '#000000';
-    const lines = quoteLines.map(ql => calculateTextDimensions(ql, fontSize));
-    const widestLine = Math.max(...lines.map(l => l.width)) + 40;
-    if (widestLine > textContainerWidth) {
-        fontSize /= widestLine / textContainerWidth;
-    }
-
-    let quoteX, quoteY, dateX, dateY, authorX, authorY;
-
-    switch (orientation) {
-    case 'landscape':
-        quoteX = 0.75;
-        quoteY = 0.5;
-
-        dateX = 0.75;
-        dateY = 0.15;
-
-        authorX = 0.75;
-        authorY = 0.85;
-        break;
-    case 'portrait':
-        quoteX = 0.5;
-        quoteY = 0.75;
-
-        dateX = 0.5;
-        dateY = 0.15;
-
-        authorX = 0.5;
-        authorY = 0.85;
-        break;
-    }
-
-    renderMultilineString(lines, quoteX, quoteY, textColor, fontSize);
-    renderString(currentDate, dateX, dateY, textColor, 15);
-    renderString(quotes.author, authorX, authorY, textColor, 18);*/
-}
-
-function populateTextContainerMeasurements(textContainer, lines, fontSize) {
-    let linesWithDimensions = lines.map(l => calculateTextDimensions(l, fontSize));
-
-    let lineWidth = 0;
-    let lineHeight = 0;
-    for (let line of linesWithDimensions) {
-        lineHeight = Math.max(lineHeight, line.height);
-        lineWidth = Math.max(lineWidth, line.width);
-    }
-
-    textContainer.height = lineHeight * lines.length;
-    textContainer.width = lineWidth;
-
-    textContainer.lineHeight = lineHeight;
+    return {
+        x, y,
+        lineHeight: formattedText.lineHeight,
+        height: formattedText.lines.length * formattedText.lineHeight,
+        fontSize: formattedText.fontSize
+    };
 }
 
 function findNextLowestRenard(value) {
@@ -269,7 +213,7 @@ function renderDate(date, orientation) {
 
     const textColor = getTextColor();
 
-    ctx.lineWidth = '1px';
+    ctx.lineWidth = 1;
     ctx.strokeStyle = textColor;
     ctx.fillStyle = textColor;
     ctx.textBaseline = 'middle';
@@ -300,100 +244,96 @@ function renderDate(date, orientation) {
 
     ctx.closePath();
     ctx.stroke();
-    ctx.font = `14pt ${fontFamily}`;
+    ctx.font = `14pt ${fontFamily} Regular`;
     ctx.fillText(date, dateStart, y);
 }
 
 /**
- * @param {String} text
- * @param {Number} x
- * @param {Number} y
- * @param {String} color
- * @param {Number} size
+ * @param {QuoteMeasurements} quoteMeasurements
  */
-function renderAuthor(targetFontSize) {
+function renderAuthor(quoteMeasurements) {
     const ctx = canvas.getContext('2d');
     const textColor = getTextColor();
-    if (quote.author === ('none' || '')) quote.author = 'Unknown';
+    const fontSize = findNextLowestRenard(quoteMeasurements.fontSize - 1);
+
+
     ctx.fillStyle = textColor;
-    let fontSize = findNextLowestRenard(targetFontSize);
-    ctx.font = `${fontSize}pt ${fontFamily}`;
-    ctx.textAlign = 'center';
-    ctx.fillText(quote.author, canvas.width * 0.75, canvas.height * 0.85);
+    ctx.font = `${fontSize}pt ${fontFamily} Light`;
+    ctx.textAlign = 'left';
+
+    ctx.fillText(quote.author, quoteMeasurements.x,
+        quoteMeasurements.y + quoteMeasurements.height + quoteMeasurements.lineHeight / 2);
 }
 
 /**
- * @param { String } quote
- * @param { Number } fontSize
- * @returns { String[] }
+ * @typedef {Object} MultilineText
+ * @property {string[]} lines
+ * @property {number} fontSize
+ * @property {number} lineHeight
  */
-function formatUsingLinebreaks(quote, fontSize, maxLineBreaks) {
-    const ctx = canvas.getContext('2d');
-    const lines = [];
-    ctx.font = `${fontSize}pt ${fontFamily}`;
-    const metrics = ctx.measureText(quote);
 
-    for (let lineBreak = maxLineBreaks; lineBreak > 0; lineBreak--) {
-        // check if the current amount of linebreaks is justified
-        if (metrics.width >= canvas.width * lineBreak) {
-            // get how many characters are supposed to be in a line
-            const charCount = quote.length / (lineBreak + 1);
-            let lastIndex = 0;
-            for (let i = 0; i < lineBreak; i++) {
-                // for each target linebreak, replace the closest space with a linebreak
-                const spaceIndex = findClosestSpace(quote, charCount * (i + 1));
-                lines.push(quote.substring(lastIndex, spaceIndex));
-                lastIndex = spaceIndex + 1;
+/**
+ * @param {string} text
+ * @param {number} maxWidth
+ * @param {number} maxHeight
+ * @param {number} maxLineBreaks
+ * @returns {MultilineText}
+ */
+function formatAsMultiline(text, maxWidth, maxHeight, maxLineBreaks) {
+    const words = text.split(' ');
+
+
+    let ri = renard.length - 1;
+    let fontSize, currentLine, lines, width, lineHeight, spaceWidth;
+
+    const reset = () => {
+        if (ri < 0) throw new Error('Impossible to render');
+
+        fontSize = renard[ri];
+        currentLine = null;
+        lines = [];
+        lineHeight = 0;
+        width = 0;
+        spaceWidth = calculateTextDimensions(' ', fontSize).width; // das ist immer 0 :'( wieso
+    };
+
+    reset();
+
+    let retry = true;
+    while (retry) {
+        retry = false;
+
+        for (let word of words) {
+            const dimensions = calculateTextDimensions(word, fontSize);
+            lineHeight = Math.max(lineHeight, dimensions.height);
+
+            if (width + dimensions.width > maxWidth) {
+                lines.push(currentLine);
+                currentLine = null;
+                width = 0;
+
+                if (lines.length > maxLineBreaks ||
+                    (lineHeight * lines.length + 1) > maxHeight) {
+                    ri--;
+                    reset();
+                    retry = true;
+                    break;
+                }
             }
-            lines.push(quote.substring(lastIndex));
-            // end of function, the quite has been partitioned
-            return lines;
+
+            if (currentLine === null) {
+                currentLine = word;
+                width = dimensions.width;
+            } else {
+                currentLine += ` ${word}`;
+                width += spaceWidth + dimensions.width;
+            }
         }
     }
 
-    // if the quote needed no change, it is returned as-is
-    return [quote];
+    lines.push(currentLine);
+    return {fontSize, lines, lineHeight};
 }
-
-/**
- *
- * @param { String } text
- * @param { Number } position
- * @returns { Number }
- * */
-function findClosestSpace(text, position) {
-    const right = text.indexOf(' ', position);
-    const left = text.lastIndexOf(' ', position);
-    if (left === -1 || right - position < position - left) {
-        return right;
-    } else {
-        return left;
-    }
-}
-
-/**
- * @param { StringWithDimensions[] } lines
- * @param { Number } x
- * @param { Number } y
- * @param { String } textColor
- * @param { Number } fontSize
- */
-
-/*function renderMultilineString(lines, x, y, textColor, fontSize) {
-    const ctx = canvas.getContext('2d');
-    ctx.textAlign = 'center';
-    ctx.fillStyle = textColor;
-    ctx.font = `${fontSize}pt ${fontFamily}`;
-
-    const xAbsolute = canvas.width * x;
-    let yAbsolute = canvas.height * y;
-
-    for (let i = 0; i < lines.length; i++) {
-        ctx.fillText(lines[i].content, xAbsolute, yAbsolute);
-        yAbsolute += lines[i].height + 5;
-    }
-}
- */
 
 /**
  * Checks how much space would be occupied when rendering the given text using the given font size
@@ -405,8 +345,8 @@ function findClosestSpace(text, position) {
 function calculateTextDimensions(text, fontSize) {
     const span = document.createElement('span');
     span.innerText = text;
-    span.style.font = `${fontSize}pt ${fontFamily}`;
-    span.style.whiteSpace = 'nowrap';
+    span.style.font = `${fontSize}pt ${fontFamily} Regular`;
+    span.style.whiteSpace = 'pre';
     document.body.append(span);
     const dimensions = span.getBoundingClientRect();
     document.body.removeChild(span);
@@ -425,7 +365,7 @@ async function getRandomImageMeta(orientation) {
 }
 
 /**
- * @param {Image} metadata
+ * @param {HTMLImageElement} image
  */
 function renderImage(image) {
     const ctx = canvas.getContext('2d');
@@ -456,53 +396,7 @@ function renderGradient(metadata, orientation) {
         ${metadata.primaryColorDetails.blue}, 0)`);
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    /*const ctx = canvas.getContext('2d');
-    const gradientColor = pickGradientColor(metadata.primaryColors);
-    const gradient = orientation === 'landscape' ?
-        ctx.createLinearGradient(canvas.width, 0, canvas.width / 2, 0) :
-        ctx.createLinearGradient(0, canvas.height, 0, canvas.height / 2);
-
-    gradient.addColorStop(0, gradientColor.color);
-    gradient.addColorStop(
-        0.3,
-        `rgba(${gradientColor.rgb[0]}, 
-        ${gradientColor.rgb[1]}, 
-        ${gradientColor.rgb[2]}, 
-        0.8)`);
-    gradient.addColorStop(
-        1,
-        `rgba(${gradientColor.rgb[0]}, 
-        ${gradientColor.rgb[1]}, 
-        ${gradientColor.rgb[2]}, 
-        0)`);
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    renderQuoteWithAuthor(quote, gradientColor, orientation);*/
 }
-
-/*
-function pickGradientColor(primaryColors){
-    let result = '';
-    let difference = 0;
-
-    for(let i = 1; i < primaryColors.length; i++){
-        let currentDifference = 0;
-        if(primaryColors[0].hsl[2] < primaryColors[i].hsl[2]){
-            currentDifference = primaryColors[i].hsl[2] - primaryColors[0].hsl[2];
-        } else {
-            currentDifference = primaryColors[0].hsl[2] - primaryColors[i].hsl[2];
-        }
-
-        if(difference < currentDifference){
-            difference = currentDifference;
-            result = primaryColors[i];
-        }
-    }
-
-    return result;
-}
- */
 
 /**
  * @typedef {Object} Metadata
