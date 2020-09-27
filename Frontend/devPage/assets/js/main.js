@@ -1,11 +1,14 @@
 // regeneratorRuntime is needed for webpack, specifically for async / await
 import 'regenerator-runtime';
+
 document.addEventListener('DOMContentLoaded', main, false);
 window.addEventListener('resize', () => rerenderOnResize().catch(console.error));
 
 
-let canvas, orientation, metadata, quote, image;
+let canvas, orientation, metadata, quote, image, containerElement;
 const fontFamily = 'Barlow Regular';
+let currentDate = new Date().toLocaleString('de-DE', {year: 'numeric', month: 'long', day: 'numeric'});
+const renard = [10, 11, 12, 14, 16, 18, 20, 22, 25, 28, 30]; //35, 40, 45, 50, 55, 60, 70, 80, 90, 100];
 
 async function rerenderOnResize() {
     const currentOrientation = getOrientation();
@@ -19,7 +22,7 @@ async function rerenderOnResize() {
 }
 
 function reloadCanvasSize() {
-    const containerBox = document.querySelector('.container').getBoundingClientRect();
+    const containerBox = containerElement.getBoundingClientRect();
     canvas.width = containerBox.width;
     canvas.height = containerBox.height;
 }
@@ -28,6 +31,7 @@ function reloadCanvasSize() {
  * @returns {void}
  */
 async function init() {
+    containerElement = document.querySelector('.container');
     canvas = document.querySelector('#canvas');
     reloadCanvasSize();
     await reloadImage();
@@ -52,6 +56,19 @@ async function main() {
 function render() {
     renderImage(image);
     renderGradient(metadata, orientation);
+
+    let quoteFontSize;
+    try {
+        quoteFontSize = renderQuote(quote, metadata, orientation);
+        containerElement.classList.remove('failure');
+    } catch (err) {
+        console.error(err);
+        containerElement.classList.add('failure');
+        return;
+    }
+
+    renderDate(currentDate, orientation);
+    renderAuthor(quoteFontSize - 2);
 }
 
 /**
@@ -62,8 +79,7 @@ function fetchImage(metadata) {
     return new Promise((resolve) => {
         const image = new Image();
         image.onload = done;
-        image.src = `http://192.168.2.106:3000${metadata.imagePath}`;
-        console.log(image.src);
+        image.src = `http://192.168.2.106:3000${metadata.imagePath}`; //TODO
 
         function done() {
             resolve(this);
@@ -96,36 +112,93 @@ async function getQuote() {
             return body.contents.quotes[0];
         }
     }
+
+    return getDefaultQuote();
+}
+
+function getDefaultQuote() {
     return {
         quote: 'Act as if what you do makes a difference. It does.',
-        author: 'William James',
-        date: getDate(),
+        author: 'William James'
     };
 }
 
-/**
- * @returns {string}
- */
-function getDate() {
-    let today = new Date();
-    const dd = String(today.getDate()).padStart(2, '0');
-    const mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    const yyyy = today.getFullYear();
-
-    return yyyy + '-' + mm + '-' + dd;
+function getTextColor() {
+    return metadata.primaryColorDetails.luma < 0.5 ? '#ffffff' : '#000000';
 }
 
 /**
  * @param {Object} quotes
  * @param {primaryColorData} gradientColor
  * @param {'portrait' | 'landscape' | 'square'} orientation
- * @returns {void}
+ * @returns {number} the fontsize used to render the quote
  */
-function renderQuoteWithAuthor(quotes, gradientColor, orientation) {
+function renderQuote(quotes, gradientColor, orientation) {
 
-    const textContainerWidth = orientation === 'landscape' ? canvas.width / 2 : canvas.width;
+    const ctx = canvas.getContext('2d');
+    const xOffset = 36;
+    const yOffset = xOffset;
+    const maxLineBreaks = orientation === 'landscape' ? 3 : 4;
+    const textColor = getTextColor();
+    let fontSize = renard[renard.length - 1];
+
+    const lines = formatUsingLinebreaks(quotes.quote, fontSize, maxLineBreaks);
+
+    const textContainer = {};
+    textContainer.x = (orientation === 'landscape' ? (canvas.width / 2) : 0) + xOffset;
+    textContainer.y = canvas.height / 2 + yOffset;
+
+    const availableWidth = canvas.width - textContainer.x - xOffset;
+    const availableHeight = canvas.height - textContainer.y - yOffset;
+
+    populateTextContainerMeasurements(textContainer, lines, fontSize);
+
+    let scale = 1;
+    if (textContainer.height > availableHeight) {
+        scale = availableHeight / textContainer.height;
+    }
+
+    if (textContainer.width * scale > availableWidth) {
+        scale = availableWidth / textContainer.width;
+    }
+
+    if (scale !== 1) {
+        fontSize *= scale;
+        populateTextContainerMeasurements(textContainer, lines, fontSize);
+    }
+
+    try {
+        fontSize = findNextLowestRenard(fontSize);
+    } catch (err) {
+        quote = getDefaultQuote();
+        fontSize = findNextLowestRenard(fontSize);
+    }
+
+    ctx.font = `${fontSize}pt Barlow Regular`;
+    ctx.fillStyle = textColor;
+    ctx.textBaseline = 'alphabetic';
+
+    const drawTextLine = (i, withEndSign = false) => {
+        ctx.fillText(
+            lines[i] + (withEndSign ? ' »' : ''),
+            textContainer.x,
+            textContainer.y + textContainer.lineHeight * i
+        );
+    };
+
+    ctx.textAlign = 'right';
+    ctx.fillText('« ', textContainer.x, textContainer.y);
+    ctx.textAlign = 'left';
+    for (let i = 0; i < lines.length - 1; i++) {
+        drawTextLine(i);
+    }
+    drawTextLine(lines.length - 1, true);
+
+    return fontSize;
+
+    /*const textContainerWidth = orientation === 'landscape' ? canvas.width / 2 : canvas.width;
     let fontSize = 25;
-    const quoteLines = formatUsingLinebreaks(quotes.quote, fontSize);
+    const quoteLines = formatUsingLinebreaks(quotes.quote, fontSize, 3, );
     const textColor = gradientColor.hsl[2] < 0.5 ? '#ffffff' : '#000000';
     const lines = quoteLines.map(ql => calculateTextDimensions(ql, fontSize));
     const widestLine = Math.max(...lines.map(l => l.width)) + 40;
@@ -159,8 +232,76 @@ function renderQuoteWithAuthor(quotes, gradientColor, orientation) {
     }
 
     renderMultilineString(lines, quoteX, quoteY, textColor, fontSize);
-    renderString(quotes.date, dateX, dateY, textColor, 15);
-    renderString(quotes.author, authorX, authorY, textColor, 18);
+    renderString(currentDate, dateX, dateY, textColor, 15);
+    renderString(quotes.author, authorX, authorY, textColor, 18);*/
+}
+
+function populateTextContainerMeasurements(textContainer, lines, fontSize) {
+    let linesWithDimensions = lines.map(l => calculateTextDimensions(l, fontSize));
+
+    let lineWidth = 0;
+    let lineHeight = 0;
+    for (let line of linesWithDimensions) {
+        lineHeight = Math.max(lineHeight, line.height);
+        lineWidth = Math.max(lineWidth, line.width);
+    }
+
+    textContainer.height = lineHeight * lines.length;
+    textContainer.width = lineWidth;
+
+    textContainer.lineHeight = lineHeight;
+}
+
+function findNextLowestRenard(value) {
+    if (value < renard[0]) {
+        throw new Error();
+    }
+
+    for (let i = 1; i < renard.length; i++) {
+        if (value <= renard[i]) {
+            return renard[i - 1];
+        }
+    }
+}
+
+function renderDate(date, orientation) {
+    const ctx = canvas.getContext('2d');
+
+    const textColor = getTextColor();
+
+    ctx.lineWidth = '1px';
+    ctx.strokeStyle = textColor;
+    ctx.fillStyle = textColor;
+    ctx.textBaseline = 'middle';
+    ctx.font = '14pt Barlow';
+    ctx.textAlign = 'left';
+
+    const dateDimensions = calculateTextDimensions(date, 14);
+
+    const y = 36;
+    const xMargin = 20;
+    let xOffset = 0;
+
+    if (orientation === 'landscape') {
+        xOffset = canvas.width / 2;
+    }
+
+    const dateStart = (xOffset / 2) + (canvas.width - dateDimensions.width) / 2;
+    const dateEnd = (xOffset / 2) + (canvas.width + dateDimensions.width) / 2;
+
+
+    ctx.beginPath();
+
+    ctx.moveTo(xOffset + xMargin, y);
+    ctx.lineTo(dateStart - xMargin, y);
+
+    ctx.moveTo(dateEnd + xMargin, y);
+    ctx.lineTo(canvas.width - xMargin, y);
+
+    ctx.closePath();
+    ctx.stroke();
+    ctx.font = `14pt ${fontFamily}`;
+    ctx.fillText(date, dateStart, y);
 }
 
 /**
@@ -170,12 +311,15 @@ function renderQuoteWithAuthor(quotes, gradientColor, orientation) {
  * @param {String} color
  * @param {Number} size
  */
-function renderString(text, x, y, color, size) {
+function renderAuthor(targetFontSize) {
     const ctx = canvas.getContext('2d');
-    ctx.fillStyle = color;
-    ctx.font = `${size}pt ${fontFamily}`;
+    const textColor = getTextColor();
+    if (quote.author === ('none' || '')) quote.author = 'Unknown';
+    ctx.fillStyle = textColor;
+    let fontSize = findNextLowestRenard(targetFontSize);
+    ctx.font = `${fontSize}pt ${fontFamily}`;
     ctx.textAlign = 'center';
-    ctx.fillText(text, canvas.width * x, canvas.height * y);
+    ctx.fillText(quote.author, canvas.width * 0.75, canvas.height * 0.85);
 }
 
 /**
@@ -183,9 +327,8 @@ function renderString(text, x, y, color, size) {
  * @param { Number } fontSize
  * @returns { String[] }
  */
-function formatUsingLinebreaks(quote, fontSize) {
+function formatUsingLinebreaks(quote, fontSize, maxLineBreaks) {
     const ctx = canvas.getContext('2d');
-    const maxLineBreaks = 2;
     const lines = [];
     ctx.font = `${fontSize}pt ${fontFamily}`;
     const metrics = ctx.measureText(quote);
@@ -235,7 +378,8 @@ function findClosestSpace(text, position) {
  * @param { String } textColor
  * @param { Number } fontSize
  */
-function renderMultilineString(lines, x, y, textColor, fontSize) {
+
+/*function renderMultilineString(lines, x, y, textColor, fontSize) {
     const ctx = canvas.getContext('2d');
     ctx.textAlign = 'center';
     ctx.fillStyle = textColor;
@@ -249,6 +393,7 @@ function renderMultilineString(lines, x, y, textColor, fontSize) {
         yAbsolute += lines[i].height + 5;
     }
 }
+ */
 
 /**
  * Checks how much space would be occupied when rendering the given text using the given font size
@@ -299,8 +444,20 @@ function renderImage(image) {
  */
 function renderGradient(metadata, orientation) {
     const ctx = canvas.getContext('2d');
+
+    const gradient = orientation === 'landscape' ?
+        ctx.createLinearGradient(canvas.width, 0, canvas.width / 2, 0) :
+        ctx.createLinearGradient(0, canvas.height, 0, canvas.height / 2);
+
+    gradient.addColorStop(0, metadata.primaryColorDetails.hex.toString());
+    gradient.addColorStop(1,
+        `rgba(${metadata.primaryColorDetails.red}, 
+        ${metadata.primaryColorDetails.green}, 
+        ${metadata.primaryColorDetails.blue}, 0)`);
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    /*const ctx = canvas.getContext('2d');
     const gradientColor = pickGradientColor(metadata.primaryColors);
-    console.log(gradientColor);
     const gradient = orientation === 'landscape' ?
         ctx.createLinearGradient(canvas.width, 0, canvas.width / 2, 0) :
         ctx.createLinearGradient(0, canvas.height, 0, canvas.height / 2);
@@ -321,9 +478,10 @@ function renderGradient(metadata, orientation) {
     ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    renderQuoteWithAuthor(quote, gradientColor, orientation);
+    renderQuoteWithAuthor(quote, gradientColor, orientation);*/
 }
 
+/*
 function pickGradientColor(primaryColors){
     let result = '';
     let difference = 0;
@@ -344,25 +502,7 @@ function pickGradientColor(primaryColors){
 
     return result;
 }
-
-
-/**
- * @returns {void}
  */
-function renderOffline() {
-    canvas = document.getElementById('canvas');
-    const image = new Image;
-    const ctx = canvas.getContext('2d');
-
-    image.src = '/images/offlineImg.jpg';
-    image.onload = drawImage;
-
-    async function drawImage() {
-        canvas.width = this.naturalWidth;
-        canvas.height = this.naturalHeight;
-        ctx.drawImage(this, 0, 0);
-    }
-}
 
 /**
  * @typedef {Object} Metadata
