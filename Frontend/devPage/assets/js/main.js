@@ -109,7 +109,7 @@ function getOrientation() {
  * @returns {Promise<Object>}
  */
 async function getQuote() {
-    const request = new Request('http://quotes.rest/qod');
+    const request = new Request('https://quotes.rest/qod');
     request.headers.append('Accept', 'application/json');
     const response = await fetch(request);
     if (response.status === 200) {

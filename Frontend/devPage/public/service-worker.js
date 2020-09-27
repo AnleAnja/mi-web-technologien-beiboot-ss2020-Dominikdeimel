@@ -1,15 +1,19 @@
 const CACHE_NAME = 'service-worker-cache';
-const landscapeReq = new Request('http://192.168.2.106:3000/api/images/single?format=landscape', { headers: {'Accept': 'application/json'} });
-const portraitReq = new Request('http://192.168.2.106:3000/api/images/single?format=portrait', { headers: {'Accept': 'application/json'} });
-const quoteReq = new Request('http://quotes.rest/qod', { headers: {'Accept': 'application/json'} });
+const landscapeReq = new Request('https://beiboot.herokuapp.com/api/images/single?format=landscape', { headers: {'Accept': 'application/json'} });
+const portraitReq = new Request('https://beiboot.herokuapp.com/api/images/single?format=portrait', { headers: {'Accept': 'application/json'} });
+const quoteReq = new Request('https://quotes.rest/qod', { headers: {'Accept': 'application/json'} });
 
 const toCache = [
     '/',
     '/js/pwa.webmanifest',
     '/js/main.min.js',
     '/css/styles.min.css',
-    '/images/splash-screen.png',
     '/images/apple-touch.png',
+    '/images/android-chrome-192x192.png',
+    '/images/android-chrome-512x512.png',
+    '/images/favicon.ico',
+    '/images/favicon-16x16.png',
+    '/images/favicon-32x32.png',
     '/font/Barlow-Light.ttf',
     '/font/Barlow-Regular.ttf',
     landscapeReq,
@@ -28,8 +32,8 @@ async function getImages(cache) {
     const landscape = await (await cache.match(landscapeReq)).json();
     const portrait = await (await cache.match(portraitReq)).json();
 
-    await cache.add(new Request(`http://192.168.2.106:3000${landscape.imagePath}`));
-    await cache.add(new Request(`http://192.168.2.106:3000${portrait.imagePath}`));
+    await cache.add(new Request(landscape.imagePath));
+    await cache.add(new Request(portrait.imagePath));
 }
 
 self.addEventListener('install', function (event) {
