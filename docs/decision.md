@@ -4,6 +4,8 @@
 
 In order to decide which PWA features should be implemented, a Lighthouse report was generated. Within this report, Lighthouse checks for the fulfillment of various features and explains their relevance.
 
+The Google Lighthouse report was used for the implementation of the PWA. The goal was to work through the different aspects of the report. Every aspect was fulfilled in order to provide the best possible progressive web application.
+
 ## Fast and reliable
 
 #### Page load is fast enough on mobile networks
